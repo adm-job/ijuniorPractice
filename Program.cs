@@ -30,7 +30,6 @@ namespace ijuniorPractice
             email = Console.ReadLine();
 
             Console.WriteLine($"Вас зовут {firstName} {lastName}, вам {age}, ваш рост {height}, работаете на {workplace}, ваш номер телефона {phoneNumber}, email: {email}.");
-
         }
     }
 }
