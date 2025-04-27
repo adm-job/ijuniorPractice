@@ -9,19 +9,21 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            string messageInput;
-            int repetitionСounter;
+            Random random = new Random();
+            int number;
+            int sumNumbers = 0;
+            number = random.Next(1,101);
 
-            Console.Write("Введите строку для сообшения в консоли: ");
-            messageInput = Console.ReadLine();
-
-            Console.Write("Введите кол-во посторов сообщения: ");
-            repetitionСounter = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < repetitionСounter; i++)
+            for (int i = 1; i <= number; i++) 
             {
-                Console.WriteLine(messageInput);
+                if ((i % 3 == 0) || (i % 5 == 0))
+                { 
+                    sumNumbers += i;
+                    Console.Write(i + " ");
+                }
             }
+            Console.WriteLine("\nВыпавешее сисло " + number);
+            Console.WriteLine($"Сумма чисел кратные 3 или 5 равна {sumNumbers}");
         }
     }
 }
