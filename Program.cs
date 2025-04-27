@@ -1,4 +1,6 @@
-﻿using System.Runtime.ConstrainedExecution;
+﻿using System.Diagnostics.Metrics;
+using System.Linq.Expressions;
+using System.Runtime.ConstrainedExecution;
 using System.Xml.Linq;
 
 namespace ijuniorPractice
@@ -7,21 +9,19 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int lineOfPeople;
-            int receptionTime = 10;
-            int minutesPerHour = 60;
-            int waitingForHours = 0;
-            int waitingForMinutes = 0;
-            int queueTimeMinutes;
+            string messageInput;
+            int repetitionСounter;
 
-            Console.Write("Введите сколько людей в очереди: ");
-            lineOfPeople = Convert.ToInt32(Console.ReadLine());
-            queueTimeMinutes = lineOfPeople * receptionTime;
+            Console.Write("Введите строку для сообшения в консоли: ");
+            messageInput = Console.ReadLine();
 
-            waitingForHours = queueTimeMinutes / minutesPerHour;
-            waitingForMinutes = queueTimeMinutes % minutesPerHour;
+            Console.Write("Введите кол-во посторов сообщения: ");
+            repetitionСounter = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine($"В очереди {lineOfPeople} человек, вам придеться ждать {waitingForHours} часов и {waitingForMinutes} минут.");
+            for (int i = 0; i < repetitionСounter; i++)
+            {
+                Console.WriteLine(messageInput);
+            }
         }
     }
 }
