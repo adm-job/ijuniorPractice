@@ -12,11 +12,13 @@ namespace ijuniorPractice
             Random random = new Random();
             int number;
             int sumNumbers = 0;
+            int divisorIs3 = 3;
+            int divisorIs5 = 5;
             number = random.Next(1,101);
 
             for (int i = 1; i <= number; i++) 
             {
-                if ((i % 3 == 0) || (i % 5 == 0))
+                if ((i % divisorIs3 == 0) || (i % divisorIs5 == 0))
                 { 
                     sumNumbers += i;
                     Console.Write(i + " ");
