@@ -56,7 +56,6 @@ namespace ijuniorPractice
                 switch (inputComand)
                 {
                     case CommandRubToUsd:
-
                         if (amountExchange > amountRub)
                         {
                             Console.WriteLine(errorMassage);
@@ -66,8 +65,8 @@ namespace ijuniorPractice
                         amountRub -= amountExchange;
                         amountUsd += amountExchange / rateRubToUsd;
                         break;
+                    
                     case CommandRubToEur:
-
                         if (amountExchange > amountRub)
                         {
                             Console.WriteLine(errorMassage);
@@ -77,8 +76,8 @@ namespace ijuniorPractice
                         amountRub -= amountExchange;
                         amountEur += amountExchange / rateRubToEur;
                         break;
-                    case CommandUsdToEur:
 
+                    case CommandUsdToEur:
                         if (amountExchange > amountUsd)
                         {
                             Console.WriteLine(errorMassage);
@@ -88,8 +87,8 @@ namespace ijuniorPractice
                         amountUsd -= amountExchange;
                         amountEur += amountExchange / rateUsdToEur;
                         break;
-                    case CommandEurToUsd:
 
+                    case CommandEurToUsd:
                         if (amountExchange > amountEur)
                         {
                             Console.WriteLine(errorMassage);
@@ -97,10 +96,10 @@ namespace ijuniorPractice
                         }
 
                         amountEur -= amountExchange;
-                        amountUsd += amountExchange * rateUsdToEur;
+                        amountUsd += amountExchange / rateUsdToEur;
                         break;
-                    case CommandUsdToRub:
 
+                    case CommandUsdToRub:
                         if (amountExchange > amountUsd)
                         {
                             Console.WriteLine(errorMassage);
@@ -108,10 +107,10 @@ namespace ijuniorPractice
                         }
 
                         amountUsd -= amountExchange;
-                        amountRub += amountExchange * rateRubToUsd;
+                        amountRub += amountExchange / rateRubToUsd;
                         break;
-                    case CommandEurToRub:
 
+                    case CommandEurToRub:
                         if (amountExchange > amountEur)
                         {
                             Console.WriteLine(errorMassage);
@@ -119,7 +118,7 @@ namespace ijuniorPractice
                         }
 
                         amountEur -= amountExchange;
-                        amountRub += amountExchange * rateRubToEur;
+                        amountRub += amountExchange / rateRubToEur;
                         break;
 
                 }
