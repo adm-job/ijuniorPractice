@@ -11,6 +11,7 @@ namespace ijuniorPractice
         {
             char inputChar;
             string inputName;
+            int addNameCharacters = 2;
 
             Console.Write("Введите символ для рамки: ");
             inputChar = Convert.ToChar(Console.ReadLine());
@@ -18,14 +19,14 @@ namespace ijuniorPractice
             Console.Write("Введите ваше имя: ");
             inputName = Console.ReadLine();
 
-            for (int i = 0; i < inputName.Length + 2; i++)
+            for (int i = 0; i < inputName.Length + addNameCharacters; i++)
             {
                 Console.Write(inputChar);
             }
 
             Console.WriteLine("\n" + inputChar + inputName + inputChar);
 
-            for (int i = 0; i < inputName.Length + 2; i++)
+            for (int i = 0; i < inputName.Length + addNameCharacters; i++)
             {
                 Console.Write(inputChar);
             }
