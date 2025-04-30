@@ -9,26 +9,28 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            char inputChar;
-            string inputName;
-            int addNameCharacters = 2;
+            string password = "123321";
+            string inputUser;
+            int inputAttempts = 3;
 
-            Console.Write("Введите символ для рамки: ");
-            inputChar = Convert.ToChar(Console.ReadLine());
-
-            Console.Write("Введите ваше имя: ");
-            inputName = Console.ReadLine();
-
-            for (int i = 0; i < inputName.Length + addNameCharacters; i++)
+            while (inputAttempts-- > 0)
             {
-                Console.Write(inputChar);
+                Console.Write("Введите пароль: ");
+                inputUser = Console.ReadLine();
+
+                if (inputUser == password)
+                {
+                    Console.WriteLine("Password successful");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Password error");
+                }
             }
-
-            Console.WriteLine("\n" + inputChar + inputName + inputChar);
-
-            for (int i = 0; i < inputName.Length + addNameCharacters; i++)
+            if (inputAttempts < 0)
             {
-                Console.Write(inputChar);
+                Console.WriteLine("There are no more attempts");
             }
 
         }
