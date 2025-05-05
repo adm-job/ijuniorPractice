@@ -6,7 +6,10 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] numberInputAll = new int[1];
+            const string CommandSum = "sum";
+            const string CommandExit = "exit";
+
+            int[] numberInputAll = new int[0];
             int[] numberTemp;
             int correction = 1;
             int sumNumber = 0;
@@ -15,39 +18,40 @@ namespace ijuniorPractice
 
             while (isExit == false)
             {
-                Console.WriteLine("Введите число \nСумма чисел - sum\nВыход - exit");
+                numberTemp = new int[numberInputAll.Length + correction];
+
+                Console.WriteLine($"Введите число \nСумма чисел - {CommandSum}\nВыход - {CommandExit}");
                 numberInput = Console.ReadLine().ToLower();
                 Console.Clear();
 
-                if (numberInput == "exit")
+                switch (numberInput)
                 {
-                    isExit = true;
-                    continue;
-                }
-                else if (numberInput == "sum")
-                {
-                    Console.WriteLine($"Сумма введенных чисел: {sumNumber}\n");
-                    continue;
-                }
-                else
-                {
-                    numberInputAll[numberInputAll.Length - correction] = Convert.ToInt32(numberInput);
+                    case CommandExit:
+                        isExit = true;
+                        break;
 
-                    foreach (int number in numberInputAll)
-                    {
-                        Console.Write(number + " ");
-                    }
+                    case CommandSum:
+                        Console.WriteLine($"Сумма введенных чисел: {sumNumber}\n");
+                        break;
 
-                    Console.WriteLine("\n");
-                    numberTemp = new int[numberInputAll.Length + correction];
-                    sumNumber += numberInputAll[numberInputAll.Length - correction];
+                    default:
+                        numberInputAll[numberInputAll.Length - correction] = Convert.ToInt32(numberInput);
 
-                    for (int i = 0; i < numberInputAll.Length; i++)
-                    {
-                        numberTemp[i] = numberInputAll[i];
-                    }
+                        foreach (int number in numberInputAll)
+                        {
+                            Console.Write(number + " ");
+                        }
 
-                    numberInputAll = numberTemp;
+                        Console.WriteLine("\n");
+                        sumNumber += numberInputAll[numberInputAll.Length - correction];
+
+                        for (int i = 0; i < numberInputAll.Length; i++)
+                        {
+                            numberTemp[i] = numberInputAll[i];
+                        }
+
+                        numberInputAll = numberTemp;
+                        break;
                 }
             }
         }
