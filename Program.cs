@@ -6,31 +6,50 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] numberInput = new int[1];
+            int[] numberInputAll = new int[1];
             int[] numberTemp;
             int correction = 1;
             int sumNumber = 0;
+            string numberInput;
             bool isExit = false;
 
             while (isExit == false)
             {
-                Console.WriteLine("Введите число \nСумма введенных чисел sum\nexit");
-                numberInput[numberInput.Length - correction] = Convert.ToInt32(Console.ReadLine());
-                numberTemp = new int[numberInput.Length + correction];
+                Console.WriteLine("Введите число \nСумма чисел - sum\nВыход - exit");
+                numberInput = Console.ReadLine().ToLower();
+                Console.Clear();
 
-                for (int i = 0; i < numberInput.Length; i++)
+                if (numberInput == "exit")
                 {
-                    numberTemp[i] = numberInput[i];
+                    isExit = true;
+                    continue;
                 }
-
-                numberInput = numberTemp;
-
-                for (int i = 0; i < numberInput.Length; i++)
+                else if (numberInput == "sum")
                 {
-                    Console.Write(numberInput[i] + " ");
+                    Console.WriteLine($"Сумма введенных чисел: {sumNumber}\n");
+                    continue;
+                }
+                else
+                {
+                    numberInputAll[numberInputAll.Length - correction] = Convert.ToInt32(numberInput);
+
+                    foreach (int number in numberInputAll)
+                    {
+                        Console.Write(number + " ");
+                    }
+
+                    Console.WriteLine("\n");
+                    numberTemp = new int[numberInputAll.Length + correction];
+                    sumNumber += numberInputAll[numberInputAll.Length - correction];
+
+                    for (int i = 0; i < numberInputAll.Length; i++)
+                    {
+                        numberTemp[i] = numberInputAll[i];
+                    }
+
+                    numberInputAll = numberTemp;
                 }
             }
-
         }
     }
 }
