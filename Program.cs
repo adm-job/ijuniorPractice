@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Linq.Expressions;
-using System.Runtime.ConstrainedExecution;
-using System.Xml.Linq;
+﻿using System;
 
 namespace ijuniorPractice
 {
@@ -9,30 +6,23 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            string password = "123321";
-            string inputUser;
-            int inputAttempts = 3;
+            int[] number = { 1, 22, 31, 4, 7, 16, 17, 8, 2, 10, 1, 15, 10, 14, 3, 17, 5, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
 
-            while (inputAttempts-- > 0)
+            for (int i = 0; i < number.Length; i++)
             {
-                Console.Write("Введите пароль: ");
-                inputUser = Console.ReadLine();
-
-                if (inputUser == password)
+                if (i == 0 && number[i] > number[i + 1])
                 {
-                    Console.WriteLine("Password successful");
-                    break;
+                    Console.Write(number[i] + " ");
                 }
-                else
+                else if (i == number.Length - 1 && number[i] > number[i - 1])
                 {
-                    Console.WriteLine("Password error");
+                    Console.Write(number[i] + " ");
+                }
+                else if (number[i] > number[i + 1] && number[i] > number[i - 1])
+                {
+                    Console.Write(number[i] + " ");
                 }
             }
-            if (inputAttempts < 0)
-            {
-                Console.WriteLine("There are no more attempts");
-            }
-
         }
     }
 }
