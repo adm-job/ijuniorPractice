@@ -1,4 +1,6 @@
 ﻿using System;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -6,54 +8,37 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            const string CommandSum = "sum";
-            const string CommandExit = "exit";
+            int[] numberAll = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 1, 1, 1, 1, 1, 4, 6, 6, 6, 6, 7, 8, 9, 9, 6, 6, 7, 7, 7, 6, 6, 3, 4, 2, 4, 2, 2, 2, 9, 9, 9, 0, 8, 6, 4, 3, 2, 1, 1, 2, 3, 3, 3, 4, 5, 6, 7, 8, 6, 6, 6, 7, 9 };
+            int numberTemp = numberAll[0];
+            int numbersCount = 1;
+            int basicValue = 1;
+            int numberFound = 0;
+            int numbersTotal = 0;
 
-            int[] numberInputAll = new int[0];
-            int[] numberTemp;
-            int correction = 1;
-            int sumNumber = 0;
-            string numberInput;
-            bool isExit = false;
-
-            while (isExit == false)
+            for (int i = 1; i < numberAll.Length; i++)
             {
-                numberTemp = new int[numberInputAll.Length + correction];
-
-                Console.WriteLine($"Введите число \nСумма чисел - {CommandSum}\nВыход - {CommandExit}");
-                numberInput = Console.ReadLine().ToLower();
-                Console.Clear();
-
-                switch (numberInput)
+                if (numberAll[i] == numberTemp)
                 {
-                    case CommandExit:
-                        isExit = true;
-                        break;
-
-                    case CommandSum:
-                        Console.WriteLine($"Сумма введенных чисел: {sumNumber}\n");
-                        break;
-
-                    default:
-                        numberInputAll[numberInputAll.Length - correction] = Convert.ToInt32(numberInput);
-
-                        foreach (int number in numberInputAll)
-                        {
-                            Console.Write(number + " ");
-                        }
-
-                        Console.WriteLine("\n");
-                        sumNumber += numberInputAll[numberInputAll.Length - correction];
-
-                        for (int i = 0; i < numberInputAll.Length; i++)
-                        {
-                            numberTemp[i] = numberInputAll[i];
-                        }
-
-                        numberInputAll = numberTemp;
-                        break;
+                    numbersCount++;
+                }
+                else
+                {
+                    if (numbersTotal < numbersCount)
+                    {
+                        numberFound = numberTemp;
+                        numbersTotal = numbersCount;
+                        numberTemp = numberAll[i];
+                        numbersCount = basicValue;
+                    }
+                    else
+                    {
+                        numberTemp = numberAll[i];
+                        numbersCount = basicValue;
+                    }
                 }
             }
+
+            Console.WriteLine($"Число {numberFound} повторяется {numbersTotal} раза подряд.");
         }
     }
 }
