@@ -6,24 +6,31 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] number = { 1, 22, 31, 4, 7, 16, 17, 8, 2, 10, 1, 15, 10, 14, 3, 17, 5, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
+            int[] numberInput = new int[1];
+            int[] numberTemp;
             int correction = 1;
+            int sumNumber = 0;
+            bool isExit = false;
 
-            for (int i = 0; i < number.Length; i++)
+            while (isExit == false)
             {
-                if (i == 0 && number[i] > number[i + correction])
+                Console.WriteLine("Введите число \nСумма введенных чисел sum\nexit");
+                numberInput[numberInput.Length - correction] = Convert.ToInt32(Console.ReadLine());
+                numberTemp = new int[numberInput.Length + correction];
+
+                for (int i = 0; i < numberInput.Length; i++)
                 {
-                    Console.Write(number[i] + " ");
+                    numberTemp[i] = numberInput[i];
                 }
-                else if (i == number.Length - correction && number[i] > number[i - correction])
+
+                numberInput = numberTemp;
+
+                for (int i = 0; i < numberInput.Length; i++)
                 {
-                    Console.Write(number[i] + " ");
-                }
-                else if (number[i] > number[i + correction] && number[i] > number[i - correction])
-                {
-                    Console.Write(number[i] + " ");
+                    Console.Write(numberInput[i] + " ");
                 }
             }
+
         }
     }
 }
