@@ -8,37 +8,35 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] numberAll = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 1, 1, 1, 1, 1, 4, 6, 6, 6, 6, 7, 8, 9, 9, 6, 6, 7, 7, 7, 6, 6, 3, 4, 2, 4, 2, 2, 2, 9, 9, 9, 0, 8, 6, 4, 3, 2, 1, 1, 2, 3, 3, 3, 4, 5, 6, 7, 8, 6, 6, 6, 7, 9 };
-            int numberTemp = numberAll[0];
-            int numbersCount = 1;
-            int basicValue = 1;
-            int numberFound = 0;
-            int numbersTotal = 0;
+            int[] numbers = { 3, 2, 3, 1, 5, 6, 7, 8, 9, 19, 12, 14, 11, 10, 4, 16, 26, 36, 8, 9, 16, 6, 27, 7, 17, 16, 6, 31, 14, 22, 41, 12, 2, 25, 19, 16, 29, 19 };
+            bool isSorted = true;
+            int correction = 1;
 
-            for (int i = 1; i < numberAll.Length; i++)
+            foreach (var number in numbers)
             {
-                if (numberAll[i] == numberTemp)
+                Console.Write(number + " ");
+            }
+
+            Console.WriteLine();
+
+            while (isSorted)
+            {
+                isSorted = false;
+
+                for (int i = 1; i < numbers.Length; i++)
                 {
-                    numbersCount++;
-                }
-                else
-                {
-                    if (numbersTotal < numbersCount)
+                    if (numbers[i] < numbers[i - correction])
                     {
-                        numberFound = numberTemp;
-                        numbersTotal = numbersCount;
-                        numberTemp = numberAll[i];
-                        numbersCount = basicValue;
-                    }
-                    else
-                    {
-                        numberTemp = numberAll[i];
-                        numbersCount = basicValue;
+                        (numbers[i], numbers[i - correction]) = (numbers[i - correction], numbers[i]);
+                        isSorted = true;
                     }
                 }
             }
 
-            Console.WriteLine($"Число {numberFound} повторяется {numbersTotal} раза подряд.");
+            foreach (int number in numbers)
+            {
+                Console.Write(number + " ");
+            }
         }
     }
 }
