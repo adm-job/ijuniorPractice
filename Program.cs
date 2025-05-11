@@ -1,7 +1,4 @@
-﻿using System;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
@@ -11,10 +8,12 @@ namespace ijuniorPractice
             string inputParenthesis;
             int countLeftParenthesis = 0;
             int countRightParenthesis = 0;
+            char LeftParenthesis = '(';
+            char RightParenthesis = ')';
             int countDepth = 0;
             int depth = 0;
             string errorMessage = "Не корректное скобочное выражение";
-            bool iserrorMessage = false;
+            bool isErrorMessage = false;
 
             Console.Write("Введите скобочное выражение: ");
             inputParenthesis = Console.ReadLine();
@@ -25,7 +24,7 @@ namespace ijuniorPractice
 
                 foreach (var charSplit in parenthesis)
                 {
-                    if (charSplit == '(')
+                    if (charSplit == LeftParenthesis)
                     {
                         countLeftParenthesis++;
                         countDepth++;
@@ -35,7 +34,7 @@ namespace ijuniorPractice
                             depth = countDepth;
                         }
                     }
-                    else if (charSplit == ')')
+                    else if (charSplit == RightParenthesis)
                     {
                         countRightParenthesis++;
                         countDepth--;
@@ -44,7 +43,7 @@ namespace ijuniorPractice
                     if (countLeftParenthesis < countRightParenthesis)
                     {
                         Console.WriteLine(errorMessage);
-                        iserrorMessage = true;
+                        isErrorMessage = true;
                         break;
                     }
                 }
@@ -52,14 +51,13 @@ namespace ijuniorPractice
             else
             {
                 Console.WriteLine(errorMessage);
-                iserrorMessage = true;
+                isErrorMessage = true;
             }
 
-            if (iserrorMessage)
+            if (isErrorMessage == false)
             {
                 Console.WriteLine($"Глубина вложения {depth}");
             }
-
         }
     }
 }
