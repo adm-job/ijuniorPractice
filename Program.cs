@@ -1,6 +1,5 @@
 ﻿using System;
 using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -8,35 +7,59 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] numbers = { 3, 2, 3, 1, 5, 6, 7, 8, 9, 19, 12, 14, 11, 10, 4, 16, 26, 36, 8, 9, 16, 6, 27, 7, 17, 16, 6, 31, 14, 22, 41, 12, 2, 25, 19, 16, 29, 19 };
-            bool isSorted = true;
-            int correction = 1;
+            char[] parenthesis;
+            string inputParenthesis;
+            int countLeftParenthesis = 0;
+            int countRightParenthesis = 0;
+            int countDepth = 0;
+            int depth = 0;
+            string errorMessage = "Не корректное скобочное выражение";
+            bool iserrorMessage = false;
 
-            foreach (var number in numbers)
+            Console.Write("Введите скобочное выражение: ");
+            inputParenthesis = Console.ReadLine();
+            parenthesis = inputParenthesis.ToCharArray();
+
+            if (parenthesis.Length % 2 == 0)
             {
-                Console.Write(number + " ");
-            }
 
-            Console.WriteLine();
-
-            while (isSorted)
-            {
-                isSorted = false;
-
-                for (int i = 1; i < numbers.Length; i++)
+                foreach (var charSplit in parenthesis)
                 {
-                    if (numbers[i] < numbers[i - correction])
+                    if (charSplit == '(')
                     {
-                        (numbers[i], numbers[i - correction]) = (numbers[i - correction], numbers[i]);
-                        isSorted = true;
+                        countLeftParenthesis++;
+                        countDepth++;
+
+                        if (countDepth > depth)
+                        {
+                            depth = countDepth;
+                        }
+                    }
+                    else if (charSplit == ')')
+                    {
+                        countRightParenthesis++;
+                        countDepth--;
+                    }
+
+                    if (countLeftParenthesis < countRightParenthesis)
+                    {
+                        Console.WriteLine(errorMessage);
+                        iserrorMessage = true;
+                        break;
                     }
                 }
             }
-
-            foreach (int number in numbers)
+            else
             {
-                Console.Write(number + " ");
+                Console.WriteLine(errorMessage);
+                iserrorMessage = true;
             }
+
+            if (iserrorMessage)
+            {
+                Console.WriteLine($"Глубина вложения {depth}");
+            }
+
         }
     }
 }
