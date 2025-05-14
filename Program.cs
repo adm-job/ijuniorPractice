@@ -4,22 +4,29 @@
     {
         static void Main(string[] args)
         {
-            int inputNumber = 0;
+            int inputNumber = 100;
 
-            ReadInt(ref inputNumber);
-            Console.WriteLine(inputNumber);
+            Healthbar(inputNumber);
         }
 
-        static int ReadInt(ref int inputNumber)
+        static void Healthbar(int inputNumber)
         {
-            Console.WriteLine("Введите число");
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("[");
+            Console.SetCursorPosition(12, 0);
+            Console.WriteLine("]");
+            Console.SetCursorPosition(1, 0);
+            for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine("Введено не число");
+                if ((inputNumber / 10) > i)
+                {
+                    Console.Write("#");
+                }
+                else
+                {
+                    Console.Write("_");
+                }
             }
-            
-            return inputNumber;
         }
     }
 }
