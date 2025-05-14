@@ -4,59 +4,19 @@
     {
         static void Main(string[] args)
         {
-            char[] parenthesis;
-            string inputParenthesis;
-            int countLeftParenthesis = 0;
-            int countRightParenthesis = 0;
-            char LeftParenthesis = '(';
-            char RightParenthesis = ')';
-            int countDepth = 0;
-            int depth = 0;
-            string errorMessage = "Не корректное скобочное выражение";
-            bool isErrorMessage = false;
+            int inputNumber;
 
-            Console.Write("Введите скобочное выражение: ");
-            inputParenthesis = Console.ReadLine();
-            parenthesis = inputParenthesis.ToCharArray();
+            GetInput(out inputNumber);
+            Console.WriteLine(inputNumber);
+        }
 
-            if (parenthesis.Length % 2 == 0)
+        static void GetInput(out int inputNumber)
+        {
+            Console.WriteLine("Введите число");
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)   
             {
-
-                foreach (var charSplit in parenthesis)
-                {
-                    if (charSplit == LeftParenthesis)
-                    {
-                        countLeftParenthesis++;
-                        countDepth++;
-
-                        if (countDepth > depth)
-                        {
-                            depth = countDepth;
-                        }
-                    }
-                    else if (charSplit == RightParenthesis)
-                    {
-                        countRightParenthesis++;
-                        countDepth--;
-                    }
-
-                    if (countLeftParenthesis < countRightParenthesis)
-                    {
-                        Console.WriteLine(errorMessage);
-                        isErrorMessage = true;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine(errorMessage);
-                isErrorMessage = true;
-            }
-
-            if (isErrorMessage == false)
-            {
-                Console.WriteLine($"Глубина вложения {depth}");
+                Console.WriteLine("Введено не число");
             }
         }
     }
