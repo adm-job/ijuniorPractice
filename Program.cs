@@ -4,20 +4,22 @@
     {
         static void Main(string[] args)
         {
-            int inputNumber;
+            int inputNumber = 0;
 
-            GetInput(out inputNumber);
+            ReadInt(ref inputNumber);
             Console.WriteLine(inputNumber);
         }
 
-        static void GetInput(out int inputNumber)
+        static int ReadInt(ref int inputNumber)
         {
             Console.WriteLine("Введите число");
 
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)   
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
             {
                 Console.WriteLine("Введено не число");
             }
+            
+            return inputNumber;
         }
     }
 }
