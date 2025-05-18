@@ -1,41 +1,45 @@
-﻿namespace ijuniorPractice
+﻿using System.IO;
+
+namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            int maxBar = 0;
-            int currentBar = 0;
+            int maxBar;
+            int currentBar;
             string frameChars = "";
             ConsoleColor consoleColor;
-
             
-            EnteringParameters(ref currentBar, ref maxBar,ref frameChars);
-            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Red,0,0, frameChars);
-            EnteringParameters(ref currentBar, ref maxBar, ref frameChars);
-            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Blue, 0, 1, frameChars);
+            EnteringParameters(out currentBar, out maxBar, out frameChars);
+            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Red,0,0, frameChars[0]);
+            EnteringParameters(out currentBar, out maxBar, out frameChars);
+            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Blue, 0, 1, frameChars[1]);
         }
 
-        static void DrawConsoleBar(int value, int maxValue, ConsoleColor color, int positionX = 0, int positionY = 0, string frameChars = "[]")
+        static void DrawConsoleBar(int value, int maxValue, ConsoleColor color, int positionX = 0, int positionY = 0,char firstBracket = '[', char lastBracket = ']')
         {
+            if (value > maxValue) 
+                value /= maxValue;
+
             Console.SetCursorPosition(positionX, positionY);
-            Console.Write(frameChars[0]);
+            Console.Write(firstBracket);
             Console.ForegroundColor = color;
-            DrowChars(0, value, '#');
+            DrowChars(value, '#');
             Console.ResetColor();
-            DrowChars(value, maxValue, '_');
-            Console.Write(frameChars[1]);
+            DrowChars( maxValue - value, '_');
+            Console.Write(lastBracket);
         }
 
-        static void DrowChars(int minValue, int maxValue, char haveChar)
+        static void DrowChars( int maxValue, char characterOutput)
         {
-            for (int i = minValue; i < maxValue; i++)
+            for (int i = 0; i < maxValue; i++)
             {
-                Console.Write(haveChar);
+                Console.Write(characterOutput);
             }
         }
 
-        static void EnteringParameters(ref int currentBar, ref int maxBar,ref string frameChars)
+        static void EnteringParameters(out int currentBar, out int maxBar, out string frameChars)
         {
             Console.SetCursorPosition(0, 10);
             Console.Write("\bВведите процент заполнения: ");
