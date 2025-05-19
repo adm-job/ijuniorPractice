@@ -10,28 +10,30 @@ namespace ijuniorPractice
             int currentBar;
             string frameChars = "";
             ConsoleColor consoleColor;
-            
+
             EnteringParameters(out currentBar, out maxBar, out frameChars);
-            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Red,0,0, frameChars[0]);
+            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Red, 0, 0, frameChars[0]);
             EnteringParameters(out currentBar, out maxBar, out frameChars);
             DrawConsoleBar(currentBar, maxBar, ConsoleColor.Blue, 0, 1, frameChars[1]);
         }
 
-        static void DrawConsoleBar(int value, int maxValue, ConsoleColor color, int positionX = 0, int positionY = 0,char firstBracket = '[', char lastBracket = ']')
+        static void DrawConsoleBar(int value, int maxValue, ConsoleColor color, int positionX = 0, int positionY = 0, char firstBracket = '[', char lastBracket = ']')
         {
-            if (value > maxValue) 
-                value /= maxValue;
+            int percentMax = 100;
+
+            if (value > maxValue)
+                value = maxValue * value / percentMax;
 
             Console.SetCursorPosition(positionX, positionY);
             Console.Write(firstBracket);
             Console.ForegroundColor = color;
             DrowChars(value, '#');
             Console.ResetColor();
-            DrowChars( maxValue - value, '_');
+            DrowChars(maxValue - value, '_');
             Console.Write(lastBracket);
         }
 
-        static void DrowChars( int maxValue, char characterOutput)
+        static void DrowChars(int maxValue, char characterOutput)
         {
             for (int i = 0; i < maxValue; i++)
             {
