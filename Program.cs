@@ -21,8 +21,7 @@ namespace ijuniorPractice
         {
             int percentMax = 100;
 
-            if (value > maxValue)
-                value = maxValue * value / percentMax;
+            value = maxValue * value / percentMax;
 
             Console.SetCursorPosition(positionX, positionY);
             Console.Write(firstBracket);
