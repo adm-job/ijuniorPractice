@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 
 namespace ijuniorPractice
 {
@@ -7,28 +7,28 @@ namespace ijuniorPractice
         static void Main(string[] args)
         {
             int maxBar;
-            int currentBar;
+            int percentageFilling;
             string frameChars = "";
             ConsoleColor consoleColor;
 
-            EnteringParameters(out currentBar, out maxBar, out frameChars);
-            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Red, 0, 0, frameChars[0]);
-            EnteringParameters(out currentBar, out maxBar, out frameChars);
-            DrawConsoleBar(currentBar, maxBar, ConsoleColor.Blue, 0, 1, frameChars[1]);
+            EnteringParameters(out percentageFilling, out maxBar, out frameChars);
+            DrawConsoleBar(percentageFilling, maxBar, ConsoleColor.Red, 0, 0, frameChars[0], frameChars[1]);
+            EnteringParameters(out percentageFilling, out maxBar, out frameChars);
+            DrawConsoleBar(percentageFilling, maxBar, ConsoleColor.Blue, 0, 1, frameChars[0], frameChars[1]);
         }
 
-        static void DrawConsoleBar(int value, int maxValue, ConsoleColor color, int positionX = 0, int positionY = 0, char firstBracket = '[', char lastBracket = ']')
+        static void DrawConsoleBar(int percentageFilling, int maxBar, ConsoleColor color, int positionX = 0, int positionY = 0, char firstBracket = '[', char lastBracket = ']')
         {
             int percentMax = 100;
 
-            value = maxValue * value / percentMax;
+            percentageFilling = maxBar * percentageFilling / percentMax;
 
             Console.SetCursorPosition(positionX, positionY);
             Console.Write(firstBracket);
             Console.ForegroundColor = color;
-            DrowChars(value, '#');
+            DrowChars(percentageFilling, '#');
             Console.ResetColor();
-            DrowChars(maxValue - value, '_');
+            DrowChars(maxBar - percentageFilling, '_');
             Console.Write(lastBracket);
         }
 
@@ -42,11 +42,13 @@ namespace ijuniorPractice
 
         static void EnteringParameters(out int currentBar, out int maxBar, out string frameChars)
         {
+            int inputNumber = 0;
+
             Console.SetCursorPosition(0, 10);
-            Console.Write("\bВведите процент заполнения: ");
-            currentBar = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\nВведите длинну шкалы: ");
-            maxBar = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\bВведите процент заполнения: ");
+            currentBar = ReadInt(inputNumber);
+            Console.WriteLine("\nВведите длину шкалы: ");
+            maxBar = ReadInt(inputNumber);
             Console.Write("\nДоп. параметр рамка из 2 символов, можно пропустить по ENTER: ");
             frameChars = Console.ReadLine();
 
@@ -54,6 +56,18 @@ namespace ijuniorPractice
             {
                 frameChars = "[]";
             }
+        }
+
+        static int ReadInt(int inputNumber)
+        {
+            Console.Write("Введите число: ");
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            {
+                Console.WriteLine("Введено не число: ");
+            }
+
+            return inputNumber;
         }
     }
 }
