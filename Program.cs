@@ -30,28 +30,28 @@ namespace ijuniorPractice
 
         static void Shuffle(int[] array)
         {
+            Random randomIndex = new Random();
+
             int indexArray1 = -1;
             int indexArray2 = -1;
 
             for (int i = 0; i < array.Length; i++)
             {
-                indexArray1 = RandomIndex(array.Length);
-                indexArray2 = RandomIndex(array.Length);
+                indexArray1 = RandomIndex(array.Length, randomIndex);
+                indexArray2 = RandomIndex(array.Length, randomIndex);
 
                 while (indexArray1 == indexArray2)
                 {
-                    indexArray1 = RandomIndex(array.Length);
-                    indexArray2 = RandomIndex(array.Length);
+                    indexArray1 = RandomIndex(array.Length, randomIndex);
+                    indexArray2 = RandomIndex(array.Length, randomIndex);
                 }
                 (array[indexArray1], array[indexArray2]) = (array[indexArray2], array[indexArray1]);
             }
         }
 
-        static int RandomIndex(int maxIndex)
+        static int RandomIndex(int maxIndex, Random random)
         {
-            Random randomIndex = new Random();
-
-            return randomIndex.Next(0, maxIndex);
+            return random.Next(0, maxIndex);
         }
     }
 }
