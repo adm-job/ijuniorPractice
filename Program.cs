@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -29,23 +30,28 @@ namespace ijuniorPractice
 
         static void Shuffle(int[] array)
         {
-            Random randomIndex = new Random();
-
-            int randomIndexArray1 = -1;
-            int randomIndexArray2 = -1;
+            int indexArray1 = -1;
+            int indexArray2 = -1;
 
             for (int i = 0; i < array.Length; i++)
             {
-                randomIndexArray1 = randomIndex.Next(0, array.Length);
-                randomIndexArray2 = randomIndex.Next(0, array.Length);
+                indexArray1 = RandomIndex(array.Length);
+                indexArray2 = RandomIndex(array.Length);
 
-                while (randomIndexArray1 == randomIndexArray2)
+                while (indexArray1 == indexArray2)
                 {
-                    randomIndexArray1 = randomIndex.Next(0, array.Length);
-                    randomIndexArray2 = randomIndex.Next(0, array.Length);
+                    indexArray1 = RandomIndex(array.Length);
+                    indexArray2 = RandomIndex(array.Length);
                 }
-                (array[randomIndexArray1], array[randomIndexArray2]) = (array[randomIndexArray2], array[randomIndexArray1]);
+                (array[indexArray1], array[indexArray2]) = (array[indexArray2], array[indexArray1]);
             }
+        }
+
+        static int RandomIndex(int maxIndex)
+        {
+            Random randomIndex = new Random();
+
+            return randomIndex.Next(0, maxIndex);
         }
     }
 }
