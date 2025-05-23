@@ -6,70 +6,48 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int maxBar;
-            int percentageFilling;
-            string frameChars = "";
-            ConsoleColor consoleColor;
+            int[] arrayNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
 
-            EnteringParameters(out percentageFilling, out maxBar, out frameChars);
-            DrawConsoleBar(percentageFilling, maxBar, ConsoleColor.Red, 0, 0, frameChars[0], frameChars[1]);
-            EnteringParameters(out percentageFilling, out maxBar, out frameChars);
-            DrawConsoleBar(percentageFilling, maxBar, ConsoleColor.Blue, 0, 1, frameChars[0], frameChars[1]);
+            Console.WriteLine("Исходный массив");
+
+            ArrayOutput(arrayNumbers);
+            Shuffle(arrayNumbers);
+
+            Console.WriteLine("Перемешанный массив");
+
+            ArrayOutput(arrayNumbers);
         }
 
-        static void DrawConsoleBar(int percentageFilling, int maxBar, ConsoleColor color, int positionX = 0, int positionY = 0, char firstBracket = '[', char lastBracket = ']')
+        static void ArrayOutput(int[] array)
         {
-            int percentMax = 100;
-
-            percentageFilling = maxBar * percentageFilling / percentMax;
-
-            Console.SetCursorPosition(positionX, positionY);
-            Console.Write(firstBracket);
-            Console.ForegroundColor = color;
-            DrowChars(percentageFilling, '#');
-            Console.ResetColor();
-            DrowChars(maxBar - percentageFilling, '_');
-            Console.Write(lastBracket);
-        }
-
-        static void DrowChars(int maxValue, char characterOutput)
-        {
-            for (int i = 0; i < maxValue; i++)
+            foreach (int number in array)
             {
-                Console.Write(characterOutput);
+                Console.Write(number + " ");
             }
+            Console.WriteLine();
         }
 
-        static void EnteringParameters(out int currentBar, out int maxBar, out string frameChars)
+        static void Shuffle(int[] array)
         {
-            int inputNumber = 0;
+            Random randomIndex = new Random();
+            int randomIndexArray1 = -1;
+            int randomIndexArray2 = -1;
 
-            Console.SetCursorPosition(0, 10);
-            Console.WriteLine("\bВведите процент заполнения: ");
-            currentBar = ReadInt(inputNumber);
-            Console.WriteLine("\nВведите длину шкалы: ");
-            maxBar = ReadInt(inputNumber);
-            Console.Write("\nДоп. параметр рамка из 2 символов, можно пропустить по ENTER: ");
-            frameChars = Console.ReadLine();
-
-            if (frameChars == "")
+            for (int i = 0; i < array.Length; i++)
             {
-                frameChars = "[]";
+                randomIndexArray1 = randomIndex.Next(0, array.Length);
+                randomIndexArray2 = randomIndex.Next(0, array.Length);
+
+                while (randomIndexArray1 == randomIndexArray2)
+                {
+                    randomIndexArray1 = randomIndex.Next(0, array.Length);
+                    randomIndexArray2 = randomIndex.Next(0, array.Length);
+                }
+                (array[randomIndexArray1], array[randomIndexArray2]) = (array[randomIndexArray2], array[randomIndexArray1]);
             }
-        }
-
-        static int ReadInt(int inputNumber)
-        {
-            Console.Write("Введите число: ");
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-            {
-                Console.WriteLine("Введено не число: ");
-            }
-
-            return inputNumber;
         }
     }
 }
+
 
 
