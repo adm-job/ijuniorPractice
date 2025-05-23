@@ -30,6 +30,7 @@ namespace ijuniorPractice
         static void Shuffle(int[] array)
         {
             Random randomIndex = new Random();
+
             int randomIndexArray1 = -1;
             int randomIndexArray2 = -1;
 
