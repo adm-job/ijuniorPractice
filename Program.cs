@@ -7,51 +7,129 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            int[] arrayNumbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
+            const string CommandAddDossier = "1";
+            const string CommandListDossier = "2";
+            const string CommandDeleteDossier = "3";
+            const string CommandSearchDossier = "4";
+            const string CommandExit = "5";
+            const string CommandNextMenu = "Для продолжения нажмите любую кнопку";
+            const string CommandSucsessful = "Изменения внесены";
 
-            Console.WriteLine("Исходный массив");
+            string[] fullName = new string[0];
+            string[] positions = new string[0];
+            string inputUser;
+            bool isContinue = true;
 
-            ArrayOutput(arrayNumbers);
-            Shuffle(arrayNumbers);
 
-            Console.WriteLine("Перемешанный массив");
-
-            ArrayOutput(arrayNumbers);
-        }
-
-        static void ArrayOutput(int[] array)
-        {
-            foreach (int number in array)
+            while (isContinue)
             {
-                Console.Write(number + " ");
-            }
-            Console.WriteLine();
-        }
+                Console.Clear();
+                Console.WriteLine("Меню:");
+                Console.WriteLine($"{CommandAddDossier} Добавить досье");
+                Console.WriteLine($"{CommandListDossier} Список всех досье");
+                Console.WriteLine($"{CommandDeleteDossier} Удалить досье");
+                Console.WriteLine($"{CommandSearchDossier} Поиск по ФИО");
+                Console.WriteLine($"{CommandExit} Выход");
+                Console.Write("\nВведите номер пункта меню: ");
+                inputUser = Console.ReadLine();
 
-        static void Shuffle(int[] array)
-        {
-            Random randomIndex = new Random();
-
-            int indexArray1 = -1;
-            int indexArray2 = -1;
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                indexArray1 = RandomIndex(array.Length, randomIndex);
-                indexArray2 = RandomIndex(array.Length, randomIndex);
-
-                while (indexArray1 == indexArray2)
+                switch (inputUser)
                 {
-                    indexArray1 = RandomIndex(array.Length, randomIndex);
-                    indexArray2 = RandomIndex(array.Length, randomIndex);
-                }
-                (array[indexArray1], array[indexArray2]) = (array[indexArray2], array[indexArray1]);
-            }
-        }
+                    case CommandAddDossier:
+                        AddDossier(ref fullName, ref positions);
+                        break;
+                    case CommandListDossier:
+                        ListDossier(ref fullName, ref positions);
+                        break;
+                    case CommandDeleteDossier:
+                        DeleteDossier(ref fullName, ref positions);
+                        break;
+                    case CommandSearchDossier:
 
-        static int RandomIndex(int maxIndex, Random random)
-        {
-            return random.Next(0, maxIndex);
+                        break;
+                    case CommandExit:
+                        isContinue = false;
+                        Console.WriteLine("До свидания");
+                        break;
+                    default:
+                        Console.WriteLine("Нет такого пункта меню");
+                        Console.WriteLine(CommandNextMenu);
+                        Console.ReadKey();
+                        break;
+                }
+            }
+
+            static void AddDossier(ref string[] fullName, ref string[] positions)
+            {
+                string[] inputFullName = new string[fullName.Length + 1];
+                string[] inputPosition = new string[positions.Length + 1]; ;
+
+                Console.Write("\nВведите ФИО :");
+                inputFullName[fullName.Length] = Console.ReadLine();
+                Console.Write("\nВведите должность :");
+                inputPosition[positions.Length] = Console.ReadLine();
+
+                for (int i = 0; i < fullName.Length; i++)
+                {
+                    inputFullName[i] = fullName[i];
+                    inputPosition[i] = positions[i];
+                }
+
+                fullName = inputFullName;
+                positions = inputPosition;
+
+                Console.WriteLine(CommandSucsessful);
+                Console.WriteLine(CommandNextMenu);
+                Console.ReadLine();
+            }
+
+            static void ListDossier(ref string[] fullName, ref string[] positions)
+            {
+                if (fullName.Length == positions.Length)
+                {
+                    Console.WriteLine();
+
+                    for (int i = 0; i < fullName.Length; i++)
+                    {
+                        Console.Write(i + 1 + ". ");
+                        Console.Write(fullName[i] + " - ");
+                        Console.WriteLine(positions[i]);
+                    }
+
+                    Console.WriteLine(CommandNextMenu);
+                    Console.ReadLine();
+                }
+            }
+
+            static void DeleteDossier(ref string[] fullName, ref string[] positions)
+            {
+                int inputDeleteDossier = -1;
+                bool isRepeat = true;
+
+                do
+                {
+                    Console.WriteLine($"Введите досье для удаления от 1 до {fullName.Length}");
+                    inputDeleteDossier = ReadInt(inputDeleteDossier);
+                    if (inputDeleteDossier <= fullName.Length && inputDeleteDossier > 0)
+                        isRepeat = false;
+                }
+                while (isRepeat);
+
+                fullName[inputDeleteDossier - 1] = "0";
+                positions[inputDeleteDossier - 1] = "0";
+
+                Console.ReadKey();
+            }
+
+            static int ReadInt(int inputNumber)
+            {
+                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+                {
+                    Console.WriteLine("Введено не число");
+                }
+
+                return inputNumber;
+            }
         }
     }
 }
