@@ -45,7 +45,7 @@ namespace ijuniorPractice
                         DeleteDossier(ref fullName, ref positions);
                         break;
                     case CommandSearchDossier:
-
+                        SearchDossier(fullName, positions);
                         break;
                     case CommandExit:
                         isContinue = false;
@@ -61,22 +61,22 @@ namespace ijuniorPractice
 
             static void AddDossier(ref string[] fullName, ref string[] positions)
             {
-                string[] inputFullName = new string[fullName.Length + 1];
-                string[] inputPosition = new string[positions.Length + 1]; ;
+                string[] addFullName = new string[fullName.Length + 1];
+                string[] addPosition = new string[positions.Length + 1]; ;
 
                 Console.Write("\nВведите ФИО :");
-                inputFullName[fullName.Length] = Console.ReadLine();
+                addFullName[fullName.Length] = Console.ReadLine();
                 Console.Write("\nВведите должность :");
-                inputPosition[positions.Length] = Console.ReadLine();
+                addPosition[positions.Length] = Console.ReadLine();
 
                 for (int i = 0; i < fullName.Length; i++)
                 {
-                    inputFullName[i] = fullName[i];
-                    inputPosition[i] = positions[i];
+                    addFullName[i] = fullName[i];
+                    addPosition[i] = positions[i];
                 }
 
-                fullName = inputFullName;
-                positions = inputPosition;
+                fullName = addFullName;
+                positions = addPosition;
 
                 Console.WriteLine(CommandSucsessful);
                 Console.WriteLine(CommandNextMenu);
@@ -105,20 +105,66 @@ namespace ijuniorPractice
             {
                 int inputDeleteDossier = -1;
                 bool isRepeat = true;
+                string[] fullNameCutBack = new string[fullName.Length - 1];
+                string[] positionsCutBack = new string[positions.Length - 1];
 
                 do
                 {
                     Console.WriteLine($"Введите досье для удаления от 1 до {fullName.Length}");
                     inputDeleteDossier = ReadInt(inputDeleteDossier);
+
                     if (inputDeleteDossier <= fullName.Length && inputDeleteDossier > 0)
+                    {
                         isRepeat = false;
+                    }
                 }
                 while (isRepeat);
 
-                fullName[inputDeleteDossier - 1] = "0";
-                positions[inputDeleteDossier - 1] = "0";
+                fullName[inputDeleteDossier - 1] = fullName[fullName.Length - 1];
+                positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
 
+                for (int i = 0; i < fullName.Length - 1; i++)
+                {
+                    fullNameCutBack[i] = fullName[i];
+                    positionsCutBack[i] = positions[i];
+                }
+
+                fullName = fullNameCutBack;
+                positions = positionsCutBack;
                 Console.ReadKey();
+            }
+
+            static void SearchDossier(string[] fullName, string[] positions)
+            {
+                string inputSearchString;
+                string indexFoundString = "";
+                int index = 0;
+                string[] showIndexes;
+
+                Console.Write("\nВведите строку для поиска: ");
+                inputSearchString = Console.ReadLine().ToLower();
+
+                do
+                {
+                    index = Array.IndexOf(fullName, inputSearchString, index);
+                    if (index != -1)
+                    {
+                        indexFoundString += index + " ";
+                    }
+
+                } while (index >= 0);
+
+                if (indexFoundString != "")
+                {
+                    showIndexes = indexFoundString.Split(' ');
+
+                    foreach (string show in showIndexes)
+                    {
+                        Console.Write(fullName[Convert.ToInt32(show)] + " - " + positions[Convert.ToInt32(show)]);
+                    }
+                }
+
+
             }
 
             static int ReadInt(int inputNumber)
