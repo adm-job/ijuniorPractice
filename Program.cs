@@ -1,5 +1,4 @@
 ﻿using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -12,8 +11,8 @@ namespace ijuniorPractice
             const string CommandDeleteDossier = "3";
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
-            const string CommandNextMenu = "Для продолжения нажмите любую кнопку";
-            const string CommandSucsessful = "Изменения внесены";
+            const string CommandNextMenu = "\nДля продолжения нажмите любую кнопку";
+            const string CommandSuccessful = "\nИзменения внесены";
 
             string[] fullName = new string[0];
             string[] positions = new string[0];
@@ -78,7 +77,7 @@ namespace ijuniorPractice
                 fullName = addFullName;
                 positions = addPosition;
 
-                Console.WriteLine(CommandSucsessful);
+                Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
                 Console.ReadLine();
             }
@@ -131,40 +130,36 @@ namespace ijuniorPractice
 
                 fullName = fullNameCutBack;
                 positions = positionsCutBack;
+
+                Console.WriteLine(CommandSuccessful);
+                Console.WriteLine(CommandNextMenu);
                 Console.ReadKey();
             }
 
             static void SearchDossier(string[] fullName, string[] positions)
             {
                 string inputSearchString;
-                string indexFoundString = "";
-                int index = 0;
-                string[] showIndexes;
+                int showing = 0;
 
                 Console.Write("\nВведите строку для поиска: ");
                 inputSearchString = Console.ReadLine().ToLower();
+                Console.WriteLine();
 
-                do
+                foreach (string index in fullName)
                 {
-                    index = Array.IndexOf(fullName, inputSearchString, index);
-                    if (index != -1)
+                    if (index.ToLower().IndexOf(inputSearchString, 0) != -1)
                     {
-                        indexFoundString += index + " ";
-                    }
-
-                } while (index >= 0);
-
-                if (indexFoundString != "")
-                {
-                    showIndexes = indexFoundString.Split(' ');
-
-                    foreach (string show in showIndexes)
-                    {
-                        Console.Write(fullName[Convert.ToInt32(show)] + " - " + positions[Convert.ToInt32(show)]);
+                        Console.WriteLine(index);
+                        showing++;
                     }
                 }
+                if (showing == 0)
+                {
+                    Console.WriteLine("Поиск не дал результатов");
+                }
 
-
+                Console.WriteLine(CommandNextMenu);
+                Console.ReadKey();
             }
 
             static int ReadInt(int inputNumber)
