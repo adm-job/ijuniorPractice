@@ -68,7 +68,10 @@ namespace ijuniorPractice
                 Console.Write("\nВведите должность :");
                 addPosition[positions.Length] = Console.ReadLine();
 
-                for (int i = 0; i < fullName.Length; i++)
+
+                CopyNewArray(ref  fullName, ref positions, ref addFullName, ref  addPosition);
+
+/*                for (int i = 0; i < fullName.Length; i++)
                 {
                     addFullName[i] = fullName[i];
                     addPosition[i] = positions[i];
@@ -76,7 +79,7 @@ namespace ijuniorPractice
 
                 fullName = addFullName;
                 positions = addPosition;
-
+*/
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
                 Console.ReadLine();
@@ -122,14 +125,16 @@ namespace ijuniorPractice
                 fullName[inputDeleteDossier - 1] = fullName[fullName.Length - 1];
                 positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
 
-                for (int i = 0; i < fullName.Length - 1; i++)
+                CopyNewArray(ref fullName, ref positions, ref fullNameCutBack, ref positionsCutBack);
+
+                /*for (int i = 0; i < fullName.Length - 1; i++)
                 {
                     fullNameCutBack[i] = fullName[i];
                     positionsCutBack[i] = positions[i];
                 }
 
                 fullName = fullNameCutBack;
-                positions = positionsCutBack;
+                positions = positionsCutBack;*/
 
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
@@ -170,6 +175,18 @@ namespace ijuniorPractice
                 }
 
                 return inputNumber;
+            }
+
+            static void CopyNewArray(ref string[] fullName, ref string[] positions, ref string[] fullNameTemp, ref string[] positionsTemp)
+            {
+                for (int i = 0; i < fullNameTemp.Length; i++)
+                {
+                    fullName[i] = fullName[i];
+                    positionsTemp[i] = positions[i];
+                }
+
+                fullName = fullNameTemp;
+                positions = positionsTemp;
             }
         }
     }
