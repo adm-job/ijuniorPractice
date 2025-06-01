@@ -1,10 +1,53 @@
-﻿using System;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
+        {
+            // MainMenu();
+            static void Main(string[] args)
+            {
+                /*
+                string pangram = "The quick brown fox jumps over the lazy dog";
+                System.Console.WriteLine(pangram);
+                string[] result = pangram.Split(" ");
+                for (int i = 0; i< result.Length;i++)
+                {
+                    char[] chars = result[i].ToCharArray();
+                    Array.Reverse(chars);
+                    result[i] = new string(chars);
+                }
+                Console.WriteLine(String.Join(" ",result));
+                */
+
+                // string orderStream = "B123,C234,A345,C15,B177,G3003,C235,B179";
+                // string[] arrayOrder = orderStream.Split(",");
+                // Array.Sort(arrayOrder);
+                // foreach(string order in arrayOrder)
+                // {
+                //     if(order.Length == 4)
+                //         System.Console.WriteLine(order);
+                //     else
+                //         System.Console.WriteLine(order + "\t-ERROR");
+                // }   
+                Dictionary<string, string> dictionaryMeanings = new Dictionary<string, string>();
+
+
+            }
+
+            static void FillDictionary(ref Dictionary<string, string> dictionary)
+            {
+                dictionary.Add("Синоним", "Слова одной части речи или словосочетания с полным или частичным совпадением значения");
+                dictionary.Add("Антоним", "Слова одной части речи, различные по звучанию и написанию, имеющие прямо противоположные лексические значения, например: «правда» — «ложь»");
+                dictionary.Add("Омоним", "Одинаковые по написанию и звучанию, но разные по значению слова и другие единицы языка");
+                dictionary.Add("Пароним", "Слова, сходные по звучанию и морфемному составу, но различающиеся лексическим значением");
+                dictionary.Add("Омофон", "Одинаково произносящиеся, но по-разному пишущиеся слова: плот и плод");
+                dictionary.Add("Омоним", "Одинаково произносящиеся и пишущиеся, но не связанные по значению слова: коса (вид причёски), коса (сельскохозяйственный инструмент), коса (узкая полоска земли, окружённая водой)");
+            }
+        
+    
+/*
+        static void MainMenu()
         {
             const string CommandAddDossier = "1";
             const string CommandListDossier = "2";
@@ -59,15 +102,15 @@ namespace ijuniorPractice
 
             static void AddDossier(ref string[] fullNames, ref string[] positions)
             {
-                string[] addFullNames = new string[fullNames.Length + 1];
-                string[] addPosition = new string[positions.Length + 1]; ;
+                string[] fullNamesTemp = new string[fullNames.Length + 1];
+                string[] positionTemp = new string[positions.Length + 1];
 
                 Console.Write("\nВведите ФИО :");
-                addFullNames[fullNames.Length] = Console.ReadLine();
+                fullNamesTemp[fullNames.Length] = Console.ReadLine();
                 Console.Write("\nВведите должность :");
-                addPosition[positions.Length] = Console.ReadLine();
+                positionTemp[positions.Length] = Console.ReadLine();
 
-                CopyNewArray(ref fullNames, ref positions, ref addFullNames, ref addPosition);
+                CopyNewArray(ref fullNames, ref positions, ref fullNamesTemp, ref positionTemp);
 
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
@@ -124,24 +167,24 @@ namespace ijuniorPractice
             static void SearchDossier(string[] fullNames, string[] positions)
             {
                 string inputSearchString;
-                int showing = 0;
+                int resultsFound = 0;
                 string[] surname;
 
                 Console.Write("\nВведите фамилию для поиска: ");
                 inputSearchString = Console.ReadLine().ToLower();
                 Console.WriteLine();
 
-                foreach (string index in fullNames)
+                foreach (string fullName in fullNames)
                 {
-                    surname = index.Split(' ');
+                    surname = fullName.Split(' ');
 
                     if (surname[0].ToLower().IndexOf(inputSearchString, 0) != -1)
                     {
-                        Console.WriteLine(index);
-                        showing++;
+                        Console.WriteLine(fullName);
+                        resultsFound++;
                     }
                 }
-                if (showing == 0)
+                if (resultsFound == 0)
                 {
                     Console.WriteLine("Поиск не дал результатов");
                 }
@@ -181,7 +224,7 @@ namespace ijuniorPractice
 
                 fullName = fullNameTemp;
                 positions = positionsTemp;
-            }
+        }*/
         }
     }
 }
