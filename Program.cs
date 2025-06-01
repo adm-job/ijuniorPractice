@@ -14,11 +14,10 @@ namespace ijuniorPractice
             const string CommandNextMenu = "\nДля продолжения нажмите любую кнопку";
             const string CommandSuccessful = "\nИзменения внесены";
 
-            string[] fullName = new string[0];
+            string[] fullNames = new string[0];
             string[] positions = new string[0];
             string inputUser;
             bool isContinue = true;
-
 
             while (isContinue)
             {
@@ -35,16 +34,16 @@ namespace ijuniorPractice
                 switch (inputUser)
                 {
                     case CommandAddDossier:
-                        AddDossier(ref fullName, ref positions);
+                        AddDossier(ref fullNames, ref positions);
                         break;
                     case CommandListDossier:
-                        ListDossier(ref fullName, ref positions);
+                        ListDossier(fullNames, positions);
                         break;
                     case CommandDeleteDossier:
-                        DeleteDossier(ref fullName, ref positions);
+                        DeleteDossier(ref fullNames, ref positions);
                         break;
                     case CommandSearchDossier:
-                        SearchDossier(fullName, positions);
+                        SearchDossier(fullNames, positions);
                         break;
                     case CommandExit:
                         isContinue = false;
@@ -58,13 +57,13 @@ namespace ijuniorPractice
                 }
             }
 
-            static void AddDossier(ref string[] fullName, ref string[] positions)
+            static void AddDossier(ref string[] fullNames, ref string[] positions)
             {
-                string[] addFullName = new string[fullName.Length + 1];
+                string[] addFullNames = new string[fullNames.Length + 1];
                 string[] addPosition = new string[positions.Length + 1]; ;
 
                 Console.Write("\nВведите ФИО :");
-                addFullName[fullName.Length] = Console.ReadLine();
+                addFullNames[fullNames.Length] = Console.ReadLine();
                 Console.Write("\nВведите должность :");
                 addPosition[positions.Length] = Console.ReadLine();
 
@@ -73,11 +72,11 @@ namespace ijuniorPractice
 
 /*                for (int i = 0; i < fullName.Length; i++)
                 {
-                    addFullName[i] = fullName[i];
+                    addFullNames[i] = fullNames[i];
                     addPosition[i] = positions[i];
                 }
 
-                fullName = addFullName;
+                fullNames = addFullNames;
                 positions = addPosition;
 */
                 Console.WriteLine(CommandSuccessful);
@@ -85,16 +84,16 @@ namespace ijuniorPractice
                 Console.ReadLine();
             }
 
-            static void ListDossier(ref string[] fullName, ref string[] positions)
+            static void ListDossier(string[] fullNames, string[] positions)
             {
-                if (fullName.Length == positions.Length)
+                if (fullNames.Length == positions.Length)
                 {
                     Console.WriteLine();
 
-                    for (int i = 0; i < fullName.Length; i++)
+                    for (int i = 0; i < fullNames.Length; i++)
                     {
                         Console.Write(i + 1 + ". ");
-                        Console.Write(fullName[i] + " - ");
+                        Console.Write(fullNames[i] + " - ");
                         Console.WriteLine(positions[i]);
                     }
 
@@ -103,45 +102,45 @@ namespace ijuniorPractice
                 }
             }
 
-            static void DeleteDossier(ref string[] fullName, ref string[] positions)
+            static void DeleteDossier(ref string[] fullNames, ref string[] positions)
             {
                 int inputDeleteDossier = -1;
                 bool isRepeat = true;
-                string[] fullNameCutBack = new string[fullName.Length - 1];
+                string[] fullNameCutBack = new string[fullNames.Length - 1];
                 string[] positionsCutBack = new string[positions.Length - 1];
 
                 do
                 {
-                    Console.WriteLine($"Введите досье для удаления от 1 до {fullName.Length}");
+                    Console.WriteLine($"Введите досье для удаления от 1 до {fullNames.Length}");
                     inputDeleteDossier = ReadInt(inputDeleteDossier);
 
-                    if (inputDeleteDossier <= fullName.Length && inputDeleteDossier > 0)
+                    if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
                     {
                         isRepeat = false;
                     }
                 }
                 while (isRepeat);
 
-                fullName[inputDeleteDossier - 1] = fullName[fullName.Length - 1];
+                fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
                 positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
 
                 CopyNewArray(ref fullName, ref positions, ref fullNameCutBack, ref positionsCutBack);
 
                 /*for (int i = 0; i < fullName.Length - 1; i++)
                 {
-                    fullNameCutBack[i] = fullName[i];
+                    fullNameCutBack[i] = fullNames[i];
                     positionsCutBack[i] = positions[i];
                 }
 
                 fullName = fullNameCutBack;
-                positions = positionsCutBack;*/
+                positions = positionsCutBack;
 
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
                 Console.ReadKey();
             }
 
-            static void SearchDossier(string[] fullName, string[] positions)
+            static void SearchDossier(string[] fullNames, string[] positions)
             {
                 string inputSearchString;
                 int showing = 0;
@@ -150,7 +149,7 @@ namespace ijuniorPractice
                 inputSearchString = Console.ReadLine().ToLower();
                 Console.WriteLine();
 
-                foreach (string index in fullName)
+                foreach (string index in fullNames)
                 {
                     if (index.ToLower().IndexOf(inputSearchString, 0) != -1)
                     {
