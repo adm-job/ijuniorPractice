@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -67,18 +68,8 @@ namespace ijuniorPractice
                 Console.Write("\nВведите должность :");
                 addPosition[positions.Length] = Console.ReadLine();
 
+                CopyNewArray(ref fullNames, ref positions, ref addFullNames, ref addPosition);
 
-                CopyNewArray(ref  fullName, ref positions, ref addFullName, ref  addPosition);
-
-/*                for (int i = 0; i < fullName.Length; i++)
-                {
-                    addFullNames[i] = fullNames[i];
-                    addPosition[i] = positions[i];
-                }
-
-                fullNames = addFullNames;
-                positions = addPosition;
-*/
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
                 Console.ReadLine();
@@ -124,16 +115,7 @@ namespace ijuniorPractice
                 fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
                 positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
 
-                CopyNewArray(ref fullName, ref positions, ref fullNameCutBack, ref positionsCutBack);
-
-                /*for (int i = 0; i < fullName.Length - 1; i++)
-                {
-                    fullNameCutBack[i] = fullNames[i];
-                    positionsCutBack[i] = positions[i];
-                }
-
-                fullName = fullNameCutBack;
-                positions = positionsCutBack;
+                CopyNewArray(ref fullNames, ref positions, ref fullNameCutBack, ref positionsCutBack);
 
                 Console.WriteLine(CommandSuccessful);
                 Console.WriteLine(CommandNextMenu);
@@ -144,14 +126,17 @@ namespace ijuniorPractice
             {
                 string inputSearchString;
                 int showing = 0;
+                string[] surname;
 
-                Console.Write("\nВведите строку для поиска: ");
+                Console.Write("\nВведите фамилию для поиска: ");
                 inputSearchString = Console.ReadLine().ToLower();
                 Console.WriteLine();
 
                 foreach (string index in fullNames)
                 {
-                    if (index.ToLower().IndexOf(inputSearchString, 0) != -1)
+                    surname = index.Split(' ');
+
+                    if (surname[0].ToLower().IndexOf(inputSearchString, 0) != -1)
                     {
                         Console.WriteLine(index);
                         showing++;
@@ -178,9 +163,20 @@ namespace ijuniorPractice
 
             static void CopyNewArray(ref string[] fullName, ref string[] positions, ref string[] fullNameTemp, ref string[] positionsTemp)
             {
-                for (int i = 0; i < fullNameTemp.Length; i++)
+                int sizeArray = 0;
+
+                if (fullName.Length < fullNameTemp.Length)
                 {
-                    fullName[i] = fullName[i];
+                    sizeArray = fullName.Length;
+                }
+                else
+                {
+                    sizeArray = fullName.Length - 1;
+                }
+
+                for (int i = 0; i < sizeArray; i++)
+                {
+                    fullNameTemp[i] = fullName[i];
                     positionsTemp[i] = positions[i];
                 }
 
