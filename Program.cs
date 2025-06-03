@@ -99,6 +99,7 @@ namespace ijuniorPractice
                     Console.Write(fullNames[i] + " - ");
                     Console.WriteLine(positions[i]);
                 }
+                Console.WriteLine();
             }
         }
 
@@ -108,6 +109,8 @@ namespace ijuniorPractice
             bool isRepeat = true;
             string[] fullNameCutBack = new string[fullNames.Length - 1];
             string[] positionsCutBack = new string[positions.Length - 1];
+
+            ShowListDossier(fullNames, positions);
 
             do
             {
@@ -121,8 +124,18 @@ namespace ijuniorPractice
             }
             while (isRepeat);
 
-            fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
-            positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
+            /*            fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
+                        positions[inputDeleteDossier - 1] = positions[positions.Length - 1];*/
+
+            for (int i = 0; i < inputDeleteDossier; i++)
+            {
+                fullNameCutBack[i] = fullNames[i];
+            }
+
+            for (int i = inputDeleteDossier + 1 ; i < fullNameCutBack.Length; i++)
+            {
+            }
+
 
             CopyNewArray(ref fullNames, ref positions, ref fullNameCutBack, ref positionsCutBack);
 
