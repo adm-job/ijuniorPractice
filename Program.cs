@@ -1,5 +1,4 @@
-﻿using System.Runtime.Intrinsics.Arm;
-using System.Xml.Linq;
+﻿using System;
 
 namespace ijuniorPractice
 {
@@ -57,7 +56,7 @@ namespace ijuniorPractice
                         Console.ReadKey();
                         break;
                     case CommandSearchDossier:
-                        SearchDossier(fullNames, positions);
+                        SearchDossier(fullNames);
                         Console.WriteLine(CommandNextMenu);
                         Console.ReadKey();
                         break;
@@ -113,7 +112,7 @@ namespace ijuniorPractice
             do
             {
                 Console.WriteLine($"Введите досье для удаления от 1 до {fullNames.Length}");
-                inputDeleteDossier = ReadInt(inputDeleteDossier);
+                inputDeleteDossier = ReadInt();
 
                 if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
                 {
@@ -129,7 +128,7 @@ namespace ijuniorPractice
 
         }
 
-        static void SearchDossier(string[] fullNames, string[] positions)
+        static void SearchDossier(string[] fullNames)
         {
             string inputSearchString;
             int resultsFound = 0;
@@ -156,8 +155,10 @@ namespace ijuniorPractice
 
         }
 
-        static int ReadInt(int inputNumber)
+        static int ReadInt()
         {
+            int inputNumber;
+
             while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
             {
                 Console.WriteLine("Введено не число");
