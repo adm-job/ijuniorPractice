@@ -1,10 +1,16 @@
-﻿using System;
+﻿using System.Runtime.Intrinsics.Arm;
+using System.Xml.Linq;
 
 namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
+        {
+            MainMenu();
+        }
+
+        static void MainMenu()
         {
             const string CommandAddDossier = "1";
             const string CommandListDossier = "2";
@@ -35,20 +41,31 @@ namespace ijuniorPractice
                 {
                     case CommandAddDossier:
                         AddDossier(ref fullNames, ref positions);
+                        Console.WriteLine(CommandSuccessful);
+                        Console.WriteLine(CommandNextMenu);
+                        Console.ReadLine();
                         break;
                     case CommandListDossier:
-                        ListDossier(fullNames, positions);
+                        ShowListDossier(fullNames, positions);
+                        Console.WriteLine(CommandNextMenu);
+                        Console.ReadLine();
                         break;
                     case CommandDeleteDossier:
                         DeleteDossier(ref fullNames, ref positions);
+                        Console.WriteLine(CommandSuccessful);
+                        Console.WriteLine(CommandNextMenu);
+                        Console.ReadKey();
                         break;
                     case CommandSearchDossier:
                         SearchDossier(fullNames, positions);
+                        Console.WriteLine(CommandNextMenu);
+                        Console.ReadKey();
                         break;
                     case CommandExit:
                         isContinue = false;
                         Console.WriteLine("До свидания");
                         break;
+
                     default:
                         Console.WriteLine("Нет такого пункта меню");
                         Console.WriteLine(CommandNextMenu);
@@ -56,135 +73,121 @@ namespace ijuniorPractice
                         break;
                 }
             }
+        }
 
-            static void AddDossier(ref string[] fullNames, ref string[] positions)
+        static void AddDossier(ref string[] fullNames, ref string[] positions)
+        {
+            string[] fullNamesTemp = new string[fullNames.Length + 1];
+            string[] positionTemp = new string[positions.Length + 1];
+
+            Console.Write("\nВведите ФИО :");
+            fullNamesTemp[fullNames.Length] = Console.ReadLine();
+            Console.Write("\nВведите должность :");
+            positionTemp[positions.Length] = Console.ReadLine();
+
+            CopyNewArray(ref fullNames, ref positions, ref fullNamesTemp, ref positionTemp);
+        }
+
+        static void ShowListDossier(string[] fullNames, string[] positions)
+        {
+            if (fullNames.Length == positions.Length)
             {
-                string[] addFullNames = new string[fullNames.Length + 1];
-                string[] addPosition = new string[positions.Length + 1]; ;
-
-                Console.Write("\nВведите ФИО :");
-                addFullNames[fullNames.Length] = Console.ReadLine();
-                Console.Write("\nВведите должность :");
-                addPosition[positions.Length] = Console.ReadLine();
-
-                CopyNewArray(ref fullNames, ref positions, ref addFullNames, ref addPosition);
-
-                Console.WriteLine(CommandSuccessful);
-                Console.WriteLine(CommandNextMenu);
-                Console.ReadLine();
-            }
-
-            static void ListDossier(string[] fullNames, string[] positions)
-            {
-                if (fullNames.Length == positions.Length)
-                {
-                    Console.WriteLine();
-
-                    for (int i = 0; i < fullNames.Length; i++)
-                    {
-                        Console.Write(i + 1 + ". ");
-                        Console.Write(fullNames[i] + " - ");
-                        Console.WriteLine(positions[i]);
-                    }
-
-                    Console.WriteLine(CommandNextMenu);
-                    Console.ReadLine();
-                }
-            }
-
-            static void DeleteDossier(ref string[] fullNames, ref string[] positions)
-            {
-                int inputDeleteDossier = -1;
-                bool isRepeat = true;
-                string[] fullNameCutBack = new string[fullNames.Length - 1];
-                string[] positionsCutBack = new string[positions.Length - 1];
-
-                do
-                {
-                    Console.WriteLine($"Введите досье для удаления от 1 до {fullNames.Length}");
-                    inputDeleteDossier = ReadInt(inputDeleteDossier);
-
-                    if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
-                    {
-                        isRepeat = false;
-                    }
-                }
-                while (isRepeat);
-
-                fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
-                positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
-
-                CopyNewArray(ref fullNames, ref positions, ref fullNameCutBack, ref positionsCutBack);
-
-                Console.WriteLine(CommandSuccessful);
-                Console.WriteLine(CommandNextMenu);
-                Console.ReadKey();
-            }
-
-            static void SearchDossier(string[] fullNames, string[] positions)
-            {
-                string inputSearchString;
-                int showing = 0;
-                string[] surname;
-
-                Console.Write("\nВведите фамилию для поиска: ");
-                inputSearchString = Console.ReadLine().ToLower();
                 Console.WriteLine();
 
-                foreach (string index in fullNames)
+                for (int i = 0; i < fullNames.Length; i++)
                 {
-                    surname = index.Split(' ');
-
-                    if (surname[0].ToLower().IndexOf(inputSearchString, 0) != -1)
-                    {
-                        Console.WriteLine(index);
-                        showing++;
-                    }
+                    Console.Write(i + 1 + ". ");
+                    Console.Write(fullNames[i] + " - ");
+                    Console.WriteLine(positions[i]);
                 }
-                if (showing == 0)
-                {
-                    Console.WriteLine("Поиск не дал результатов");
-                }
-
-                Console.WriteLine(CommandNextMenu);
-                Console.ReadKey();
-            }
-
-            static int ReadInt(int inputNumber)
-            {
-                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-                {
-                    Console.WriteLine("Введено не число");
-                }
-
-                return inputNumber;
-            }
-
-            static void CopyNewArray(ref string[] fullName, ref string[] positions, ref string[] fullNameTemp, ref string[] positionsTemp)
-            {
-                int sizeArray = 0;
-
-                if (fullName.Length < fullNameTemp.Length)
-                {
-                    sizeArray = fullName.Length;
-                }
-                else
-                {
-                    sizeArray = fullName.Length - 1;
-                }
-
-                for (int i = 0; i < sizeArray; i++)
-                {
-                    fullNameTemp[i] = fullName[i];
-                    positionsTemp[i] = positions[i];
-                }
-
-                fullName = fullNameTemp;
-                positions = positionsTemp;
             }
         }
+
+        static void DeleteDossier(ref string[] fullNames, ref string[] positions)
+        {
+            int inputDeleteDossier = -1;
+            bool isRepeat = true;
+            string[] fullNameCutBack = new string[fullNames.Length - 1];
+            string[] positionsCutBack = new string[positions.Length - 1];
+
+            do
+            {
+                Console.WriteLine($"Введите досье для удаления от 1 до {fullNames.Length}");
+                inputDeleteDossier = ReadInt(inputDeleteDossier);
+
+                if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
+                {
+                    isRepeat = false;
+                }
+            }
+            while (isRepeat);
+
+            fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
+            positions[inputDeleteDossier - 1] = positions[positions.Length - 1];
+
+            CopyNewArray(ref fullNames, ref positions, ref fullNameCutBack, ref positionsCutBack);
+
+        }
+
+        static void SearchDossier(string[] fullNames, string[] positions)
+        {
+            string inputSearchString;
+            int resultsFound = 0;
+            string[] surname;
+
+            Console.Write("\nВведите фамилию для поиска: ");
+            inputSearchString = Console.ReadLine().ToLower();
+            Console.WriteLine();
+
+            foreach (string fullName in fullNames)
+            {
+                surname = fullName.Split(' ');
+
+                if (surname[0].ToLower().IndexOf(inputSearchString, 0) != -1)
+                {
+                    Console.WriteLine(fullName);
+                    resultsFound++;
+                }
+            }
+            if (resultsFound == 0)
+            {
+                Console.WriteLine("Поиск не дал результатов");
+            }
+
+        }
+
+        static int ReadInt(int inputNumber)
+        {
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            {
+                Console.WriteLine("Введено не число");
+            }
+
+            return inputNumber;
+        }
+
+        static void CopyNewArray(ref string[] fullName, ref string[] positions, ref string[] fullNameTemp, ref string[] positionsTemp)
+        {
+            int sizeArray = 0;
+
+            if (fullName.Length < fullNameTemp.Length)
+            {
+                sizeArray = fullName.Length;
+            }
+            else
+            {
+                sizeArray = fullName.Length - 1;
+            }
+
+            for (int i = 0; i < sizeArray; i++)
+            {
+                fullNameTemp[i] = fullName[i];
+                positionsTemp[i] = positions[i];
+            }
+
+            fullName = fullNameTemp;
+            positions = positionsTemp;
+        }
+
     }
 }
-
-
-
