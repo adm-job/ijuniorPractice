@@ -124,21 +124,20 @@ namespace ijuniorPractice
             }
             while (isRepeat);
 
-            /*            fullNames[inputDeleteDossier - 1] = fullNames[fullNames.Length - 1];
-                        positions[inputDeleteDossier - 1] = positions[positions.Length - 1];*/
-
-            for (int i = 0; i < inputDeleteDossier; i++)
+            for (int i = 0; i < inputDeleteDossier - 1; i++)
             {
                 fullNameCutBack[i] = fullNames[i];
+                positionsCutBack[i] = positions[i];
             }
 
-            for (int i = inputDeleteDossier + 1 ; i < fullNameCutBack.Length; i++)
+            for (int i = inputDeleteDossier; i <= fullNameCutBack.Length; i++)
             {
+                fullNameCutBack[i - 1] = fullNames[i];
+                positionsCutBack[i - 1] = positions[i];
             }
 
-
-            CopyNewArray(ref fullNames, ref positions, ref fullNameCutBack, ref positionsCutBack);
-
+            fullNames = fullNameCutBack;
+            positions = positionsCutBack;
         }
 
         static void SearchDossier(string[] fullNames)
