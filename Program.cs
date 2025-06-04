@@ -77,14 +77,21 @@ namespace ijuniorPractice
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
             string[] fullNamesTemp = new string[fullNames.Length + 1];
-            string[] positionTemp = new string[positions.Length + 1];
+            string[] positionsTemp = new string[positions.Length + 1];
 
             Console.Write("\nВведите ФИО :");
             fullNamesTemp[fullNames.Length] = Console.ReadLine();
             Console.Write("\nВведите должность :");
-            positionTemp[positions.Length] = Console.ReadLine();
+            positionsTemp[positions.Length] = Console.ReadLine();
 
-            CopyNewArray(ref fullNames, ref positions, ref fullNamesTemp, ref positionTemp);
+            for (int i = 0; i < fullNames.Length; i++)
+            {
+                fullNamesTemp[i] = fullNames[i];
+                positionsTemp[i] = positions[i];
+            }
+
+            fullNames = fullNamesTemp;
+            positions = positionsTemp;
         }
 
         static void ShowListDossier(string[] fullNames, string[] positions)
@@ -178,29 +185,5 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
-
-        static void CopyNewArray(ref string[] fullName, ref string[] positions, ref string[] fullNameTemp, ref string[] positionsTemp)
-        {
-            int sizeArray = 0;
-
-            if (fullName.Length < fullNameTemp.Length)
-            {
-                sizeArray = fullName.Length;
-            }
-            else
-            {
-                sizeArray = fullName.Length - 1;
-            }
-
-            for (int i = 0; i < sizeArray; i++)
-            {
-                fullNameTemp[i] = fullName[i];
-                positionsTemp[i] = positions[i];
-            }
-
-            fullName = fullNameTemp;
-            positions = positionsTemp;
-        }
-
     }
 }
