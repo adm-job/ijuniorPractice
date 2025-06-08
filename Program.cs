@@ -18,7 +18,7 @@ namespace ijuniorPractice
                 sumAllBuyers += purchaseAmount;
                 Console.WriteLine($"Всего на счету: {sumAllBuyers}\n");
                 Console.WriteLine("нажмите любую клавишу");
-                Console.ReadKey(); 
+                Console.ReadKey();
             }
         }
         static Queue<int> RandomAmountChecks()
@@ -38,6 +38,3 @@ namespace ijuniorPractice
         }
     }
 }
-
-
-
