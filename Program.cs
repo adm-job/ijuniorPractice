@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ijuniorPractice
 {
@@ -9,29 +10,36 @@ namespace ijuniorPractice
             Queue<int> amountBuyersReceipt = new Queue<int>();
             int sumAllBuyers = 0;
 
-            amountBuyersReceipt = RandomAmountChecks();
+            amountBuyersReceipt = FillingQueue();
 
-            foreach (int purchaseAmount in amountBuyersReceipt)
+            while(amountBuyersReceipt.Count > 0)
             {
                 Console.Clear();
-                Console.WriteLine($"Сумма покупки: {purchaseAmount}");
-                sumAllBuyers += purchaseAmount;
+                sumAllBuyers += amountBuyersReceipt.Peek();
+                Console.WriteLine($"Сумма покупки: {amountBuyersReceipt.Dequeue()}");
                 Console.WriteLine($"Всего на счету: {sumAllBuyers}\n");
                 Console.WriteLine("нажмите любую клавишу");
                 Console.ReadKey();
             }
         }
-        static Queue<int> RandomAmountChecks()
+
+        static Queue<int> FillingQueue()
         {
-            Random randomInteger = new Random();
+            Random random = new Random();
             Queue<int> amountBuyersReceipt = new Queue<int>();
 
-            int queueSize = randomInteger.Next(15, 25);
+            int minQueueSize = 15;
+            int maxQueueSize = 25;
+            int minAmount = 100;
+            int maxAmount = 1000;
+
+
+            int queueSize = random.Next(minQueueSize, maxQueueSize + 1);
 
 
             for (int i = 0; i < queueSize; i++)
             {
-                amountBuyersReceipt.Enqueue(randomInteger.Next(100, 1000));
+                amountBuyersReceipt.Enqueue(random.Next(minAmount, maxAmount));
             }
 
             return amountBuyersReceipt;
