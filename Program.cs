@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace ijuniorPractice
 {
@@ -33,9 +32,7 @@ namespace ijuniorPractice
             int minAmount = 100;
             int maxAmount = 1000;
 
-
             int queueSize = random.Next(minQueueSize, maxQueueSize + 1);
-
 
             for (int i = 0; i < queueSize; i++)
             {
