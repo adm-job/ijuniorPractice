@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -6,18 +7,17 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            MainMenu();
+            ShowMenu();
         }
 
-        static void MainMenu()
+        static void ShowMenu()
         {
             const string CommandAddDossier = "1";
             const string CommandListDossier = "2";
             const string CommandDeleteDossier = "3";
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
-            const string CommandNextMenu = "\nДля продолжения нажмите любую кнопку";
-            const string CommandSuccessful = "\nИзменения внесены";
+
 
             string[] fullNames = new string[0];
             string[] positions = new string[0];
@@ -40,25 +40,15 @@ namespace ijuniorPractice
                 {
                     case CommandAddDossier:
                         AddDossier(ref fullNames, ref positions);
-                        Console.WriteLine(CommandSuccessful);
-                        Console.WriteLine(CommandNextMenu);
-                        Console.ReadLine();
                         break;
                     case CommandListDossier:
                         ShowListDossier(fullNames, positions);
-                        Console.WriteLine(CommandNextMenu);
-                        Console.ReadLine();
                         break;
                     case CommandDeleteDossier:
                         DeleteDossier(ref fullNames, ref positions);
-                        Console.WriteLine(CommandSuccessful);
-                        Console.WriteLine(CommandNextMenu);
-                        Console.ReadKey();
                         break;
                     case CommandSearchDossier:
                         SearchDossier(fullNames);
-                        Console.WriteLine(CommandNextMenu);
-                        Console.ReadKey();
                         break;
                     case CommandExit:
                         isContinue = false;
@@ -67,31 +57,27 @@ namespace ijuniorPractice
 
                     default:
                         Console.WriteLine("Нет такого пункта меню");
-                        Console.WriteLine(CommandNextMenu);
                         Console.ReadKey();
                         break;
                 }
             }
         }
 
+
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
-            string[] fullNamesTemp = new string[fullNames.Length + 1];
-            string[] positionsTemp = new string[positions.Length + 1];
+            string fullNameAndPosition = "";
 
             Console.Write("\nВведите ФИО :");
-            fullNamesTemp[fullNames.Length] = Console.ReadLine();
+            fullNameAndPosition += Console.ReadLine() + '|';
             Console.Write("\nВведите должность :");
-            positionsTemp[positions.Length] = Console.ReadLine();
+            fullNameAndPosition += Console.ReadLine();
 
-            for (int i = 0; i < fullNames.Length; i++)
-            {
-                fullNamesTemp[i] = fullNames[i];
-                positionsTemp[i] = positions[i];
-            }
+            CopyNewArray(ref fullNames, ref positions, fullNameAndPosition);
 
-            fullNames = fullNamesTemp;
-            positions = positionsTemp;
+            MessageOutput("Next menu");
+            MessageOutput("Successful");
+            Console.ReadLine();
         }
 
         static void ShowListDossier(string[] fullNames, string[] positions)
@@ -108,6 +94,9 @@ namespace ijuniorPractice
                 }
                 Console.WriteLine();
             }
+
+            MessageOutput("Next menu");
+            Console.ReadLine();
         }
 
         static void DeleteDossier(ref string[] fullNames, ref string[] positions)
@@ -145,6 +134,10 @@ namespace ijuniorPractice
 
             fullNames = fullNameCutBack;
             positions = positionsCutBack;
+
+            MessageOutput("Next menu");
+            MessageOutput("Successful");
+            Console.ReadLine();
         }
 
         static void SearchDossier(string[] fullNames)
@@ -172,6 +165,9 @@ namespace ijuniorPractice
                 Console.WriteLine("Поиск не дал результатов");
             }
 
+            MessageOutput("Next menu");
+            MessageOutput("Successful");
+            Console.ReadLine();
         }
 
         static int ReadInt()
@@ -184,6 +180,43 @@ namespace ijuniorPractice
             }
 
             return inputNumber;
+        }
+
+        static void CopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPosition)
+        {
+            string[] newData = fullNameAndPosition.Split('|');
+
+            string[] fullNamesTemp = new string[fullNames.Length + 1];
+            string[] positionsTemp = new string[positions.Length + 1];
+
+            fullNamesTemp[fullNames.Length] = newData[0];
+            positionsTemp[positions.Length] = newData[1];
+
+            for (int i = 0; i < fullNames.Length; i++)
+            {
+                fullNamesTemp[i] = fullNames[i];
+                positionsTemp[i] = positions[i];
+            }
+
+            fullNames = fullNamesTemp;
+            positions = positionsTemp;
+        }
+
+        static string MessageOutput(string numberMessage)
+        {
+            string message = "";
+
+            switch (numberMessage)
+            {
+                case "Next menu":
+                    Console.WriteLine("\nДля продолжения нажмите любую кнопку");
+                    break;
+                case "Successful":
+                    Console.WriteLine("\nИзменения внесены");
+                    break;
+            }
+
+            return message;
         }
     }
 }
