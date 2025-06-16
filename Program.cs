@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -34,15 +35,19 @@ namespace ijuniorPractice
                     case CommandAddDossier:
                         AddDossier(ref fullNames, ref positions);
                         break;
+
                     case CommandListDossier:
                         ShowListDossier(fullNames, positions);
                         break;
+
                     case CommandDeleteDossier:
                         DeleteDossier(ref fullNames, ref positions);
                         break;
+
                     case CommandSearchDossier:
                         SearchDossier(fullNames);
                         break;
+
                     case CommandExit:
                         isContinue = false;
                         break;
@@ -92,7 +97,7 @@ namespace ijuniorPractice
 
         static void DeleteDossier(ref string[] fullNames, ref string[] positions)
         {
-            int inputDeleteDossier = -1;
+            int inputDeleteDossier;
             bool isRepeat = true;
 
             do
@@ -102,6 +107,7 @@ namespace ijuniorPractice
 
                 if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
                 {
+                    inputDeleteDossier--;
                     isRepeat = false;
                 }
             }
@@ -154,6 +160,7 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
+
         static void SendMessage()
         {
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
@@ -161,20 +168,17 @@ namespace ijuniorPractice
 
         static void EnlargeCopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPositionAddAction)
         {
+            int sizeArray = fullNames.Length + 1;
             char separator = '|';
             string[] newData = fullNameAndPositionAddAction.Split(separator);
-
-            string[] fullNamesTemp = new string[fullNames.Length + 1];
-            string[] positionsTemp = new string[positions.Length + 1];
+            string[] fullNamesTemp = new string[sizeArray];
+            string[] positionsTemp = new string[sizeArray];
 
             fullNamesTemp[fullNames.Length] = newData[0];
             positionsTemp[positions.Length] = newData[1];
 
-            for (int i = 0; i < fullNames.Length; i++)
-            {
-                fullNamesTemp[i] = fullNames[i];
-                positionsTemp[i] = positions[i];
-            }
+            CopyArray(fullNames, fullNamesTemp);
+            CopyArray(positions, positionsTemp);
 
             fullNames = fullNamesTemp;
             positions = positionsTemp;
@@ -182,22 +186,35 @@ namespace ijuniorPractice
 
         static void ReduceCopyNewArray(ref string[] fullNames, ref string[] positions, int deleteDossier)
         {
-            string[] fullNamesTemp = new string[fullNames.Length - 1];
-            string[] positionsTemp = new string[positions.Length - 1];
+            int sizeArray = fullNames.Length - 1;
+            string[] fullNamesTemp = new string[sizeArray];
+            string[] positionsTemp = new string[sizeArray];
 
-            for (int i = 0; i < deleteDossier - 1; i++)
-            {
-                fullNamesTemp[i] = fullNames[i];
-                positionsTemp[i] = positions[i];
-            }
+            CopyArray(fullNames, fullNamesTemp, deleteDossier);
+            CopyArray(positions, positionsTemp, deleteDossier);
 
-            for (int i = deleteDossier; i <= fullNamesTemp.Length; i++)
-            {
-                fullNamesTemp[i - 1] = fullNames[i];
-                positionsTemp[i - 1] = positions[i];
-            }
             fullNames = fullNamesTemp;
             positions = positionsTemp;
+        }
+
+        static void CopyArray(string[] source, string[] destination)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                destination[i] = source[i];
+            }
+        }
+
+        static void CopyArray(string[] source, string[] destination, int deleteIndex)
+        {
+            for (int i = 0, j = 0; i < source.Length; i++)
+            {
+                if (i != deleteIndex)
+                {
+                    destination[j] = source[i];
+                    j++;
+                }
+            }
         }
     }
 }
