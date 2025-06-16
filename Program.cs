@@ -61,7 +61,6 @@ namespace ijuniorPractice
             }
         }
 
-
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
             string fullNameAndPositionAddAction = "";
