@@ -6,17 +6,11 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            ShowMenu();
-        }
-
-        static void ShowMenu()
-        {
             const string CommandAddDossier = "1";
             const string CommandListDossier = "2";
             const string CommandDeleteDossier = "3";
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
-
 
             string[] fullNames = new string[0];
             string[] positions = new string[0];
@@ -61,23 +55,19 @@ namespace ijuniorPractice
             }
         }
 
-
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
             string fullNameAndPositionAddAction = "";
             char separator = '|';
 
-
             Console.Write("\nВведите ФИО :");
             fullNameAndPositionAddAction += Console.ReadLine() + separator;
             Console.Write("\nВведите должность :");
-            fullNameAndPositionAddAction += Console.ReadLine() + separator;
-            fullNameAndPositionAddAction += "Add";
+            fullNameAndPositionAddAction += Console.ReadLine();
 
-            CopyNewArray(ref fullNames, ref positions, fullNameAndPositionAddAction);
+            EnlargeCopyNewArray(ref fullNames, ref positions, fullNameAndPositionAddAction);
 
-            MessageOutput("Next menu");
-            MessageOutput("Successful");
+            SendMessage();
             Console.ReadLine();
         }
 
@@ -96,7 +86,7 @@ namespace ijuniorPractice
                 Console.WriteLine();
             }
 
-            MessageOutput("Next menu");
+            SendMessage();
             Console.ReadLine();
         }
 
@@ -104,8 +94,6 @@ namespace ijuniorPractice
         {
             int inputDeleteDossier = -1;
             bool isRepeat = true;
-            string fullNameAndPositionAddAction = "";
-            char separator = '|';
 
             do
             {
@@ -119,14 +107,9 @@ namespace ijuniorPractice
             }
             while (isRepeat);
 
-            fullNameAndPositionAddAction += "" + inputDeleteDossier + separator;
-            fullNameAndPositionAddAction += "" + inputDeleteDossier + separator;
-            fullNameAndPositionAddAction += "Del";
+            ReduceCopyNewArray(ref fullNames, ref positions, inputDeleteDossier);
 
-            CopyNewArray(ref fullNames, ref positions, fullNameAndPositionAddAction);
-
-            MessageOutput("Next menu");
-            MessageOutput("Successful");
+            SendMessage();
             Console.ReadLine();
         }
 
@@ -144,19 +127,19 @@ namespace ijuniorPractice
             {
                 surname = fullName.Split(' ');
 
-                if (surname[0].ToLower().IndexOf(inputSearchString, 0) != -1)
+                if (surname[0] == inputSearchString)
                 {
                     Console.WriteLine(fullName);
                     resultsFound++;
                 }
             }
+
             if (resultsFound == 0)
             {
                 Console.WriteLine("Поиск не дал результатов");
             }
 
-            MessageOutput("Next menu");
-            MessageOutput("Successful");
+            SendMessage();
             Console.ReadLine();
         }
 
@@ -171,68 +154,51 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
-        static string MessageOutput(string numberMessage)
+        static void SendMessage()
         {
-            string message = "";
-
-            switch (numberMessage)
-            {
-                case "Next menu":
-                    Console.WriteLine("\nДля продолжения нажмите любую кнопку");
-                    break;
-                case "Successful":
-                    Console.WriteLine("\nИзменения внесены");
-                    break;
-            }
-
-            return message;
+            Console.WriteLine("\nДля продолжения нажмите любую кнопку");
         }
 
-        static void CopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPositionAddAction)
+        static void EnlargeCopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPositionAddAction)
         {
             char separator = '|';
             string[] newData = fullNameAndPositionAddAction.Split(separator);
 
-            if (newData[2] == "Add")
+            string[] fullNamesTemp = new string[fullNames.Length + 1];
+            string[] positionsTemp = new string[positions.Length + 1];
+
+            fullNamesTemp[fullNames.Length] = newData[0];
+            positionsTemp[positions.Length] = newData[1];
+
+            for (int i = 0; i < fullNames.Length; i++)
             {
-                string[] fullNamesTemp = new string[fullNames.Length + 1];
-                string[] positionsTemp = new string[positions.Length + 1];
-
-                fullNamesTemp[fullNames.Length] = newData[0];
-                positionsTemp[positions.Length] = newData[1];
-
-                for (int i = 0; i < fullNames.Length; i++)
-                {
-                    fullNamesTemp[i] = fullNames[i];
-                    positionsTemp[i] = positions[i];
-                }
-
-                fullNames = fullNamesTemp;
-                positions = positionsTemp;
+                fullNamesTemp[i] = fullNames[i];
+                positionsTemp[i] = positions[i];
             }
-            else if(newData[2] == "Del")
-            {
-                int deleteDossier = Convert.ToInt32(newData[0]);
 
-                string[] fullNamesTemp = new string[fullNames.Length - 1];
-                string[] positionsTemp = new string[positions.Length - 1];
-
-                for (int i = 0; i < deleteDossier - 1; i++)
-                {
-                    fullNamesTemp[i] = fullNames[i];
-                    positionsTemp[i] = positions[i];
-                }
-
-                for (int i = deleteDossier; i <= fullNamesTemp.Length; i++)
-                {
-                    fullNamesTemp[i - 1] = fullNames[i];
-                    positionsTemp[i - 1] = positions[i];
-
-                }
-                fullNames = fullNamesTemp;
-                positions = positionsTemp;
-            }
+            fullNames = fullNamesTemp;
+            positions = positionsTemp;
         }
 
+        static void ReduceCopyNewArray(ref string[] fullNames, ref string[] positions, int deleteDossier)
+        {
+            string[] fullNamesTemp = new string[fullNames.Length - 1];
+            string[] positionsTemp = new string[positions.Length - 1];
+
+            for (int i = 0; i < deleteDossier - 1; i++)
+            {
+                fullNamesTemp[i] = fullNames[i];
+                positionsTemp[i] = positions[i];
+            }
+
+            for (int i = deleteDossier; i <= fullNamesTemp.Length; i++)
+            {
+                fullNamesTemp[i - 1] = fullNames[i];
+                positionsTemp[i - 1] = positions[i];
+            }
+            fullNames = fullNamesTemp;
+            positions = positionsTemp;
+        }
     }
 }
+
