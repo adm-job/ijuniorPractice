@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace ijuniorPractice
 {
@@ -6,6 +7,8 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
+            //File.ReadAllLines(map.txt);
+
 
         }
     }
