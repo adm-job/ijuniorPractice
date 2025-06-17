@@ -62,15 +62,15 @@ namespace ijuniorPractice
 
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
-            string fullNameAndPositionAddAction = "";
+            string fullNameAndPosition = "";
             char separator = '|';
 
             Console.Write("\nВведите ФИО :");
-            fullNameAndPositionAddAction += Console.ReadLine() + separator;
+            fullNameAndPosition += Console.ReadLine() + separator;
             Console.Write("\nВведите должность :");
-            fullNameAndPositionAddAction += Console.ReadLine();
+            fullNameAndPosition += Console.ReadLine();
 
-            EnlargeCopyNewArray(ref fullNames, ref positions, fullNameAndPositionAddAction);
+            EnlargeCopyNewArray(ref fullNames, ref positions, fullNameAndPosition);
 
             SendMessage();
             Console.ReadLine();
@@ -166,11 +166,11 @@ namespace ijuniorPractice
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
         }
 
-        static void EnlargeCopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPositionAddAction)
+        static void EnlargeCopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPosition)
         {
             int sizeArray = fullNames.Length + 1;
             char separator = '|';
-            string[] newData = fullNameAndPositionAddAction.Split(separator);
+            string[] newData = fullNameAndPosition.Split(separator);
             string[] fullNamesTemp = new string[sizeArray];
             string[] positionsTemp = new string[sizeArray];
 
