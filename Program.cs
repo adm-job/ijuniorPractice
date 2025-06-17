@@ -10,24 +10,18 @@
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
 
-            string[] fullNames = new string[0];
-            string[] positions = new string[0];
-            string inputUser;
-            bool isContinue = true;
+            List<int> numberList = new List<int>();
+            int sumNumber = 0;
+            string comandInput;
+            bool isExit = false;
 
-            while (isContinue)
+            while (isExit == false)
             {
+                Console.WriteLine($"Введите число \nСумма чисел - {CommandSum}\nВыход - {CommandExit}");
+                comandInput = ReadInput();
                 Console.Clear();
-                Console.WriteLine("Меню:");
-                Console.WriteLine($"{CommandAddDossier} Добавить досье");
-                Console.WriteLine($"{CommandListDossier} Список всех досье");
-                Console.WriteLine($"{CommandDeleteDossier} Удалить досье");
-                Console.WriteLine($"{CommandSearchDossier} Поиск по ФИО");
-                Console.WriteLine($"{CommandExit} Выход");
-                Console.Write("\nВведите номер пункта меню: ");
-                inputUser = Console.ReadLine();
 
-                switch (inputUser)
+                switch (comandInput)
                 {
                     case CommandAddDossier:
                         AddDossier(ref fullNames, ref positions);
