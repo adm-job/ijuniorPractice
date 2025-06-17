@@ -97,7 +97,6 @@
 
                 if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
                 {
-                    inputDeleteDossier--;
                     isRepeat = false;
                 }
             }
@@ -121,7 +120,7 @@
 
             foreach (string fullName in fullNames)
             {
-                surname = fullName.Split(' ');
+                surname = fullName.Split();
 
                 if (surname[0] == inputSearchString)
                 {
@@ -170,18 +169,20 @@
 
             array = tempArray;
         }
+
         static void RemoveElement(ref string[] array, int idElement)
         {
             int sizeArray = array.Length - 1;
             string[] tempArray = new string[sizeArray];
 
-            for (int i = 0, j = 0; i < array.Length; i++)
+            for (int i = 0; i < idElement; i++)
             {
-                if (i != idElement)
-                {
-                    tempArray[j] = array[i];
-                    j++;
-                }
+                    tempArray[i] = array[i];
+            }
+
+            for (int i = idElement ; i <= sizeArray; i++)
+            {
+                    tempArray[i - 1] = array[i];
             }
 
             array = tempArray;
