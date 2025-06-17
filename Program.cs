@@ -59,18 +59,12 @@
 
         static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
-            string fullNameAndPosition = "";
-            char separator = '|';
-
             Console.Write("\nВведите ФИО :");
-            fullNameAndPosition += Console.ReadLine() + separator;
+            AddElement(ref fullNames, Console.ReadLine());
             Console.Write("\nВведите должность :");
-            fullNameAndPosition += Console.ReadLine();
-
-            EnlargeArray(ref fullNames, ref positions, fullNameAndPosition);
+            AddElement(ref positions, Console.ReadLine());
 
             SendMessage();
-            Console.ReadLine();
         }
 
         static void ShowListDossier(string[] fullNames, string[] positions)
@@ -89,7 +83,6 @@
             }
 
             SendMessage();
-            Console.ReadLine();
         }
 
         static void DeleteDossier(ref string[] fullNames, ref string[] positions)
@@ -110,10 +103,10 @@
             }
             while (isRepeat);
 
-            ReduceArray(ref fullNames, ref positions, inputDeleteDossier);
+            RemoveElement(ref fullNames, inputDeleteDossier);
+            RemoveElement(ref positions, inputDeleteDossier);
 
             SendMessage();
-            Console.ReadLine();
         }
 
         static void SearchDossier(string[] fullNames)
@@ -143,7 +136,6 @@
             }
 
             SendMessage();
-            Console.ReadLine();
         }
 
         static int ReadInt()
@@ -161,66 +153,38 @@
         static void SendMessage()
         {
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
+            Console.ReadLine();
         }
 
-        static void EnlargeArray(ref string[] fullNames, ref string[] positions, string fullNameAndPosition)
-        {
-            int sizeArray = fullNames.Length + 1;
-            char separator = '|';
-            string[] newData = fullNameAndPosition.Split(separator);
-            string[] fullNamesTemp = new string[sizeArray];
-            string[] positionsTemp = new string[sizeArray];
-
-            fullNamesTemp[fullNames.Length] = newData[0];
-            positionsTemp[positions.Length] = newData[1];
-
-            CopyArray(fullNames, fullNamesTemp);
-            CopyArray(positions, positionsTemp);
-
-            fullNames = fullNamesTemp;
-            positions = positionsTemp;
-        }
         static void AddElement(ref string[] array, string element)
         {
             int sizeArray = array.Length + 1;
             string[] tempArray = new string[sizeArray];
 
+            for (int i = 0; i < array.Length; i++)
+            {
+                tempArray[i] = array[i];
+            }
+
             tempArray[array.Length] = element;
 
             array = tempArray;
         }
-
-        static void ReduceArray(ref string[] fullNames, ref string[] positions, int deleteDossier)
+        static void RemoveElement(ref string[] array, int idElement)
         {
-            int sizeArray = fullNames.Length - 1;
-            string[] fullNamesTemp = new string[sizeArray];
-            string[] positionsTemp = new string[sizeArray];
+            int sizeArray = array.Length - 1;
+            string[] tempArray = new string[sizeArray];
 
-            CopyArray(fullNames, fullNamesTemp, deleteDossier);
-            CopyArray(positions, positionsTemp, deleteDossier);
-
-            fullNames = fullNamesTemp;
-            positions = positionsTemp;
-        }
-
-        static void CopyArray(string[] source, string[] destination)
-        {
-            for (int i = 0; i < source.Length; i++)
+            for (int i = 0, j = 0; i < array.Length; i++)
             {
-                destination[i] = source[i];
-            }
-        }
-
-        static void CopyArray(string[] source, string[] destination, int deleteIndex)
-        {
-            for (int i = 0, j = 0; i < source.Length; i++)
-            {
-                if (i != deleteIndex)
+                if (i != idElement)
                 {
-                    destination[j] = source[i];
+                    tempArray[j] = array[i];
                     j++;
                 }
             }
+
+            array = tempArray;
         }
     }
 }
