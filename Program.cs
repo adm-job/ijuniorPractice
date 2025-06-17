@@ -1,7 +1,4 @@
-﻿using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
@@ -70,7 +67,7 @@ namespace ijuniorPractice
             Console.Write("\nВведите должность :");
             fullNameAndPosition += Console.ReadLine();
 
-            EnlargeCopyNewArray(ref fullNames, ref positions, fullNameAndPosition);
+            EnlargeArray(ref fullNames, ref positions, fullNameAndPosition);
 
             SendMessage();
             Console.ReadLine();
@@ -113,7 +110,7 @@ namespace ijuniorPractice
             }
             while (isRepeat);
 
-            ReduceCopyNewArray(ref fullNames, ref positions, inputDeleteDossier);
+            ReduceArray(ref fullNames, ref positions, inputDeleteDossier);
 
             SendMessage();
             Console.ReadLine();
@@ -166,7 +163,7 @@ namespace ijuniorPractice
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
         }
 
-        static void EnlargeCopyNewArray(ref string[] fullNames, ref string[] positions, string fullNameAndPosition)
+        static void EnlargeArray(ref string[] fullNames, ref string[] positions, string fullNameAndPosition)
         {
             int sizeArray = fullNames.Length + 1;
             char separator = '|';
@@ -183,8 +180,17 @@ namespace ijuniorPractice
             fullNames = fullNamesTemp;
             positions = positionsTemp;
         }
+        static void AddElement(ref string[] array, string element)
+        {
+            int sizeArray = array.Length + 1;
+            string[] tempArray = new string[sizeArray];
 
-        static void ReduceCopyNewArray(ref string[] fullNames, ref string[] positions, int deleteDossier)
+            tempArray[array.Length] = element;
+
+            array = tempArray;
+        }
+
+        static void ReduceArray(ref string[] fullNames, ref string[] positions, int deleteDossier)
         {
             int sizeArray = fullNames.Length - 1;
             string[] fullNamesTemp = new string[sizeArray];
