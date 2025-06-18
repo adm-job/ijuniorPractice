@@ -8,13 +8,13 @@ namespace ijuniorPractice
         static void Main(string[] args)
         {
             char[,] map = ReadMap("map.txt");
-            DrowMap(map);
+            DrawMap(map);
         }
 
         private static char[,] ReadMap(string patch)
         {
             string[] file = File.ReadAllLines("map.txt");
-            char[,] map = new char[GetMaxLenghtOfLine(file), file.Length];
+            char[,] map = new char[GetMaxLengthOfLine(file), file.Length];
 
             for (int x = 0; x < map.GetLength(0); x++)
             {
@@ -25,7 +25,7 @@ namespace ijuniorPractice
             return map;
         }
 
-        private static void DrowMap(char[,] map)
+        private static void DrawMap(char[,] map)
         {
             for (int y = 0; y < map.GetLength(1); y++)
             {
@@ -36,7 +36,7 @@ namespace ijuniorPractice
             }
         }
 
-        private static int GetMaxLenghtOfLine(string[] lines)
+        private static int GetMaxLengthOfLine(string[] lines)
         {
             int maxLenght = 0;
 
