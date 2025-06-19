@@ -13,8 +13,9 @@ namespace ijuniorPractice
             char[,] map = ReadMap("map.txt");
             int playerX = 1;
             int playerY = 1;
-            int score = 1;
-
+            int score = 0;
+            int scoreX = 32;
+            int scoreY = 0;
 
             while (true)
             {
@@ -23,12 +24,12 @@ namespace ijuniorPractice
 
                 Console.SetCursorPosition(playerX, playerY);
                 Console.Write("@");
+                Console.SetCursorPosition(scoreX, scoreY);
+                Console.Write($"Score: {score}");
 
                 pressedKey = Console.ReadKey();
                 PressedButton(pressedKey, ref playerX, ref playerY, map, ref score);
 
-                Console.SetCursorPosition(32, 0);
-                Console.Write("Score");
             }
         }
 
@@ -51,7 +52,9 @@ namespace ijuniorPractice
             for (int y = 0; y < map.GetLength(1); y++)
             {
                 for (int x = 0; x < map.GetLength(0); x++)
+                {
                     Console.Write(map[x, y]);
+                }
 
                 Console.Write("\n");
             }
@@ -64,7 +67,9 @@ namespace ijuniorPractice
             for (int i = 0; i < lines.Length; i++)
             {
                 if (lines[i].Length > maxLenght)
+                {
                     maxLenght = lines[i].Length;
+                }
             }
 
             return maxLenght;
@@ -83,6 +88,7 @@ namespace ijuniorPractice
             {
                 playerX = nextPlayerPositionX;
                 playerY = nextPlayerPositionY;
+
                 if (nextChar == '$')
                 {
                     score++;
