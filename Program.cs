@@ -43,7 +43,7 @@ namespace ijuniorPractice
                         break;
 
                     case CommandDeleteDossier:
-                        DeleteDossier(ref fullNames, ref positions);
+                        DeleteDossier(ref personnelAccounting);
                         break;
 
                     case CommandSearchDossier:
@@ -90,8 +90,6 @@ namespace ijuniorPractice
                 Console.WriteLine();
             }
 
-
-
             SendMessage();
         }
 
@@ -115,6 +113,39 @@ namespace ijuniorPractice
             RemoveElement(ref fullNames, inputDeleteDossier);
             RemoveElement(ref positions, inputDeleteDossier);
 
+            SendMessage();
+        }
+
+        static void DeleteDossier(ref Dictionary<string,Lazy<string>> perpersonnelAccounting)
+        {
+            string inputDeleteFullName = "";
+            bool isRepeat = true;
+
+            do
+            {
+                Console.WriteLine($"Введите ФИО работника для удаления");
+                inputDeleteFullName = Console.ReadLine().ToLower();
+
+                for (int i = 0; i < perpersonnelAccounting.Count;  i++)
+                {
+                    perpersonnelAccounting.ContainsValue(new List<string> { inputDeleteFullName});
+
+                }
+                        
+                        
+                    
+                
+                
+                
+/*                if (inputDeleteFullName <= fullNames.Length && inputDeleteFullName > 0)
+                {
+                    isRepeat = false;
+                }*/
+            }
+            while (isRepeat);
+
+            //RemoveElement(ref fullNames, inputDeleteDossier);
+           
             SendMessage();
         }
 
@@ -145,18 +176,6 @@ namespace ijuniorPractice
             }
 
             SendMessage();
-        }
-
-        static int ReadInt()
-        {
-            int inputNumber;
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-            {
-                Console.WriteLine("Введено не число");
-            }
-
-            return inputNumber;
         }
 
         static void SendMessage()
