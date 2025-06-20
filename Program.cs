@@ -62,7 +62,7 @@ namespace ijuniorPractice
             }
         }
 
-        static void AddDossier(ref Dictionary<string, List<string>> perpersonnelAccounting)
+        static void AddDossier(ref Dictionary<string, List<string>> personnelAccounting)
         {
             string[] positionsAndFullname = new string[2];
 
@@ -71,14 +71,14 @@ namespace ijuniorPractice
             Console.WriteLine("Ввдедите ФИО работник");
             positionsAndFullname[1] = Console.ReadLine().ToLower();
 
-            AddElement(ref perpersonnelAccounting, positionsAndFullname);
+            AddElement(ref personnelAccounting, positionsAndFullname);
 
             SendMessage();
         }
 
-        static void ShowListDossier(Dictionary<string, List<string>> perpersonnelAccounting)
+        static void ShowListDossier(Dictionary<string, List<string>> personnelAccounting)
         {
-            foreach (var position in perpersonnelAccounting)
+            foreach (var position in personnelAccounting)
             {
                 Console.Write($"Должность: {position.Key} - Работники:");
 
@@ -93,59 +93,34 @@ namespace ijuniorPractice
             SendMessage();
         }
 
-        static void DeleteDossier(ref string[] fullNames, ref string[] positions)
+        static void DeleteDossier(ref Dictionary<string, List<string>> personnelAccounting)
         {
-            int inputDeleteDossier;
-            bool isRepeat = true;
+            List<string> fullName = new List<string>();
+            string inputDeleteFullName;
 
-            do
+            Console.WriteLine($"Введите ФИО работника для удаления");
+            inputDeleteFullName = Console.ReadLine().ToLower();
+            fullName.Add(inputDeleteFullName);
+
+            foreach (string key in personnelAccounting.Keys)
             {
-                Console.WriteLine($"Введите досье для удаления от 1 до {fullNames.Length}");
-                inputDeleteDossier = ReadInt();
-
-                if (inputDeleteDossier <= fullNames.Length && inputDeleteDossier > 0)
+                //Console.WriteLine(personnelAccounting.ContainsValue(fullName));
+                if (personnelAccounting[key].Contains(inputDeleteFullName))
                 {
-                    isRepeat = false;
-                }
-            }
-            while (isRepeat);
-
-            RemoveElement(ref fullNames, inputDeleteDossier);
-            RemoveElement(ref positions, inputDeleteDossier);
-
-            SendMessage();
-        }
-
-        static void DeleteDossier(ref Dictionary<string,Lazy<string>> perpersonnelAccounting)
-        {
-            string inputDeleteFullName = "";
-            bool isRepeat = true;
-
-            do
-            {
-                Console.WriteLine($"Введите ФИО работника для удаления");
-                inputDeleteFullName = Console.ReadLine().ToLower();
-
-                for (int i = 0; i < perpersonnelAccounting.Count;  i++)
-                {
-                    perpersonnelAccounting.ContainsValue(new List<string> { inputDeleteFullName});
+                    personnelAccounting[key].Remove(inputDeleteFullName);
+                    Console.WriteLine($"Работник удален");
+                    if (personnelAccounting[key].Count <= 0)
+                        personnelAccounting.Remove(key);
 
                 }
-                        
-                        
-                    
-                
-                
-                
-/*                if (inputDeleteFullName <= fullNames.Length && inputDeleteFullName > 0)
+                else
                 {
-                    isRepeat = false;
-                }*/
+                    Console.WriteLine($"работник с фио {inputDeleteFullName} не найден");
+                }
             }
-            while (isRepeat);
 
             //RemoveElement(ref fullNames, inputDeleteDossier);
-           
+
             SendMessage();
         }
 
@@ -187,19 +162,19 @@ namespace ijuniorPractice
         static void AddElement(ref Dictionary<string, List<string>> personnelAccounting, string[] positionsAndFullname)
         {
             string position;
-            
+
             position = positionsAndFullname[0];
 
             if (personnelAccounting.ContainsKey(position))
             {
-                personnelAccounting[position].Add( positionsAndFullname[1]);
+                personnelAccounting[position].Add(positionsAndFullname[1]);
             }
             else
             {
                 personnelAccounting.Add(position, new List<string> { positionsAndFullname[1] });
             }
         }
-        
+
         static void RemoveElement(ref string[] array, int idElement)
         {
             int sizeArray = array.Length - 1;
