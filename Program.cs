@@ -31,7 +31,7 @@ namespace ijuniorPractice
                 switch (inputUser)
                 {
                     case CommandAddDossier:
-                        AddDossier(ref personnelAccounting);
+                        AddDossier(personnelAccounting);
                         break;
 
                     case CommandListDossier:
@@ -39,7 +39,7 @@ namespace ijuniorPractice
                         break;
 
                     case CommandDeleteDossier:
-                        DeleteDossier(ref personnelAccounting);
+                        DeleteDossier(personnelAccounting);
                         break;
 
                     case CommandExit:
@@ -54,7 +54,7 @@ namespace ijuniorPractice
             }
         }
 
-        static void AddDossier(ref Dictionary<string, List<string>> personnelAccounting)
+        static void AddDossier(Dictionary<string, List<string>> personnelAccounting)
         {
             string post;
             string fullName;
@@ -66,7 +66,7 @@ namespace ijuniorPractice
             fullName = Console.ReadLine()
                                              .ToLower();
 
-            AddElement(ref personnelAccounting, post, fullName);
+            AddElement(personnelAccounting, post, fullName);
 
             SendMessage();
         }
@@ -88,7 +88,7 @@ namespace ijuniorPractice
             SendMessage();
         }
 
-        static void DeleteDossier(ref Dictionary<string, List<string>> personnelAccounting)
+        static void DeleteDossier(Dictionary<string, List<string>> personnelAccounting)
         {
             string inputDeleteFullName;
 
@@ -124,7 +124,7 @@ namespace ijuniorPractice
             Console.ReadLine();
         }
 
-        static void AddElement(ref Dictionary<string, List<string>> personnelAccounting, string post, string fullName)
+        static void AddElement(Dictionary<string, List<string>> personnelAccounting, string post, string fullName)
         {
             string position = post;
 
