@@ -56,16 +56,17 @@ namespace ijuniorPractice
 
         static void AddDossier(ref Dictionary<string, List<string>> personnelAccounting)
         {
-            string[] positionsAndFullname = new string[2];
+            string post;
+            string fullName;
 
             Console.WriteLine("Введите должность работника");
-            positionsAndFullname[0] = Console.ReadLine()
+            post = Console.ReadLine()
                                              .ToLower();
             Console.WriteLine("Введите ФИО работник");
-            positionsAndFullname[1] = Console.ReadLine()
+            fullName = Console.ReadLine()
                                              .ToLower();
 
-            AddElement(ref personnelAccounting, positionsAndFullname);
+            AddElement(ref personnelAccounting, post, fullName);
 
             SendMessage();
         }
@@ -123,19 +124,17 @@ namespace ijuniorPractice
             Console.ReadLine();
         }
 
-        static void AddElement(ref Dictionary<string, List<string>> personnelAccounting, string[] positionsAndFullname)
+        static void AddElement(ref Dictionary<string, List<string>> personnelAccounting, string post, string fullName)
         {
-            string position;
-
-            position = positionsAndFullname[0];
+            string position = post;
 
             if (personnelAccounting.ContainsKey(position))
             {
-                personnelAccounting[position].Add(positionsAndFullname[1]);
+                personnelAccounting[position].Add(fullName);
             }
             else
             {
-                personnelAccounting.Add(position, new List<string> { positionsAndFullname[1] });
+                personnelAccounting.Add(position, new List<string> { fullName });
             }
         }
     }
