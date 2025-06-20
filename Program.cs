@@ -111,9 +111,6 @@ namespace ijuniorPractice
             const ConsoleKey RightArrowPressed = ConsoleKey.RightArrow;
 
             int[] direction = { 0, 0 };
-            ConsoleKey Up, Down, Left, Right;
-
-            Up = ConsoleKey.UpArrow;
 
             switch (pressedKey.Key)
             {
