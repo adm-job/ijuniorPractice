@@ -14,8 +14,6 @@ namespace ijuniorPractice
 
             Dictionary<string, List<string>> personnelAccounting = new Dictionary<string, List<string>>();
 
-            string[] fullNames = new string[0];
-            string[] positions = new string[0];
             string inputUser;
             bool isContinue = true;
 
