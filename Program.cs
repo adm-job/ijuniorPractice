@@ -11,31 +11,36 @@ namespace ijuniorPractice
             ConsoleKeyInfo pressedKey = new ConsoleKeyInfo();
 
             char[,] map = ReadMap("map.txt");
-            int playerX = 1;
-            int playerY = 1;
+            int positionPlayerX = 1;
+            int positionPlayerY = 1;
             int score = 0;
             int scoreX = 32;
             int scoreY = 0;
+            bool isRetry = true;
 
-            while (true)
+            while (isRetry)
             {
                 Console.Clear();
                 DrawMap(map);
 
-                Console.SetCursorPosition(playerX, playerY);
+                Console.SetCursorPosition(positionPlayerX, positionPlayerY);
                 Console.Write("@");
                 Console.SetCursorPosition(scoreX, scoreY);
                 Console.Write($"Score: {score}");
 
                 pressedKey = Console.ReadKey();
-                PressedButton(pressedKey, ref playerX, ref playerY, map, ref score);
-
+                PressingKey(pressedKey, ref positionPlayerX, ref positionPlayerY, map, ref score);
+                
+                if(pressedKey.Key == ConsoleKey.Escape)
+                {
+                    isRetry = false;
+                }
             }
         }
 
         private static char[,] ReadMap(string patch)
         {
-            string[] file = File.ReadAllLines("map.txt");
+            string[] file = File.ReadAllLines(patch);
             char[,] map = new char[GetMaxLengthOfLine(file), file.Length];
 
             for (int x = 0; x < map.GetLength(0); x++)
@@ -75,21 +80,23 @@ namespace ijuniorPractice
             return maxLenght;
         }
 
-        private static void PressedButton(ConsoleKeyInfo pressedKey, ref int playerX, ref int playerY, char[,] map, ref int score)
+        private static void PressingKey(ConsoleKeyInfo pressedKey, ref int positionPlayerX, ref int positionPlayerY, char[,] map, ref int score)
         {
             int[] direction = GetDirection(pressedKey);
 
-            int nextPlayerPositionX = playerX + direction[0];
-            int nextPlayerPositionY = playerY + direction[1];
+            int nextPlayerPositionX = positionPlayerX + direction[0];
+            int nextPlayerPositionY = positionPlayerY + direction[1];
 
             char nextChar = map[nextPlayerPositionX, nextPlayerPositionY];
+            char freeSpace = ' ';
+            char loot = '$';
 
-            if (nextChar == ' ' || nextChar == '$')
+            if (nextChar == freeSpace || nextChar == loot)
             {
-                playerX = nextPlayerPositionX;
-                playerY = nextPlayerPositionY;
+                positionPlayerX = nextPlayerPositionX;
+                positionPlayerY = nextPlayerPositionY;
 
-                if (nextChar == '$')
+                if (nextChar == loot)
                 {
                     score++;
                     map[nextPlayerPositionX, nextPlayerPositionY] = ' ';
@@ -98,7 +105,11 @@ namespace ijuniorPractice
         }
         private static int[] GetDirection(ConsoleKeyInfo pressedKey)
         {
+
             int[] direction = { 0, 0 };
+            ConsoleKey Up, Down, Left, Right;
+
+            Up = ConsoleKey.UpArrow;
 
             switch (pressedKey.Key)
             {
