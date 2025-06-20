@@ -104,14 +104,13 @@ namespace ijuniorPractice
 
             foreach (string key in personnelAccounting.Keys)
             {
-                //Console.WriteLine(personnelAccounting.ContainsValue(fullName));
                 if (personnelAccounting[key].Contains(inputDeleteFullName))
                 {
                     personnelAccounting[key].Remove(inputDeleteFullName);
                     Console.WriteLine($"Работник удален");
-                    if (personnelAccounting[key].Count <= 0)
-                        personnelAccounting.Remove(key);
 
+                    if (personnelAccounting[key].Count == 0)
+                        personnelAccounting.Remove(key);
                 }
                 else
                 {
