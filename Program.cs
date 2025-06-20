@@ -103,6 +103,7 @@ namespace ijuniorPractice
                 }
             }
         }
+
         private static int[] GetDirection(ConsoleKeyInfo pressedKey)
         {
             const ConsoleKey UpArrowPressed = ConsoleKey.UpArrow;
