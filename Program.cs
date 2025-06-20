@@ -1,4 +1,7 @@
-﻿namespace ijuniorPractice
+﻿using System.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace ijuniorPractice
 {
     internal class Program
     {
@@ -9,6 +12,8 @@
             const string CommandDeleteDossier = "3";
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
+
+            Dictionary<string, List<string>> personnelAccounting = new Dictionary<string, List<string>>();
 
             string[] fullNames = new string[0];
             string[] positions = new string[0];
@@ -30,11 +35,11 @@
                 switch (inputUser)
                 {
                     case CommandAddDossier:
-                        AddDossier(ref fullNames, ref positions);
+                        AddDossier(ref personnelAccounting);
                         break;
 
                     case CommandListDossier:
-                        ShowListDossier(fullNames, positions);
+                        ShowListDossier(personnelAccounting);
                         break;
 
                     case CommandDeleteDossier:
@@ -57,30 +62,35 @@
             }
         }
 
-        static void AddDossier(ref string[] fullNames, ref string[] positions)
+        static void AddDossier(ref Dictionary<string, List<string>> perpersonnelAccounting)
         {
-            Console.Write("\nВведите ФИО :");
-            AddElement(ref fullNames, Console.ReadLine());
-            Console.Write("\nВведите должность :");
-            AddElement(ref positions, Console.ReadLine());
+            string[] positionsAndFullname = new string[2];
+
+            Console.WriteLine("Ввдедите должность работника");
+            positionsAndFullname[0] = Console.ReadLine().ToLower();
+            Console.WriteLine("Ввдедите ФИО работник");
+            positionsAndFullname[1] = Console.ReadLine().ToLower();
+
+            AddElement(ref perpersonnelAccounting, positionsAndFullname);
 
             SendMessage();
         }
 
-        static void ShowListDossier(string[] fullNames, string[] positions)
+        static void ShowListDossier(Dictionary<string, List<string>> perpersonnelAccounting)
         {
-            if (fullNames.Length == positions.Length)
+            foreach (var position in perpersonnelAccounting)
             {
-                Console.WriteLine();
+                Console.Write($"Должность: {position.Key} - Работники:");
 
-                for (int i = 0; i < fullNames.Length; i++)
+                foreach (var value in position.Value)
                 {
-                    Console.Write(i + 1 + ". ");
-                    Console.Write(fullNames[i] + " - ");
-                    Console.WriteLine(positions[i]);
+                    Console.Write($" {value}");
                 }
+
                 Console.WriteLine();
             }
+
+
 
             SendMessage();
         }
@@ -155,21 +165,22 @@
             Console.ReadLine();
         }
 
-        static void AddElement(ref string[] array, string element)
+        static void AddElement(ref Dictionary<string, List<string>> personnelAccounting, string[] positionsAndFullname)
         {
-            int sizeArray = array.Length + 1;
-            string[] tempArray = new string[sizeArray];
+            string position;
+            
+            position = positionsAndFullname[0];
 
-            for (int i = 0; i < array.Length; i++)
+            if (personnelAccounting.ContainsKey(position))
             {
-                tempArray[i] = array[i];
+                personnelAccounting[position].Add( positionsAndFullname[1]);
             }
-
-            tempArray[array.Length] = element;
-
-            array = tempArray;
+            else
+            {
+                personnelAccounting.Add(position, new List<string> { positionsAndFullname[1] });
+            }
         }
-
+        
         static void RemoveElement(ref string[] array, int idElement)
         {
             int sizeArray = array.Length - 1;
