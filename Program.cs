@@ -10,8 +10,7 @@ namespace ijuniorPractice
             const string CommandAddDossier = "1";
             const string CommandListDossier = "2";
             const string CommandDeleteDossier = "3";
-            const string CommandSearchDossier = "4";
-            const string CommandExit = "5";
+            const string CommandExit = "4";
 
             Dictionary<string, List<string>> personnelAccounting = new Dictionary<string, List<string>>();
 
@@ -27,7 +26,6 @@ namespace ijuniorPractice
                 Console.WriteLine($"{CommandAddDossier} Добавить досье");
                 Console.WriteLine($"{CommandListDossier} Список всех досье");
                 Console.WriteLine($"{CommandDeleteDossier} Удалить досье");
-                Console.WriteLine($"{CommandSearchDossier} Поиск по ФИО");
                 Console.WriteLine($"{CommandExit} Выход");
                 Console.Write("\nВведите номер пункта меню: ");
                 inputUser = Console.ReadLine();
@@ -46,10 +44,6 @@ namespace ijuniorPractice
                         DeleteDossier(ref personnelAccounting);
                         break;
 
-                    case CommandSearchDossier:
-                        SearchDossier(fullNames);
-                        break;
-
                     case CommandExit:
                         isContinue = false;
                         break;
@@ -66,10 +60,12 @@ namespace ijuniorPractice
         {
             string[] positionsAndFullname = new string[2];
 
-            Console.WriteLine("Ввдедите должность работника");
-            positionsAndFullname[0] = Console.ReadLine().ToLower();
-            Console.WriteLine("Ввдедите ФИО работник");
-            positionsAndFullname[1] = Console.ReadLine().ToLower();
+            Console.WriteLine("Введите должность работника");
+            positionsAndFullname[0] = Console.ReadLine()
+                                             .ToLower();
+            Console.WriteLine("Введите ФИО работник");
+            positionsAndFullname[1] = Console.ReadLine()
+                                             .ToLower();
 
             AddElement(ref personnelAccounting, positionsAndFullname);
 
@@ -95,58 +91,29 @@ namespace ijuniorPractice
 
         static void DeleteDossier(ref Dictionary<string, List<string>> personnelAccounting)
         {
-            List<string> fullName = new List<string>();
             string inputDeleteFullName;
 
             Console.WriteLine($"Введите ФИО работника для удаления");
-            inputDeleteFullName = Console.ReadLine().ToLower();
-            fullName.Add(inputDeleteFullName);
+            inputDeleteFullName = Console.ReadLine()
+                                         .ToLower();
 
             foreach (string key in personnelAccounting.Keys)
             {
                 if (personnelAccounting[key].Contains(inputDeleteFullName))
                 {
                     personnelAccounting[key].Remove(inputDeleteFullName);
+
                     Console.WriteLine($"Работник удален");
 
                     if (personnelAccounting[key].Count == 0)
+                    {
                         personnelAccounting.Remove(key);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"работник с фио {inputDeleteFullName} не найден");
+                    Console.WriteLine($"На должности {key} работник с фио {inputDeleteFullName} не найден");
                 }
-            }
-
-            //RemoveElement(ref fullNames, inputDeleteDossier);
-
-            SendMessage();
-        }
-
-        static void SearchDossier(string[] fullNames)
-        {
-            string inputSearchString;
-            int resultsFound = 0;
-            string[] surname;
-
-            Console.Write("\nВведите фамилию для поиска: ");
-            inputSearchString = Console.ReadLine().ToLower();
-            Console.WriteLine();
-
-            foreach (string fullName in fullNames)
-            {
-                surname = fullName.Split();
-
-                if (surname[0] == inputSearchString)
-                {
-                    Console.WriteLine(fullName);
-                    resultsFound++;
-                }
-            }
-
-            if (resultsFound == 0)
-            {
-                Console.WriteLine("Поиск не дал результатов");
             }
 
             SendMessage();
@@ -172,24 +139,6 @@ namespace ijuniorPractice
             {
                 personnelAccounting.Add(position, new List<string> { positionsAndFullname[1] });
             }
-        }
-
-        static void RemoveElement(ref string[] array, int idElement)
-        {
-            int sizeArray = array.Length - 1;
-            string[] tempArray = new string[sizeArray];
-
-            for (int i = 0; i < idElement; i++)
-            {
-                tempArray[i] = array[i];
-            }
-
-            for (int i = idElement; i <= sizeArray; i++)
-            {
-                tempArray[i - 1] = array[i];
-            }
-
-            array = tempArray;
         }
     }
 }
