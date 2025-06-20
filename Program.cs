@@ -10,18 +10,24 @@
             const string CommandSearchDossier = "4";
             const string CommandExit = "5";
 
-            List<int> numberList = new List<int>();
-            int sumNumber = 0;
-            string comandInput;
-            bool isExit = false;
+            string[] fullNames = new string[0];
+            string[] positions = new string[0];
+            string inputUser;
+            bool isContinue = true;
 
-            while (isExit == false)
+            while (isContinue)
             {
-                Console.WriteLine($"Введите число \nСумма чисел - {CommandSum}\nВыход - {CommandExit}");
-                comandInput = ReadInput();
                 Console.Clear();
+                Console.WriteLine("Меню:");
+                Console.WriteLine($"{CommandAddDossier} Добавить досье");
+                Console.WriteLine($"{CommandListDossier} Список всех досье");
+                Console.WriteLine($"{CommandDeleteDossier} Удалить досье");
+                Console.WriteLine($"{CommandSearchDossier} Поиск по ФИО");
+                Console.WriteLine($"{CommandExit} Выход");
+                Console.Write("\nВведите номер пункта меню: ");
+                inputUser = Console.ReadLine();
 
-                switch (comandInput)
+                switch (inputUser)
                 {
                     case CommandAddDossier:
                         AddDossier(ref fullNames, ref positions);
@@ -171,16 +177,15 @@
 
             for (int i = 0; i < idElement; i++)
             {
-                    tempArray[i] = array[i];
+                tempArray[i] = array[i];
             }
 
-            for (int i = idElement ; i <= sizeArray; i++)
+            for (int i = idElement; i <= sizeArray; i++)
             {
-                    tempArray[i - 1] = array[i];
+                tempArray[i - 1] = array[i];
             }
 
             array = tempArray;
         }
     }
 }
-
