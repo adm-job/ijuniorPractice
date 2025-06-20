@@ -30,8 +30,8 @@ namespace ijuniorPractice
 
                 pressedKey = Console.ReadKey();
                 PressingKey(pressedKey, ref positionPlayerX, ref positionPlayerY, map, ref score);
-                
-                if(pressedKey.Key == ConsoleKey.Escape)
+
+                if (pressedKey.Key == ConsoleKey.Escape)
                 {
                     isRetry = false;
                 }
@@ -105,6 +105,10 @@ namespace ijuniorPractice
         }
         private static int[] GetDirection(ConsoleKeyInfo pressedKey)
         {
+            const ConsoleKey UpArrowPressed = ConsoleKey.UpArrow;
+            const ConsoleKey DownArrowPressed = ConsoleKey.DownArrow;
+            const ConsoleKey LeftArrowPressed = ConsoleKey.LeftArrow;
+            const ConsoleKey RightArrowPressed = ConsoleKey.RightArrow;
 
             int[] direction = { 0, 0 };
             ConsoleKey Up, Down, Left, Right;
@@ -113,19 +117,19 @@ namespace ijuniorPractice
 
             switch (pressedKey.Key)
             {
-                case ConsoleKey.UpArrow:
+                case UpArrowPressed:
                     direction[1] = -1;
                     break;
 
-                case ConsoleKey.DownArrow:
+                case DownArrowPressed:
                     direction[1] = 1;
                     break;
 
-                case ConsoleKey.LeftArrow:
+                case LeftArrowPressed:
                     direction[0] = -1;
                     break;
 
-                case ConsoleKey.RightArrow:
+                case RightArrowPressed:
                     direction[0] = 1;
                     break;
             }
