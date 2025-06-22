@@ -125,14 +125,14 @@ namespace ijuniorPractice
 
         static void AddElement(Dictionary<string, List<string>> personnelAccounting, string post, string fullName)
         {
-            CheckingPosition(personnelAccounting, post);
+            AddingNewPost(personnelAccounting, post);
 
             personnelAccounting[post].Add(fullName);
         }
 
-        static void CheckingPosition(Dictionary<string, List<string>> personnelAccounting, string post)
+        static void AddingNewPost(Dictionary<string, List<string>> personnelAccounting, string post)
         {
-            if (!personnelAccounting.ContainsKey(post))
+            if (personnelAccounting.ContainsKey(post) == false)
             {
                 personnelAccounting.Add(post, new List<string> { });
             }
