@@ -68,9 +68,14 @@ namespace ijuniorPractice
             fullName = Console.ReadLine()
                               .ToLower();
 
-            AddElement(personnelAccounting, post, fullName);
-
-
+            if (personnelAccounting.ContainsKey(post) == false)
+            {
+                personnelAccounting.Add(post, new List<string> { fullName });
+            }
+            else
+            {
+                personnelAccounting[post].Add(fullName);
+            }
         }
 
         static void ShowListDossier(Dictionary<string, List<string>> personnelAccounting)
@@ -87,55 +92,41 @@ namespace ijuniorPractice
                 Console.WriteLine();
             }
         }
-
         static void DeleteDossier(Dictionary<string, List<string>> personnelAccounting)
         {
             string inputDeletePosition;
-            string inputDeleteFullName;
+            int inputDeleteFullName;
+            int count = 0;
 
             Console.WriteLine($"Введите должность работника для удаления");
             inputDeletePosition = Console.ReadLine()
                                          .ToLower();
-            Console.WriteLine($"Введите ФИО работника для удаления");
-            inputDeleteFullName = Console.ReadLine()
-                                         .ToLower();
 
-            if (personnelAccounting[inputDeletePosition].Contains(inputDeleteFullName))
+            List<string> post = new List<string>();
+            post = personnelAccounting[inputDeletePosition];
+
+            foreach (var worker in post)
             {
-                personnelAccounting[inputDeletePosition].Remove(inputDeleteFullName);
-
-                Console.WriteLine($"Работник удален");
-
-                if (personnelAccounting[inputDeletePosition].Count == 0)
-                {
-                    personnelAccounting.Remove(inputDeletePosition);
-                }
+                ++count;
+                Console.Write($"{count}-{worker}\t");
             }
-            else
+
+            Console.WriteLine($"\nВведите номер работника из списка для удаления");
+            inputDeleteFullName = Convert.ToInt32(Console.ReadLine());
+
+            post.RemoveAt(inputDeleteFullName - 1);
+
+            Console.WriteLine($"Работник удален");
+
+            if (post.Count == 0)
             {
-                Console.WriteLine($"На должности {inputDeletePosition} работник с фио {inputDeleteFullName} не найден");
+                personnelAccounting.Remove(inputDeletePosition);
             }
         }
-
         static void SendMessage()
         {
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
             Console.ReadLine();
-        }
-
-        static void AddElement(Dictionary<string, List<string>> personnelAccounting, string post, string fullName)
-        {
-            AddingNewPost(personnelAccounting, post);
-
-            personnelAccounting[post].Add(fullName);
-        }
-
-        static void AddingNewPost(Dictionary<string, List<string>> personnelAccounting, string post)
-        {
-            if (personnelAccounting.ContainsKey(post) == false)
-            {
-                personnelAccounting.Add(post, new List<string> { });
-            }
         }
     }
 }
