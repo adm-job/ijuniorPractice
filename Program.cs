@@ -92,6 +92,7 @@ namespace ijuniorPractice
                 Console.WriteLine();
             }
         }
+
         static void DeleteDossier(Dictionary<string, List<string>> personnelAccounting)
         {
             string inputDeletePosition;
@@ -102,27 +103,38 @@ namespace ijuniorPractice
             inputDeletePosition = Console.ReadLine()
                                          .ToLower();
 
-            List<string> post = new List<string>();
-            post = personnelAccounting[inputDeletePosition];
-
-            foreach (var worker in post)
+            if (personnelAccounting.TryGetValue(inputDeletePosition, out List<string> post))
             {
-                ++count;
-                Console.Write($"{count}-{worker}\t");
+                foreach (var worker in post)
+                {
+                    ++count;
+                    Console.Write($"{count}-{worker}\t");
+                }
+
+                Console.WriteLine($"\nВведите номер работника из списка для удаления");
+                inputDeleteFullName = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                if (inputDeleteFullName > post.Count || inputDeleteFullName < 0)
+                {
+                    Console.WriteLine($"Работника с номером {inputDeleteFullName} не существует");
+                    return;
+                }
+
+                post.RemoveAt(inputDeleteFullName);
+
+                Console.WriteLine($"Работник удален");
+
+                if (post.Count == 0)
+                {
+                    personnelAccounting.Remove(inputDeletePosition);
+                }
             }
-
-            Console.WriteLine($"\nВведите номер работника из списка для удаления");
-            inputDeleteFullName = Convert.ToInt32(Console.ReadLine());
-
-            post.RemoveAt(inputDeleteFullName - 1);
-
-            Console.WriteLine($"Работник удален");
-
-            if (post.Count == 0)
+            else
             {
-                personnelAccounting.Remove(inputDeletePosition);
+                Console.WriteLine($"Должности {inputDeletePosition} не существует");
             }
         }
+
         static void SendMessage()
         {
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
