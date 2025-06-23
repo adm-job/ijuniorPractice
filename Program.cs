@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -62,11 +61,9 @@ namespace ijuniorPractice
             string fullName;
 
             Console.WriteLine("Введите должность работника");
-            post = Console.ReadLine()
-                          .ToLower();
+            post = ReadLine();
             Console.WriteLine("Введите ФИО работник");
-            fullName = Console.ReadLine()
-                              .ToLower();
+            fullName = ReadLine();
 
             if (personnelAccounting.ContainsKey(post) == false)
             {
@@ -97,34 +94,28 @@ namespace ijuniorPractice
         {
             string inputDeletePosition;
             int inputDeleteFullName;
-            int count = 0;
 
             Console.WriteLine($"Введите должность работника для удаления");
-            inputDeletePosition = Console.ReadLine()
-                                         .ToLower();
+            inputDeletePosition = ReadLine();
 
-            if (personnelAccounting.TryGetValue(inputDeletePosition, out List<string> post))
+            if (personnelAccounting.TryGetValue(inputDeletePosition, out List<string> workers))
             {
-                foreach (var worker in post)
-                {
-                    ++count;
-                    Console.Write($"{count}-{worker}\t");
-                }
+                ShowingEmployees(workers);
 
                 Console.WriteLine($"\nВведите номер работника из списка для удаления");
                 inputDeleteFullName = ReadInt();
 
-                if (inputDeleteFullName > post.Count || inputDeleteFullName < 0)
+                if (inputDeleteFullName > workers.Count || inputDeleteFullName <= 0)
                 {
                     Console.WriteLine($"Работника с номером {inputDeleteFullName} не существует");
                     return;
                 }
 
-                post.RemoveAt(inputDeleteFullName - 1);
+                workers.RemoveAt(inputDeleteFullName - 1);
 
                 Console.WriteLine($"Работник удален");
 
-                if (post.Count == 0)
+                if (workers.Count == 0)
                 {
                     personnelAccounting.Remove(inputDeletePosition);
                 }
@@ -141,6 +132,17 @@ namespace ijuniorPractice
             Console.ReadLine();
         }
 
+        static void ShowingEmployees(List<string> workers)
+        {
+            int count = 0;
+
+            foreach (var worker in workers)
+            {
+                ++count;
+                Console.Write($"{count}-{worker}\t");
+            }
+        }
+
         static int ReadInt()
         {
             int inputNumber;
@@ -152,5 +154,11 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
+
+        static string ReadLine()
+        {
+            return Console.ReadLine().ToLower();
+        }
+
     }
 }
