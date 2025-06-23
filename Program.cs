@@ -112,7 +112,7 @@ namespace ijuniorPractice
                 }
 
                 Console.WriteLine($"\nВведите номер работника из списка для удаления");
-                inputDeleteFullName = Convert.ToInt32(Console.ReadLine()) - 1;
+                inputDeleteFullName = ReadInt();
 
                 if (inputDeleteFullName > post.Count || inputDeleteFullName < 0)
                 {
@@ -120,7 +120,7 @@ namespace ijuniorPractice
                     return;
                 }
 
-                post.RemoveAt(inputDeleteFullName);
+                post.RemoveAt(inputDeleteFullName - 1);
 
                 Console.WriteLine($"Работник удален");
 
@@ -139,6 +139,18 @@ namespace ijuniorPractice
         {
             Console.WriteLine("\nДля продолжения нажмите любую кнопку");
             Console.ReadLine();
+        }
+
+        static int ReadInt()
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            {
+                Console.WriteLine("Введено не число");
+            }
+
+            return inputNumber;
         }
     }
 }
