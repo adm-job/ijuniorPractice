@@ -16,35 +16,38 @@
 
     class Player
     {
-        private string Name;
-        private string Description;
-        private int GamesPlayed;
+        private string _name;
+        private string _description;
+        private int _gamesPlayed;
 
         public Player()
         {
-            Name = "Пользователь";
-            Description = "Безымянный пользователь";
-            GamesPlayed = 0;
+            _name = "Пользователь";
+            _description = "Безымянный пользователь";
+            _gamesPlayed = 0;
         }
+
         public Player(string name, string description, int gamesPlayed)
         {
-            Name = name;
-            Description = description;
+            _name = name;
+            _description = description;
 
             if (gamesPlayed > 0)
             {
-                GamesPlayed = gamesPlayed;
+                _gamesPlayed = gamesPlayed;
             }
             else
             {
                 gamesPlayed = 0;
+                _gamesPlayed = gamesPlayed;
             }
         }
+
         public void ShowInfo()
         {
-            Console.WriteLine($"Имя - {Name}");
-            Console.WriteLine($"Описание игрока - {Description}");
-            Console.WriteLine($"Игр сыграно - {GamesPlayed}\n");
+            Console.WriteLine($"Имя - {_name}");
+            Console.WriteLine($"Описание игрока - {_description}");
+            Console.WriteLine($"Игр сыграно - {_gamesPlayed}\n");
         }
     }
 }
