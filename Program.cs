@@ -16,9 +16,9 @@
 
     class Player
     {
-        public string Name;
-        public string Description;
-        public int GamesPlayed;
+        private string Name;
+        private string Description;
+        private int GamesPlayed;
 
         public Player()
         {
