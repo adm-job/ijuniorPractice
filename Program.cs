@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Player player1 = new Player("Иван", "Заядлый игрок", 507);
-            Player player2 = new Player("Сергей", "Начинающий", 5);
+            Player player1 = new Player("Иван", '$', 507);
+            Player player2 = new Player("Сергей", '#', 5);
             Player player3 = new Player();
 
             player1.ShowInfo();
@@ -17,17 +17,17 @@
     class Player
     {
         private string _name;
-        private string _description;
+        private char _description;
         private int _gamesPlayed;
 
         public Player()
         {
             _name = "Пользователь";
-            _description = "Безымянный пользователь";
+            _description = '!';
             _gamesPlayed = 0;
         }
 
-        public Player(string name, string description, int gamesPlayed)
+        public Player(string name, char description, int gamesPlayed)
         {
             _name = name;
             _description = description;
