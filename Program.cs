@@ -4,35 +4,28 @@
     {
         static void Main(string[] args)
         {
-            Renderer renderer = new Renderer();
-            Player player = new Player(30, 20, '$');
-
-            renderer.Draw(player.X, player.Y, player.Chacter);
+            Player player  =  new Player(1,"Benn", 55 , false);
+            Console.WriteLine(player.PlayerID);
+            Console.WriteLine(player.Name);
+            Console.WriteLine(player.PlayerLvl);
+            Console.WriteLine(player.IsBanned);
         }
     }
 
     class Player
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public char Chacter { get; private set; }
-
-
-        public Player(int x, int y, char chacter)
+        public Player(int playerID, string name, int playerLvl, bool isBanned)
         {
-            X = x;
-            Y = y;
-            Chacter = chacter;
+            PlayerID = playerID;
+            Name = name;
+            PlayerLvl = playerLvl;
+            IsBanned = isBanned;
         }
+
+        public int PlayerID { get; private set; }
+        public string Name { get; private set; }
+        public int PlayerLvl { get; private set; }
+        public bool IsBanned { get; private set; }
     }
 
-    public class Renderer
-    {
-        public void Draw(int x, int y, char chacter)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(chacter);
-            Console.ReadKey();
-        }
-    }
 }
