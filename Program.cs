@@ -115,8 +115,10 @@ namespace ijuniorPractice
             ShowPlayer(playerBase);
 
             int inputPlayerId;
+
             Console.WriteLine("Введите номер игрока чтобы забанить или разбанить игрока");
             inputPlayerId = Convert.ToInt32(Console.ReadLine());
+            
             Player selectedPlayer = playerBase[inputPlayerId - 1];
 
             if (selectedPlayer.IsBanned)
