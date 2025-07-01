@@ -61,18 +61,18 @@ namespace ijuniorPractice
 
         static void AddPlayer(List<Player> PlayerBase)
         {
-            int playerId = 0;
+            int identifier = 0;
             string name = "";
             int level = 0;
             bool isBanned = false;
 
             if (PlayerBase.Count > 0)
             {
-                playerId = PlayerBase.Count + 1;
+                identifier = PlayerBase.Count + 1;
             }
             else
             {
-                playerId++;
+                identifier++;
             }
 
             Console.WriteLine("Введите имя");
@@ -81,7 +81,7 @@ namespace ijuniorPractice
             Console.WriteLine("Введите лвл игрока");
             level = ReadInt();
 
-            Player newPlayer = new Player(playerId, name, level, isBanned);
+            Player newPlayer = new Player(identifier, name, level, isBanned);
 
             PlayerBase.Add(newPlayer);
         }
@@ -170,6 +170,39 @@ namespace ijuniorPractice
             Console.Write("Забанен: " + (IsBanned ? "Да" : "Нет") + "\t");
             Console.WriteLine();
         }
+    }
+
+    class Database
+    {
+        private int identifierCounter = 1;
+
+        Dictionary<int, Player> Databaselist = new Dictionary<int, Player>();
+
+        public Player player { get; private set; }
+
+        static void AddPlayer(string name, int level, bool isBanned)
+        {
+
+            if (PlayerBase.Count > 0)
+            {
+                playerId = PlayerBase.Count + 1;
+            }
+            else
+            {
+                playerId++;
+            }
+
+            Console.WriteLine("Введите имя");
+            name = Console.ReadLine();
+
+            Console.WriteLine("Введите лвл игрока");
+            level = ReadInt();
+
+            Player newPlayer = new Player(playerId, name, level, isBanned);
+
+            PlayerBase.Add(newPlayer);
+        }
+
     }
 }
 
