@@ -78,8 +78,8 @@ namespace ijuniorPractice
             Console.WriteLine("Введите имя");
             name = Console.ReadLine();
 
-            Console.WriteLine("ВВедите лвл игрока");
-            playerLvl = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите лвл игрока");
+            playerLvl = ReadInt();
 
             Player newPlayer = new Player(playerId, name, playerLvl, isBanned);
 
@@ -104,10 +104,14 @@ namespace ijuniorPractice
 
             int inputPlayerId;
 
-            Console.WriteLine("Введите номер игрока для удаления");
-            inputPlayerId = Convert.ToInt32(Console.ReadLine()) - 1;
+            do
+            {
+                Console.WriteLine("Введите номер игрока для удаления");
+                inputPlayerId = ReadInt();
+            }
+            while (inputPlayerId <= 0 || inputPlayerId > playerBase.Count);
 
-            playerBase.RemoveAt(inputPlayerId);
+            playerBase.RemoveAt(inputPlayerId - 1);
         }
 
         static void BannedPlayer(List<Player> playerBase)
@@ -116,9 +120,14 @@ namespace ijuniorPractice
 
             int inputPlayerId;
 
-            Console.WriteLine("Введите номер игрока чтобы забанить или разбанить игрока");
-            inputPlayerId = Convert.ToInt32(Console.ReadLine());
-            
+            do
+            {
+                Console.WriteLine("Введите номер игрока чтобы забанить или разбанить игрока");
+                inputPlayerId = ReadInt();
+            }
+            while (inputPlayerId <= 0 || inputPlayerId > playerBase.Count);
+
+
             Player selectedPlayer = playerBase[inputPlayerId - 1];
 
             if (selectedPlayer.IsBanned)
@@ -129,6 +138,18 @@ namespace ijuniorPractice
             {
                 selectedPlayer.IsBanned = true;
             }
+        }
+
+        static int ReadInt()
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            {
+                Console.WriteLine("Введено не число");
+            }
+
+            return inputNumber;
         }
     }
 
