@@ -6,46 +6,46 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            List<Player> PlayerBase = new List<Player>();
+            const string CommandAddPlayer = "1";
+            const string CommandShowAllPlayers = "2";
+            const string CommandRemovePlayer = "3";
+            const string CommandBannedPlayer = "4";
+            const string CommandExit = "5";
 
-            const string commandAddPlayer = "1";
-            const string commandShowAllPlayers = "2";
-            const string commandRemovePlayer = "3";
-            const string commandBannedPlayer = "4";
-            const string commandExit = "5";
+            List<Player> PlayerBase = new List<Player>();
 
             string inputUser;
 
             do
             {
                 Console.Clear();
-                Console.WriteLine(commandAddPlayer + " Добавить нового игрока в базу");
-                Console.WriteLine(commandShowAllPlayers + " Показать всех игроков в базе");
-                Console.WriteLine(commandRemovePlayer + " Удаление игрока из базы");
-                Console.WriteLine(commandBannedPlayer + " Забанить игрока");
-                Console.WriteLine(commandExit + " Выход" + "\n");
+                Console.WriteLine(CommandAddPlayer + " Добавить нового игрока в базу");
+                Console.WriteLine(CommandShowAllPlayers + " Показать всех игроков в базе");
+                Console.WriteLine(CommandRemovePlayer + " Удаление игрока из базы");
+                Console.WriteLine(CommandBannedPlayer + " Забанить игрока");
+                Console.WriteLine(CommandExit + " Выход" + "\n");
 
                 inputUser = Console.ReadLine();
 
                 switch (inputUser)
                 {
-                    case commandAddPlayer:
+                    case CommandAddPlayer:
                         AddPlayer(PlayerBase);
                         break;
 
-                    case commandShowAllPlayers:
+                    case CommandShowAllPlayers:
                         ShowPlayer(PlayerBase);
                         break;
 
-                    case commandRemovePlayer:
+                    case CommandRemovePlayer:
                         DeletePlayer(PlayerBase);
                         break;
 
-                    case commandBannedPlayer:
+                    case CommandBannedPlayer:
                         BannedPlayer(PlayerBase);
                         break;
 
-                    case commandExit:
+                    case CommandExit:
                         Console.WriteLine($"Программа завершила работу");
                         break;
 
@@ -56,14 +56,14 @@ namespace ijuniorPractice
 
                 Console.ReadKey();
             }
-            while (inputUser != commandExit);
+            while (inputUser != CommandExit);
         }
 
         static void AddPlayer(List<Player> PlayerBase)
         {
             int playerId = 0;
             string name = "";
-            int playerLvl = 0;
+            int level = 0;
             bool isBanned = false;
 
             if (PlayerBase.Count > 0)
@@ -79,22 +79,18 @@ namespace ijuniorPractice
             name = Console.ReadLine();
 
             Console.WriteLine("Введите лвл игрока");
-            playerLvl = ReadInt();
+            level = ReadInt();
 
-            Player newPlayer = new Player(playerId, name, playerLvl, isBanned);
+            Player newPlayer = new Player(playerId, name, level, isBanned);
 
             PlayerBase.Add(newPlayer);
         }
 
         static void ShowPlayer(List<Player> playerBase)
         {
-            for (int i = 0; i < playerBase.Count; i++)
+            foreach (var player in playerBase)
             {
-                Console.Write(playerBase[i].PlayerID + ": ");
-                Console.Write("Имя: " + playerBase[i].Name + "\t\t\t");
-                Console.Write("Уровень: " + playerBase[i].PlayerLvl + "\t\t");
-                Console.Write("Забанен: " + (playerBase[i].IsBanned ? "Да" : "Нет") + "\t");
-                Console.WriteLine();
+                player.ShowThis();
             }
         }
 
@@ -127,17 +123,7 @@ namespace ijuniorPractice
             }
             while (inputPlayerId <= 0 || inputPlayerId > playerBase.Count);
 
-
-            Player selectedPlayer = playerBase[inputPlayerId - 1];
-
-            if (selectedPlayer.IsBanned)
-            {
-                selectedPlayer.IsBanned = false;
-            }
-            else
-            {
-                selectedPlayer.IsBanned = true;
-            }
+            playerBase[inputPlayerId - 1].Banned();
         }
 
         static int ReadInt()
@@ -155,18 +141,35 @@ namespace ijuniorPractice
 
     class Player
     {
-        public Player(int playerID, string name, int playerLvl, bool isBanned)
+        public Player(int identifier, string name, int level, bool isBanned)
         {
-            PlayerID = playerID;
+            Identifier = identifier;
             Name = name;
-            PlayerLvl = playerLvl;
+            Level = level;
             IsBanned = isBanned;
         }
 
-        public int PlayerID { get; private set; }
+        public int Identifier { get; private set; }
         public string Name { get; private set; }
-        public int PlayerLvl { get; private set; }
-        public bool IsBanned { get; set; }
+        public int Level { get; private set; }
+        public bool IsBanned { get; private set; }
+
+        public void Banned()
+        {
+            if (IsBanned)
+                IsBanned = false;
+            else
+                IsBanned = true;
+        }
+
+        public void ShowThis()
+        {
+            Console.Write(Identifier + ": ");
+            Console.Write("Имя: " + Name + "\t\t\t");
+            Console.Write("Уровень: " + Level + "\t\t");
+            Console.Write("Забанен: " + (IsBanned ? "Да" : "Нет") + "\t");
+            Console.WriteLine();
+        }
     }
 }
 
