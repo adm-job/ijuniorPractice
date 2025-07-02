@@ -174,20 +174,20 @@ namespace ijuniorPractice
 
     class Database
     {
-        private int _identifierCounter = 1;
+        private static int _identifierCounter = 1;
 
         static Dictionary<int, Player> Databaselist = new Dictionary<int, Player>();
 
         public Player player { get; private set; }
-        public int IdentifierCounter {  get { return _identifierCounter; } }
+        public static int IdentifierCounter {  get { return _identifierCounter; } }
 
-        static AddPlayer(string name, int level, bool isBanned)
+        static void AddPlayer(string name, int level, bool isBanned)
         {
-           
 
+            Databaselist.Add(IdentifierCounter,{new Player Name = name }), _identifierCounter++;
         }
 
-        private 
+         
 
     }
 }
