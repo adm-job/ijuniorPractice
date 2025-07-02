@@ -174,34 +174,20 @@ namespace ijuniorPractice
 
     class Database
     {
-        private int identifierCounter = 1;
+        private int _identifierCounter = 1;
 
-        Dictionary<int, Player> Databaselist = new Dictionary<int, Player>();
+        static Dictionary<int, Player> Databaselist = new Dictionary<int, Player>();
 
         public Player player { get; private set; }
+        public int IdentifierCounter {  get { return _identifierCounter; } }
 
-        static void AddPlayer(string name, int level, bool isBanned)
+        static AddPlayer(string name, int level, bool isBanned)
         {
+           
 
-            if (PlayerBase.Count > 0)
-            {
-                playerId = PlayerBase.Count + 1;
-            }
-            else
-            {
-                playerId++;
-            }
-
-            Console.WriteLine("Введите имя");
-            name = Console.ReadLine();
-
-            Console.WriteLine("Введите лвл игрока");
-            level = ReadInt();
-
-            Player newPlayer = new Player(playerId, name, level, isBanned);
-
-            PlayerBase.Add(newPlayer);
         }
+
+        private 
 
     }
 }
