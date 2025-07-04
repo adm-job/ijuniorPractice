@@ -75,17 +75,19 @@ namespace ijuniorPractice
         public int Level { get; private set; }
         public bool IsBanned { get; private set; }
 
-        public void Banned()
+        public void Ban()
         {
-            if (IsBanned)
-                IsBanned = false;
-            else
                 IsBanned = true;
         }
 
-        public void ShowThis()
+        public void UnBan()
         {
-            Console.Write(Identifier + ": ");
+                IsBanned = false;
+        }
+
+        public void Show()
+        {
+            Console.Write("ID: " + Identifier + "\t\t");
             Console.Write("Имя: " + Name + "\t\t\t");
             Console.Write("Уровень: " + Level + "\t\t");
             Console.Write("Забанен: " + (IsBanned ? "Да" : "Нет") + "\t");
@@ -95,9 +97,9 @@ namespace ijuniorPractice
 
     class Database
     {
-        private static int _identifierCounter = 1;
+        private int _identifierCounter = 1;
 
-        static List<Player> DatabaseList = new List <Player>();
+        private List<Player> ListPlayers = new List<Player>();
 
         public void AddPlayer()
         {
@@ -112,17 +114,18 @@ namespace ijuniorPractice
             Console.WriteLine("Введите лвл игрока");
             level = ReadInt();
 
-            Player newPlayer = new Player(identifier, name, level, isBanned);
+            Player AddPlayer = new Player(identifier, name, level, isBanned);
             _identifierCounter++;
 
-            DatabaseList.Add(newPlayer);
+            ListPlayers.Add(AddPlayer);
         }
 
         public void ShowPlayer()
         {
-            foreach (var player in DatabaseList)
+            for (int i = 0; i < ListPlayers.Count; i++)
             {
-                player.ShowThis();
+                Console.Write("№" + (i + 1) + ": ");
+                ListPlayers[i].Show();
             }
         }
 
@@ -130,32 +133,21 @@ namespace ijuniorPractice
         {
             ShowPlayer();
 
-            int inputPlayerId;
+            Player player = SerchPlayer();
 
-            do
-            {
-                Console.WriteLine("Введите номер игрока для удаления");
-                inputPlayerId = ReadInt();
-            }
-            while (inputPlayerId <= 0 || inputPlayerId > DatabaseList.Count);
-
-            DatabaseList.RemoveAt(inputPlayerId - 1);
+            ListPlayers.Remove(player);
         }
 
         public void BannedPlayer()
         {
             ShowPlayer();
 
-            int inputPlayerId;
+            Player player = SerchPlayer();
 
-            do
-            {
-                Console.WriteLine("Введите номер игрока чтобы забанить или разбанить игрока");
-                inputPlayerId = ReadInt();
-            }
-            while (inputPlayerId <= 0 || inputPlayerId > DatabaseList.Count);
-
-            DatabaseList[inputPlayerId - 1].Banned();
+            if (player.IsBanned)
+                player.UnBan();
+            else
+                player.Ban();
         }
 
         private int ReadInt()
@@ -168,6 +160,20 @@ namespace ijuniorPractice
             }
 
             return inputNumber;
+        }
+
+        private Player SerchPlayer()
+        {
+            int inputPlayerId;
+            
+            do
+            {
+                Console.WriteLine("Введите номер игрока для удаления");
+                inputPlayerId = ReadInt();
+            }
+            while (inputPlayerId < 0 || inputPlayerId > ListPlayers.Count);
+
+            return ListPlayers[inputPlayerId - 1];
         }
     }
 }
