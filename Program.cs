@@ -34,7 +34,7 @@ namespace ijuniorPractice
                         break;
 
                     case CommandShowAllPlayers:
-                        database.ShowPlayer();
+                        database.ShowPlayers();
                         break;
 
                     case CommandRemovePlayer:
@@ -42,7 +42,7 @@ namespace ijuniorPractice
                         break;
 
                     case CommandBannedPlayer:
-                        database.BannedPlayer();
+                        database.BanPlayer();
                         break;
 
                     case CommandExit:
@@ -99,7 +99,7 @@ namespace ijuniorPractice
     {
         private int _identifierCounter = 1;
 
-        private List<Player> ListPlayers = new List<Player>();
+        private List<Player> _basePlayers = new List<Player>();
 
         public void AddPlayer()
         {
@@ -114,34 +114,35 @@ namespace ijuniorPractice
             Console.WriteLine("Введите лвл игрока");
             level = ReadInt();
 
-            Player AddPlayer = new Player(identifier, name, level, isBanned);
+            Player player = new Player(identifier, name, level, isBanned);
             _identifierCounter++;
 
-            ListPlayers.Add(AddPlayer);
+            _basePlayers.Add(player);
         }
 
-        public void ShowPlayer()
+        public void ShowPlayers()
         {
-            for (int i = 0; i < ListPlayers.Count; i++)
+            foreach (var player in _basePlayers)
             {
-                Console.Write("№" + (i + 1) + ": ");
-                ListPlayers[i].Show();
+                player.Show();
             }
         }
 
         public void DeletePlayer()
         {
-            ShowPlayer();
+            ShowPlayers();
 
+            Console.WriteLine("\nДля удаления");
             Player player = SerchPlayer();
 
-            ListPlayers.Remove(player);
+            _basePlayers.Remove(player);
         }
 
-        public void BannedPlayer()
+        public void BanPlayer()
         {
-            ShowPlayer();
+            ShowPlayers();
 
+            Console.WriteLine("\nДля бана или разбана");
             Player player = SerchPlayer();
 
             if (player.IsBanned)
@@ -165,15 +166,17 @@ namespace ijuniorPractice
         private Player SerchPlayer()
         {
             int inputPlayerId;
-            
+            Player player;
+
             do
             {
-                Console.WriteLine("Введите номер игрока для удаления");
+                Console.WriteLine("Введите ID игрока");
                 inputPlayerId = ReadInt();
+                player = _basePlayers.Find(item => item.Identifier == inputPlayerId);
             }
-            while (inputPlayerId < 0 || inputPlayerId > ListPlayers.Count);
+            while (player == null);
 
-            return ListPlayers[inputPlayerId - 1];
+            return player;
         }
     }
 }
