@@ -78,11 +78,13 @@ namespace ijuniorPractice
         public void Ban()
         {
                 IsBanned = true;
+            Console.WriteLine("Игрок забанен");
         }
 
         public void UnBan()
         {
                 IsBanned = false;
+            Console.WriteLine("Игрок разбанен");
         }
 
         public void Show()
@@ -99,7 +101,7 @@ namespace ijuniorPractice
     {
         private int _identifierCounter = 1;
 
-        private List<Player> _basePlayers = new List<Player>();
+        private List<Player> _players = new List<Player>();
 
         public void AddPlayer()
         {
@@ -117,12 +119,12 @@ namespace ijuniorPractice
             Player player = new Player(identifier, name, level, isBanned);
             _identifierCounter++;
 
-            _basePlayers.Add(player);
+            _players.Add(player);
         }
 
         public void ShowPlayers()
         {
-            foreach (var player in _basePlayers)
+            foreach (var player in _players)
             {
                 player.Show();
             }
@@ -135,7 +137,7 @@ namespace ijuniorPractice
             Console.WriteLine("\nДля удаления");
             Player player = SerchPlayer();
 
-            _basePlayers.Remove(player);
+            _players.Remove(player);
         }
 
         public void BanPlayer()
@@ -172,7 +174,7 @@ namespace ijuniorPractice
             {
                 Console.WriteLine("Введите ID игрока");
                 inputPlayerId = ReadInt();
-                player = _basePlayers.Find(item => item.Identifier == inputPlayerId);
+                player = _players.Find(item => item.Identifier == inputPlayerId);
             }
             while (player == null);
 
