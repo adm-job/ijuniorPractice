@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
@@ -68,6 +66,8 @@ namespace ijuniorPractice
 
     class Player
     {
+        public Player() { }
+
         public Player(int identifier, string name, int level, bool isBanned)
         {
             Identifier = identifier;
@@ -178,33 +178,33 @@ namespace ijuniorPractice
 
         private Player SerchPlayer()
         {
-            Player player;
             //player = _players.Find(player => player.Identifier == inputPlayerId);
-            if (TryGetPlayer(out player) == false)
+            Player player;
+            if (TryGetPlayer(out player) == null)
+            {
                 Console.WriteLine("Такого игрока нет");
+            }
 
             return player;
         }
 
-        private bool TryGetPlayer(int identifier, out Player player)
+        private bool TryGetPlayer(out Player player)
         {
             int inputPlayerId;
+            player = null;
 
             Console.WriteLine("Введите ID игрока");
             inputPlayerId = ReadInt();
 
-            foreach (var item in _players)
+            for (int i = 0; i < _players.Count; i++)
             {
-                player = (item.Identifier == inputPlayerId) ? item : null;
+                if (_players[i].Identifier == inputPlayerId)
+                {
+                    player = _players[i];
+                }
             }
 
-
-
-
-
-            //return player = _players(player, identifier) ? player : null;
-
-
+            return player != null;
         }
     }
 }
