@@ -1,4 +1,6 @@
-﻿namespace ijuniorPractice
+﻿using System.Threading.Channels;
+
+namespace ijuniorPractice
 {
     internal class Program
     {
@@ -143,7 +145,7 @@
             Console.WriteLine("\nДля удаления");
             Player player = SerchPlayer();
 
-            _players.Remove(player);
+            if (player != null) _players.Remove(player);
         }
 
         public void BanPlayer()
@@ -152,16 +154,18 @@
 
             Console.WriteLine("\nДля бана");
             Player player = SerchPlayer();
-            player.Ban();
+
+            if (player != null) player.Ban();
         }
 
-        public void UnbanPlayer()
+        public void UnbanPlayer()  
         {
             ShowPlayers();
 
             Console.WriteLine("\nДля разбана");
             Player player = SerchPlayer();
-            player.Unban();
+
+            if (player != null) player.Unban(); 
         }
 
         private int ReadInt()
@@ -178,9 +182,9 @@
 
         private Player SerchPlayer()
         {
-            //player = _players.Find(player => player.Identifier == inputPlayerId);
-            Player player;
-            if (TryGetPlayer(out player) == null)
+            Player player; 
+            
+            if (TryGetPlayer(out player) == false)
             {
                 Console.WriteLine("Такого игрока нет");
             }
