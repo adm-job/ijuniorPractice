@@ -13,7 +13,7 @@ namespace ijuniorPractice
             const string CommandUnbanPlayer = "5";
             const string CommandExit = "6";
 
-            Database database = new Database();
+            //Database database = new Database();
 
             string inputUser;
 
@@ -32,23 +32,18 @@ namespace ijuniorPractice
                 switch (inputUser)
                 {
                     case CommandAddPlayer:
-                        database.AddPlayer();
                         break;
 
                     case CommandShowAllPlayers:
-                        database.ShowPlayers();
                         break;
 
                     case CommandRemovePlayer:
-                        database.DeletePlayer();
                         break;
 
                     case CommandBanPlayer:
-                        database.BanPlayer();
                         break;
 
                     case CommandUnbanPlayer:
-                        database.UnbanPlayer();
                         break;
 
                     case CommandExit:
@@ -66,150 +61,36 @@ namespace ijuniorPractice
         }
     }
 
-    class Player
+    class PlayingCard
     {
-        public Player() { }
-
-        public Player(int identifier, string name, int level, bool isBanned)
+        public PlayingCard(string name)
         {
-            Identifier = identifier;
             Name = name;
-            Level = level;
-            IsBanned = isBanned;
+
         }
 
-        public int Identifier { get; private set; }
         public string Name { get; private set; }
-        public int Level { get; private set; }
-        public bool IsBanned { get; private set; }
 
-        public void Ban()
-        {
-            IsBanned = true;
-            Console.WriteLine("Игрок забанен");
-        }
-
-        public void Unban()
-        {
-            IsBanned = false;
-            Console.WriteLine("Игрок разбанен");
-        }
-
-        public void Show()
-        {
-            Console.Write("ID: " + Identifier + "\t\t");
-            Console.Write("Имя: " + Name + "\t\t\t");
-            Console.Write("Уровень: " + Level + "\t\t");
-            Console.Write("Забанен: " + (IsBanned ? "Да" : "Нет") + "\t");
-            Console.WriteLine();
-        }
     }
 
-    class Database
+    class PlayingDeck
     {
-        private int _identifierCounter = 1;
+        private List<string> Cards = new List<string>
+                                        { "6♥", "7♥","8♥","9♥","10♥","V♥","D♥","K♥","A♥",
+                                        "6♣","7♣","8♣","9♣","10♣","V♣","D♣","K♣","A♣",
+                                        "6♠","7♠","8♠","9♠","10♠","V♠","D♠","K♠","A♠",
+                                        "6♦","7♦","8♦","9♦","10♦","V♦","D♦","K♦","A♦" };
 
-        private List<Player> _players = new List<Player>();
+        private Queue<PlayingCard> _deck = new Queue<PlayingCard>();
 
-        public void AddPlayer()
+        public void AddDesc()
         {
-            int identifier = _identifierCounter;
-            string name = "";
-            int level = 0;
-            bool isBanned = false;
+            Random random = new Random();
 
-            Console.WriteLine("Введите имя");
-            name = Console.ReadLine();
 
-            Console.WriteLine("Введите лвл игрока");
-            level = ReadInt();
-
-            Player player = new Player(identifier, name, level, isBanned);
-            _identifierCounter++;
-
-            _players.Add(player);
-        }
-
-        public void ShowPlayers()
-        {
-            foreach (var player in _players)
-            {
-                player.Show();
-            }
-        }
-
-        public void DeletePlayer()
-        {
-            ShowPlayers();
-
-            Console.WriteLine("\nДля удаления");
-            Player player = SerchPlayer();
-
-            if (player != null) _players.Remove(player);
-        }
-
-        public void BanPlayer()
-        {
-            ShowPlayers();
-
-            Console.WriteLine("\nДля бана");
-            Player player = SerchPlayer();
-
-            if (player != null) player.Ban();
-        }
-
-        public void UnbanPlayer()  
-        {
-            ShowPlayers();
-
-            Console.WriteLine("\nДля разбана");
-            Player player = SerchPlayer();
-
-            if (player != null) player.Unban(); 
-        }
-
-        private int ReadInt()
-        {
-            int inputNumber;
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-            {
-                Console.WriteLine("Введено не число");
-            }
-
-            return inputNumber;
-        }
-
-        private Player SerchPlayer()
-        {
-            Player player; 
-            
-            if (TryGetPlayer(out player) == false)
-            {
-                Console.WriteLine("Такого игрока нет");
-            }
-
-            return player;
-        }
-
-        private bool TryGetPlayer(out Player player)
-        {
-            int inputPlayerId;
-            player = null;
-
-            Console.WriteLine("Введите ID игрока");
-            inputPlayerId = ReadInt();
-
-            for (int i = 0; i < _players.Count; i++)
-            {
-                if (_players[i].Identifier == inputPlayerId)
-                {
-                    player = _players[i];
-                }
-            }
-
-            return player != null;
         }
     }
+
 }
+
 
