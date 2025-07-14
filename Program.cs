@@ -6,44 +6,31 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            const string CommandAddPlayer = "1";
-            const string CommandShowAllPlayers = "2";
-            const string CommandRemovePlayer = "3";
-            const string CommandBanPlayer = "4";
-            const string CommandUnbanPlayer = "5";
-            const string CommandExit = "6";
+            const string CommandAddCards = "1";
+            const string CommandShowCards = "2";
+            const string CommandExit = "3";
 
-            //Database database = new Database();
+            PlayingDeck desc = new PlayingDeck();
 
             string inputUser;
 
             do
             {
                 Console.Clear();
-                Console.WriteLine(CommandAddPlayer + " Добавить нового игрока в базу");
-                Console.WriteLine(CommandShowAllPlayers + " Показать всех игроков в базе");
-                Console.WriteLine(CommandRemovePlayer + " Удаление игрока из базы");
-                Console.WriteLine(CommandBanPlayer + " Забанить игрока");
-                Console.WriteLine(CommandUnbanPlayer + " Разбанить игрока");
+                Console.WriteLine(CommandAddCards + "Какое кол-во карт добавить ?");
+                Console.WriteLine(CommandShowCards + " Показать карту");
+
                 Console.WriteLine(CommandExit + " Выход" + "\n");
 
                 inputUser = Console.ReadLine();
 
                 switch (inputUser)
                 {
-                    case CommandAddPlayer:
+                    case CommandAddCards:
+                        desc.AddDesc();
                         break;
 
-                    case CommandShowAllPlayers:
-                        break;
-
-                    case CommandRemovePlayer:
-                        break;
-
-                    case CommandBanPlayer:
-                        break;
-
-                    case CommandUnbanPlayer:
+                    case CommandShowCards:
                         break;
 
                     case CommandExit:
@@ -75,7 +62,7 @@ namespace ijuniorPractice
 
     class PlayingDeck
     {
-        private List<string> Cards = new List<string>
+        private List<string> _cards = new List<string>
                                         { "6♥", "7♥","8♥","9♥","10♥","V♥","D♥","K♥","A♥",
                                         "6♣","7♣","8♣","9♣","10♣","V♣","D♣","K♣","A♣",
                                         "6♠","7♠","8♠","9♠","10♠","V♠","D♠","K♠","A♠",
@@ -87,7 +74,16 @@ namespace ijuniorPractice
         {
             Random random = new Random();
 
+            
 
+            for (int i = 0; i < _cards.Count; i++)
+            {
+
+                PlayingCard card = new PlayingCard(_cards[random.Next(_cards.Count)]);
+
+                _deck.Enqueue(card);
+
+            }
         }
     }
 
