@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
 using System.Threading.Channels;
 
 namespace ijuniorPractice
@@ -32,6 +33,7 @@ namespace ijuniorPractice
                         break;
 
                     case CommandShowCards:
+                        desc.ShowAllCards();
                         break;
 
                     case CommandExit:
@@ -64,10 +66,10 @@ namespace ijuniorPractice
     class PlayingDeck
     {
         private List<string> _cards = new List<string>
-                                        { "6♥", "7♥","8♥","9♥","10♥","V♥","D♥","K♥","A♥",
-                                        "6♣","7♣","8♣","9♣","10♣","V♣","D♣","K♣","A♣",
-                                        "6♠","7♠","8♠","9♠","10♠","V♠","D♠","K♠","A♠",
-                                        "6♦","7♦","8♦","9♦","10♦","V♦","D♦","K♦","A♦" };
+                                        { "6♥", "7♥", "8♥", "9♥", "10♥", "V♥", "D♥", "K♥", "A♥",
+                                          "6♣", "7♣", "8♣", "9♣", "10♣", "V♣", "D♣", "K♣", "A♣",
+                                          "6♠", "7♠", "8♠", "9♠", "10♠", "V♠", "D♠", "K♠", "A♠",
+                                          "6♦", "7♦", "8♦", "9♦", "10♦", "V♦", "D♦", "K♦", "A♦" };
 
         private Queue<PlayingCard> _deck = new Queue<PlayingCard>();
 
@@ -75,19 +77,33 @@ namespace ijuniorPractice
         {
             Random random = new Random();
 
-            List<string> cards = _cards;
+            List<string> cards = new List<string>(_cards);
 
             ;
 
             for (int i = 0; i < _cards.Count; i++)
             {
-
-                PlayingCard card = new PlayingCard(_cards[random.Next(_cards.Count)]);
-
+                string gameCard = cards[random.Next(cards.Count)];
+                PlayingCard card = new PlayingCard(gameCard);
+                cards.Remove(gameCard);
                 _deck.Enqueue(card);
-
             }
         }
+
+        public void ShowAllCards()
+        {
+            for (int i = 0; i < _cards.Count; i++)
+            {
+                Console.WriteLine(_deck.Dequeue().Name);
+            }
+        }
+    }
+
+    class Dealer
+    {
+        Queue<PlayingDeck> desc = new Queue<PlayingDeck>();
+        
+
     }
 
 }
