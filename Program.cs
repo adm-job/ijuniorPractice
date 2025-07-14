@@ -1,4 +1,5 @@
-﻿using System.Threading.Channels;
+﻿using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace ijuniorPractice
 {
@@ -74,7 +75,9 @@ namespace ijuniorPractice
         {
             Random random = new Random();
 
-            
+            List<string> cards = _cards;
+
+            ;
 
             for (int i = 0; i < _cards.Count; i++)
             {
