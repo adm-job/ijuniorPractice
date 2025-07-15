@@ -106,6 +106,11 @@ namespace ijuniorPractice
 
     }
 
+    class Player
+    {
+
+    }
+
 }
 
 
