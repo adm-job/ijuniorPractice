@@ -29,7 +29,7 @@ namespace ijuniorPractice
                 switch (inputUser)
                 {
                     case CommandAddCards:
-                        desc.AddDesc();
+                        desc.ShuffleDeck();
                         break;
 
                     case CommandShowCards:
@@ -73,13 +73,14 @@ namespace ijuniorPractice
 
         private Queue<PlayingCard> _deck = new Queue<PlayingCard>();
 
-        public void AddDesc()
+
+
+        public void ShuffleDeck()
         {
             Random random = new Random();
 
             List<string> cards = new List<string>(_cards);
 
-            ;
 
             for (int i = 0; i < _cards.Count; i++)
             {
@@ -97,18 +98,29 @@ namespace ijuniorPractice
                 Console.WriteLine(_deck.Dequeue().Name);
             }
         }
+
+        public Queue<PlayingCard> ReturnDesc()
+        {
+            return _deck;
+        }
     }
 
     class Dealer
     {
-        Queue<PlayingDeck> desc = new Queue<PlayingDeck>();
-        
+        PlayingDeck deck = new PlayingDeck();
 
+        Queue<PlayingCard> playingDecks = new Queue<PlayingCard>();
+        
+        public void TakeDeck()
+        {
+            deck.ShuffleDeck();
+            playingDecks = deck.ReturnDesc();
+        }
     }
 
     class Player
     {
-
+        Queue<PlayingCard> CardsYourHand = new Queue<PlayingCard>();
     }
 
 }
