@@ -120,7 +120,12 @@ namespace ijuniorPractice
 
     class Player
     {
-        Queue<PlayingCard> CardsYourHand = new Queue<PlayingCard>();
+        List<PlayingCard> CardsYourHand = new List<PlayingCard>();
+
+        public void AcceptСard()
+        {
+
+        }
     }
 
 }
