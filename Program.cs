@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
-using System.Threading.Channels;
+﻿using System;
 
 namespace ijuniorPractice
 {
@@ -8,46 +6,28 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            const string CommandAddCards = "1";
-            const string CommandShowCards = "2";
-            const string CommandExit = "3";
-
             PlayingDeck desc = new PlayingDeck();
+            desc.ShuffleDeck();
+            Player player = new Player();
 
-            string inputUser;
+            int totalPlayingCards = 0;
 
-            do
+            Console.Clear();
+            Console.WriteLine("Какое кол-во карт добавить ?");
+
+            totalPlayingCards = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine($"Выдано карт игроку {totalPlayingCards}\n");
+
+            for (int i = 0; i < totalPlayingCards; i++)
             {
-                Console.Clear();
-                Console.WriteLine(CommandAddCards + "Какое кол-во карт добавить ?");
-                Console.WriteLine(CommandShowCards + " Показать карту");
-
-                Console.WriteLine(CommandExit + " Выход" + "\n");
-
-                inputUser = Console.ReadLine();
-
-                switch (inputUser)
-                {
-                    case CommandAddCards:
-                        desc.ShuffleDeck();
-                        break;
-
-                    case CommandShowCards:
-                        desc.ShowAllCards();
-                        break;
-
-                    case CommandExit:
-                        Console.WriteLine($"Программа завершила работу");
-                        break;
-
-                    default:
-                        Console.WriteLine("Данного пункта в меню нет");
-                        break;
-                }
-
-                Console.ReadKey();
+                player.AcceptСard(desc.ReturnOneCard());
             }
-            while (inputUser != CommandExit);
+
+            player.ShowCardYouHandle();
+
+            Console.WriteLine();
+            desc.ShowAllCards();
         }
     }
 
@@ -56,7 +36,6 @@ namespace ijuniorPractice
         public PlayingCard(string name)
         {
             Name = name;
-
         }
 
         public string Name { get; private set; }
@@ -72,8 +51,6 @@ namespace ijuniorPractice
                                           "6♦", "7♦", "8♦", "9♦", "10♦", "V♦", "D♦", "K♦", "A♦" };
 
         private Queue<PlayingCard> _deck = new Queue<PlayingCard>();
-
-
 
         public void ShuffleDeck()
         {
@@ -103,6 +80,11 @@ namespace ijuniorPractice
         {
             return _deck;
         }
+
+        public PlayingCard ReturnOneCard()
+        {
+            return _deck.Dequeue();
+        }
     }
 
     class Dealer
@@ -110,7 +92,7 @@ namespace ijuniorPractice
         PlayingDeck deck = new PlayingDeck();
 
         Queue<PlayingCard> playingDecks = new Queue<PlayingCard>();
-        
+
         public void TakeDeck()
         {
             deck.ShuffleDeck();
@@ -122,12 +104,21 @@ namespace ijuniorPractice
     {
         List<PlayingCard> CardsYourHand = new List<PlayingCard>();
 
-        public void AcceptСard()
+        public void AcceptСard(PlayingCard card)
         {
+            CardsYourHand.Add(card);
+        }
 
+        public void ShowCardYouHandle()
+        {
+            Console.Write("Карты в руке игрока: ");
+
+            foreach (var card in CardsYourHand)
+            {
+                Console.Write(card.Name + " ");
+            }
         }
     }
-
 }
 
 
