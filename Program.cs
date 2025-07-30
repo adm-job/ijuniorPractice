@@ -17,7 +17,7 @@ namespace ijuniorPractice
 
             totalPlayingCards = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine($"Выдано карт игроку {totalPlayingCards}\n");
+            Console.WriteLine($"\nВыдано карт игроку {totalPlayingCards}\n");
 
             for (int i = 0; i < totalPlayingCards; i++)
             {
@@ -26,8 +26,6 @@ namespace ijuniorPractice
 
             player.ShowCardYouHandle();
 
-            Console.WriteLine();
-            desc.ShowAllCards();
         }
     }
 
@@ -65,14 +63,6 @@ namespace ijuniorPractice
                 PlayingCard card = new PlayingCard(gameCard);
                 cards.Remove(gameCard);
                 _deck.Enqueue(card);
-            }
-        }
-
-        public void ShowAllCards()
-        {
-            for (int i = 0; i < _cards.Count; i++)
-            {
-                Console.WriteLine(_deck.Dequeue().Name);
             }
         }
 
