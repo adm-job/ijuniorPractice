@@ -6,7 +6,7 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            PlayingDeck desc = new PlayingDeck();
+            Deck desc = new Deck();
             desc.ShuffleDeck();
             Player player = new Player();
 
@@ -29,26 +29,26 @@ namespace ijuniorPractice
         }
     }
 
-    class PlayingCard
+    class Card
     {
-        public PlayingCard(string name)
+        public Card(string name, string suit)
         {
             Name = name;
+            Suit = suit;
         }
 
         public string Name { get; private set; }
+        public string Suit { get; private set; }
 
     }
 
-    class PlayingDeck
+    class Deck
     {
-        private List<string> _cards = new List<string>
-                                        { "6♥", "7♥", "8♥", "9♥", "10♥", "V♥", "D♥", "K♥", "A♥",
-                                          "6♣", "7♣", "8♣", "9♣", "10♣", "V♣", "D♣", "K♣", "A♣",
-                                          "6♠", "7♠", "8♠", "9♠", "10♠", "V♠", "D♠", "K♠", "A♠",
-                                          "6♦", "7♦", "8♦", "9♦", "10♦", "V♦", "D♦", "K♦", "A♦" };
+        private List<string> _cards = new List<string>;
+        private List<string> _suits = new List<string> { "♥","♣","♠","♦"};
+        private List<string> _names = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
 
-        private Queue<PlayingCard> _deck = new Queue<PlayingCard>();
+        private Queue<Card> _deck = new Queue<Card>();
 
         public void ShuffleDeck()
         {
@@ -60,18 +60,18 @@ namespace ijuniorPractice
             for (int i = 0; i < _cards.Count; i++)
             {
                 string gameCard = cards[random.Next(cards.Count)];
-                PlayingCard card = new PlayingCard(gameCard);
+                Card card = new Card(gameCard);
                 cards.Remove(gameCard);
                 _deck.Enqueue(card);
             }
         }
 
-        public Queue<PlayingCard> ReturnDesc()
+        public Queue<Card> ReturnDesc()
         {
             return _deck;
         }
 
-        public PlayingCard ReturnOneCard()
+        public Card ReturnOneCard()
         {
             return _deck.Dequeue();
         }
@@ -79,9 +79,9 @@ namespace ijuniorPractice
 
     class Dealer
     {
-        PlayingDeck deck = new PlayingDeck();
+        Deck deck = new Deck();
 
-        Queue<PlayingCard> playingDecks = new Queue<PlayingCard>();
+        Queue<Card> playingDecks = new Queue<Card>();
 
         public void TakeDeck()
         {
@@ -92,9 +92,9 @@ namespace ijuniorPractice
 
     class Player
     {
-        List<PlayingCard> CardsYourHand = new List<PlayingCard>();
+        List<Card> CardsYourHand = new List<Card>();
 
-        public void AcceptСard(PlayingCard card)
+        public void AcceptСard(Card card)
         {
             CardsYourHand.Add(card);
         }
