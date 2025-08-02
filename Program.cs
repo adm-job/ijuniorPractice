@@ -7,7 +7,7 @@ namespace ijuniorPractice
         static void Main(string[] args)
         {
             Deck desc = new Deck();
-            desc.ShuffleDeck();
+            desc.Shuffle();
             Player player = new Player();
 
             int totalPlayingCards = 0;
@@ -44,13 +44,13 @@ namespace ijuniorPractice
 
     class Deck
     {
-        private List<string> _cards = new List<string>;
+        //private List<string> _cards = new List<string>;
         private List<string> _suits = new List<string> { "♥","♣","♠","♦"};
         private List<string> _names = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
 
         private Queue<Card> _deck = new Queue<Card>();
 
-        public void ShuffleDeck()
+        public void Shuffle()
         {
             Random random = new Random();
 
@@ -66,7 +66,7 @@ namespace ijuniorPractice
             }
         }
 
-        public Queue<Card> ReturnDesc()
+        public Queue<Card> Return()
         {
             return _deck;
         }
@@ -85,8 +85,8 @@ namespace ijuniorPractice
 
         public void TakeDeck()
         {
-            deck.ShuffleDeck();
-            playingDecks = deck.ReturnDesc();
+            deck.Shuffle();
+            playingDecks = deck.Return();
         }
     }
 
