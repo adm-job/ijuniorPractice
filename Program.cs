@@ -44,25 +44,40 @@ namespace ijuniorPractice
 
     class Deck
     {
-        //private List<string> _cards = new List<string>;
-        private List<string> _suits = new List<string> { "♥","♣","♠","♦"};
+        private List<string> _suits = new List<string> { "♥", "♣", "♠", "♦" };
         private List<string> _names = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
 
         private Queue<Card> _deck = new Queue<Card>();
+
+        private Random _random = new Random();
+
+        public List<Card> TakeDeck()
+        {
+            List<Card> cards = new List<Card>();
+
+            for (int i = 0; i < _suits.Count; i++)
+            {
+                for (int j = 0; j < _names.Count; j++)
+                {
+                    Card card = new Card(_names[j], _suits[i]);
+                    cards.Add(card);
+                }
+            }
+
+            return cards;
+        }
 
         public void Shuffle()
         {
             Random random = new Random();
 
-            List<string> cards = new List<string>(_cards);
+            List<Card> cards = TakeDeck();
 
-
-            for (int i = 0; i < _cards.Count; i++)
+            for (int i = 0; i < cards.Count; i++)
             {
-                string gameCard = cards[random.Next(cards.Count)];
-                Card card = new Card(gameCard);
+                Card gameCard = cards[random.Next(cards.Count)];
                 cards.Remove(gameCard);
-                _deck.Enqueue(card);
+                _deck.Enqueue(gameCard);
             }
         }
 
@@ -78,37 +93,37 @@ namespace ijuniorPractice
     }
 
     class Dealer
+{
+    Deck deck = new Deck();
+
+    Queue<Card> playingDecks = new Queue<Card>();
+
+    public void TakeDeck()
     {
-        Deck deck = new Deck();
+        deck.Shuffle();
+        playingDecks = deck.Return();
+    }
+}
 
-        Queue<Card> playingDecks = new Queue<Card>();
+class Player
+{
+    List<Card> CardsYourHand = new List<Card>();
 
-        public void TakeDeck()
-        {
-            deck.Shuffle();
-            playingDecks = deck.Return();
-        }
+    public void AcceptСard(Card card)
+    {
+        CardsYourHand.Add(card);
     }
 
-    class Player
+    public void ShowCardYouHandle()
     {
-        List<Card> CardsYourHand = new List<Card>();
+        Console.Write("Карты в руке игрока: ");
 
-        public void AcceptСard(Card card)
+        foreach (var card in CardsYourHand)
         {
-            CardsYourHand.Add(card);
-        }
-
-        public void ShowCardYouHandle()
-        {
-            Console.Write("Карты в руке игрока: ");
-
-            foreach (var card in CardsYourHand)
-            {
-                Console.Write(card.Name + " ");
-            }
+            Console.Write(card.Name + card.Suit + " ");
         }
     }
+}
 }
 
 
