@@ -12,16 +12,16 @@ namespace ijuniorPractice
             Player player = new Player();
 
             int totalPlayingCards = 0;
+            int totalMaps = dealer.CheckingQuantity();
 
             Console.Clear();
-            Console.WriteLine("Какое кол-во карт добавить ?");
 
             do
             {
-                totalPlayingCards = Convert.ToInt32(Console.ReadLine());
-
+                Console.WriteLine($"Какое кол-во карт из колоды в {totalMaps} карт отдать?");
+                totalPlayingCards = ReadInt();
             }
-            while (dealer.CheckingQuantity(totalPlayingCards) == false);
+            while (totalMaps < totalPlayingCards);
             
 
             Console.WriteLine($"\nВыдано карт игроку {totalPlayingCards}\n");
@@ -33,6 +33,19 @@ namespace ijuniorPractice
             }
 
             player.ShowCardYouHandle();
+
+
+            static int ReadInt()
+            {
+                int inputNumber;
+
+                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+                {
+                    Console.WriteLine("Введено не число");
+                }
+
+                return inputNumber;
+            }
 
         }
     }
@@ -77,13 +90,12 @@ namespace ijuniorPractice
 
         public Queue<Card> Shuffle()
         {
-            Random random = new Random();
-
             List<Card> cards = Take();
+            int totalMaps = cards.Count();
 
-            for (int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < totalMaps; i++)
             {
-                Card gameCard = cards[random.Next(cards.Count)];
+                Card gameCard = cards[_random.Next(cards.Count)];
                 cards.Remove(gameCard);
                 _deck.Enqueue(gameCard);
             }
@@ -115,9 +127,9 @@ namespace ijuniorPractice
             return playingDecks.Dequeue();
         }
 
-        public bool CheckingQuantity(int total)
+        public int CheckingQuantity()
         {
-            return playingDecks.Count > total ? true : false;
+            return playingDecks.Count;
         }
 
     }
