@@ -21,14 +21,14 @@ namespace ijuniorPractice
                 Console.WriteLine($"Какое кол-во карт из колоды в {totalMaps} карт отдать?");
                 totalPlayingCards = ReadInt();
             }
-            while (totalMaps < totalPlayingCards);
-            
+            while (totalPlayingCards < totalMaps  && totalPlayingCards <= 0);
+
 
             Console.WriteLine($"\nВыдано карт игроку {totalPlayingCards}\n");
 
             for (int i = 0; i < totalPlayingCards; i++)
             {
-                
+
                 player.AcceptСard(dealer.ReturnOneCard());
             }
 
@@ -65,22 +65,26 @@ namespace ijuniorPractice
 
     class Deck
     {
-        private List<string> _suits = new List<string> { "♥", "♣", "♠", "♦" };
-        private List<string> _names = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
-
-        private Queue<Card> _deck = new Queue<Card>();
+        private Queue<Card> _allCards = new Queue<Card>();
 
         private Random _random = new Random();
 
-        public List<Card> Take()
+        public Queue<Card> AllCards { get; private set; }
+
+        public List<Card> Fill()
         {
+            AllCards = _allCards;
+
+            List<string> suitsCard = new List<string> { "♥", "♣", "♠", "♦" };
+            List<string> namesCard = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
+
             List<Card> cards = new List<Card>();
 
-            for (int i = 0; i < _suits.Count; i++)
+            for (int i = 0; i < suitsCard.Count; i++)
             {
-                for (int j = 0; j < _names.Count; j++)
+                for (int j = 0; j < namesCard.Count; j++)
                 {
-                    Card card = new Card(_names[j], _suits[i]);
+                    Card card = new Card(namesCard[j], suitsCard[i]);
                     cards.Add(card);
                 }
             }
@@ -90,53 +94,54 @@ namespace ijuniorPractice
 
         public Queue<Card> Shuffle()
         {
-            List<Card> cards = Take();
+            List<Card> cards = Fill();
+
             int totalMaps = cards.Count();
 
             for (int i = 0; i < totalMaps; i++)
             {
                 Card gameCard = cards[_random.Next(cards.Count)];
                 cards.Remove(gameCard);
-                _deck.Enqueue(gameCard);
+                _allCards.Enqueue(gameCard);
             }
 
-            return _deck;
+            return AllCards;
         }
 
-        public Queue<Card> Return()
+         public Card ReturnOneCard()
         {
-            return _deck;
+            return AllCards.Dequeue();
         }
 
-
+        public int TotalMaps()
+        {
+            return AllCards.Count;
+        }
     }
 
     class Dealer
     {
         private Deck _deck = new Deck();
 
-        Queue<Card> playingDecks = new Queue<Card>();
-
         public void TakeDeck()
         {
-            playingDecks = _deck.Shuffle();
+            _deck.Shuffle();
         }
 
         public Card ReturnOneCard()
         {
-            return playingDecks.Dequeue();
+            return _deck.ReturnOneCard();
         }
 
         public int CheckingQuantity()
         {
-            return playingDecks.Count;
+            return _deck.TotalMaps();
         }
-
     }
 
     class Player
     {
-        List<Card> CardsYourHand = new List<Card>();
+        private List<Card> CardsYourHand = new List<Card>();
 
         public void AcceptСard(Card card)
         {
