@@ -6,8 +6,9 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            Deck desc = new Deck();
-            desc.Shuffle();
+            Dealer dealer = new Dealer();
+            dealer.TakeDeck();
+
             Player player = new Player();
 
             int totalPlayingCards = 0;
@@ -15,13 +16,20 @@ namespace ijuniorPractice
             Console.Clear();
             Console.WriteLine("Какое кол-во карт добавить ?");
 
-            totalPlayingCards = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                totalPlayingCards = Convert.ToInt32(Console.ReadLine());
+
+            }
+            while (dealer.CheckingQuantity(totalPlayingCards) == false);
+            
 
             Console.WriteLine($"\nВыдано карт игроку {totalPlayingCards}\n");
 
             for (int i = 0; i < totalPlayingCards; i++)
             {
-                player.AcceptСard(desc.ReturnOneCard());
+                
+                player.AcceptСard(dealer.ReturnOneCard());
             }
 
             player.ShowCardYouHandle();
@@ -51,7 +59,7 @@ namespace ijuniorPractice
 
         private Random _random = new Random();
 
-        public List<Card> TakeDeck()
+        public List<Card> Take()
         {
             List<Card> cards = new List<Card>();
 
@@ -67,11 +75,11 @@ namespace ijuniorPractice
             return cards;
         }
 
-        public void Shuffle()
+        public Queue<Card> Shuffle()
         {
             Random random = new Random();
 
-            List<Card> cards = TakeDeck();
+            List<Card> cards = Take();
 
             for (int i = 0; i < cards.Count; i++)
             {
@@ -79,6 +87,8 @@ namespace ijuniorPractice
                 cards.Remove(gameCard);
                 _deck.Enqueue(gameCard);
             }
+
+            return _deck;
         }
 
         public Queue<Card> Return()
@@ -86,44 +96,51 @@ namespace ijuniorPractice
             return _deck;
         }
 
-        public Card ReturnOneCard()
-        {
-            return _deck.Dequeue();
-        }
+
     }
 
     class Dealer
-{
-    Deck deck = new Deck();
-
-    Queue<Card> playingDecks = new Queue<Card>();
-
-    public void TakeDeck()
     {
-        deck.Shuffle();
-        playingDecks = deck.Return();
-    }
-}
+        private Deck _deck = new Deck();
 
-class Player
-{
-    List<Card> CardsYourHand = new List<Card>();
+        Queue<Card> playingDecks = new Queue<Card>();
 
-    public void AcceptСard(Card card)
-    {
-        CardsYourHand.Add(card);
-    }
-
-    public void ShowCardYouHandle()
-    {
-        Console.Write("Карты в руке игрока: ");
-
-        foreach (var card in CardsYourHand)
+        public void TakeDeck()
         {
-            Console.Write(card.Name + card.Suit + " ");
+            playingDecks = _deck.Shuffle();
+        }
+
+        public Card ReturnOneCard()
+        {
+            return playingDecks.Dequeue();
+        }
+
+        public bool CheckingQuantity(int total)
+        {
+            return playingDecks.Count > total ? true : false;
+        }
+
+    }
+
+    class Player
+    {
+        List<Card> CardsYourHand = new List<Card>();
+
+        public void AcceptСard(Card card)
+        {
+            CardsYourHand.Add(card);
+        }
+
+        public void ShowCardYouHandle()
+        {
+            Console.Write("Карты в руке игрока: ");
+
+            foreach (var card in CardsYourHand)
+            {
+                Console.Write(card.Name + card.Suit + " ");
+            }
         }
     }
-}
 }
 
 
