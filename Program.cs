@@ -7,21 +7,14 @@ namespace ijuniorPractice
         static void Main(string[] args)
         {
             Dealer dealer = new Dealer();
-            dealer.TakeDeck();
-
             Player player = new Player();
 
-            Console.Clear();
+            dealer.ShuffleDeck();
 
             player.AcceptСards(dealer.ReturnCards());
 
             player.ShowCards();
         }
-    }
-
-    class InputUser
-    {
-
     }
 
     class Card
@@ -39,15 +32,15 @@ namespace ijuniorPractice
 
     class Deck
     {
-        private Queue<Card> _allCards = new Queue<Card>();
+        private Queue<Card> _cards = new Queue<Card>();
 
         private Random _random = new Random();
 
-        public Queue<Card> AllCards { get; private set; }
+        public Queue<Card> Cards { get; private set; }
 
         public List<Card> Fill()
         {
-            AllCards = _allCards;
+            Cards = _cards;
 
             List<string> suitsCard = new List<string> { "♥", "♣", "♠", "♦" };
             List<string> namesCard = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
@@ -66,7 +59,7 @@ namespace ijuniorPractice
             return cards;
         }
 
-        public Queue<Card> Shuffle()
+        public void Shuffle()
         {
             List<Card> cards = Fill();
 
@@ -76,20 +69,13 @@ namespace ijuniorPractice
             {
                 Card gameCard = cards[_random.Next(cards.Count)];
                 cards.Remove(gameCard);
-                _allCards.Enqueue(gameCard);
+                _cards.Enqueue(gameCard);
             }
-
-            return AllCards;
         }
 
-        public Card ReturnOneCard()
+        public Card GiveCard()
         {
-            return AllCards.Dequeue();
-        }
-
-        public int TotalMaps()
-        {
-            return AllCards.Count;
+            return Cards.Dequeue();
         }
     }
 
@@ -97,7 +83,7 @@ namespace ijuniorPractice
     {
         private Deck _deck = new Deck();
 
-        public void TakeDeck()
+        public void ShuffleDeck()
         {
             _deck.Shuffle();
         }
@@ -105,8 +91,9 @@ namespace ijuniorPractice
         public List<Card> ReturnCards()
         {
             int count = 0;
-            int maxMaps = _deck.TotalMaps();
+            int maxMaps = _deck.Cards.Count();
 
+            Console.Clear();
             Console.WriteLine($"Какое кол-во карт из колоды в карт отдать?");
 
             count = ReadInt(maxMaps);
@@ -115,7 +102,7 @@ namespace ijuniorPractice
             
             for (int i = 0; i < count; i++)
             {
-                cardList.Add(_deck.ReturnOneCard());
+                cardList.Add(_deck.GiveCard());
             }
 
             return cardList;
