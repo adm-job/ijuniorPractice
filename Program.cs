@@ -11,43 +11,17 @@ namespace ijuniorPractice
 
             Player player = new Player();
 
-            int totalPlayingCards = 0;
-            int totalMaps = dealer.CheckingQuantity();
-
             Console.Clear();
 
-            do
-            {
-                Console.WriteLine($"Какое кол-во карт из колоды в {totalMaps} карт отдать?");
-                totalPlayingCards = ReadInt();
-            }
-            while (totalPlayingCards < totalMaps  && totalPlayingCards <= 0);
+            player.AcceptСards(dealer.ReturnCards());
 
-
-            Console.WriteLine($"\nВыдано карт игроку {totalPlayingCards}\n");
-
-            for (int i = 0; i < totalPlayingCards; i++)
-            {
-
-                player.AcceptСard(dealer.ReturnOneCard());
-            }
-
-            player.ShowCardYouHandle();
-
-
-            static int ReadInt()
-            {
-                int inputNumber;
-
-                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-                {
-                    Console.WriteLine("Введено не число");
-                }
-
-                return inputNumber;
-            }
-
+            player.ShowCards();
         }
+    }
+
+    class InputUser
+    {
+
     }
 
     class Card
@@ -108,7 +82,7 @@ namespace ijuniorPractice
             return AllCards;
         }
 
-         public Card ReturnOneCard()
+        public Card ReturnOneCard()
         {
             return AllCards.Dequeue();
         }
@@ -128,14 +102,36 @@ namespace ijuniorPractice
             _deck.Shuffle();
         }
 
-        public Card ReturnOneCard()
+        public List<Card> ReturnCards()
         {
-            return _deck.ReturnOneCard();
-        }
+            int count = 0;
+            int maxMaps = _deck.TotalMaps();
 
-        public int CheckingQuantity()
-        {
-            return _deck.TotalMaps();
+            Console.WriteLine($"Какое кол-во карт из колоды в карт отдать?");
+
+            count = ReadInt(maxMaps);
+
+            List<Card> cardList = new List<Card>();
+            
+            for (int i = 0; i < count; i++)
+            {
+                cardList.Add(_deck.ReturnOneCard());
+            }
+
+            return cardList;
+            
+
+            static int ReadInt(int maxMaps)
+            {
+                int inputNumber;
+
+                while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxMaps)
+                {
+                    Console.WriteLine($"Введено не верное значение карт всего {maxMaps}");
+                }
+
+                return inputNumber;
+            }
         }
     }
 
@@ -143,12 +139,15 @@ namespace ijuniorPractice
     {
         private List<Card> CardsYourHand = new List<Card>();
 
-        public void AcceptСard(Card card)
+        public void AcceptСards(List<Card> cards)
         {
-            CardsYourHand.Add(card);
+            for (int i = 0; i < cards.Count; i++)
+            {
+                CardsYourHand.Add(cards[i]);
+            }
         }
 
-        public void ShowCardYouHandle()
+        public void ShowCards()
         {
             Console.Write("Карты в руке игрока: ");
 
