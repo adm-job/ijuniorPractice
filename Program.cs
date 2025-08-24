@@ -36,24 +36,21 @@ namespace ijuniorPractice
 
         private Random _random = new Random();
 
-        public Queue<Card> Cards { get; private set; }
-
         public List<Card> Fill()
         {
-            Cards = _cards;
 
             List<string> suitsCard = new List<string> { "♥", "♣", "♠", "♦" };
             List<string> namesCard = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
 
             List<Card> cards = new List<Card>();
 
-            for (int i = 0; i < suitsCard.Count; i++)
+            foreach (var name in namesCard)
             {
-                for (int j = 0; j < namesCard.Count; j++)
+                foreach (var suits in suitsCard)
                 {
-                    Card card = new Card(namesCard[j], suitsCard[i]);
-                    cards.Add(card);
+                    cards.Add(new Card(name, suits));
                 }
+
             }
 
             return cards;
@@ -67,15 +64,21 @@ namespace ijuniorPractice
 
             for (int i = 0; i < totalMaps; i++)
             {
-                Card gameCard = cards[_random.Next(cards.Count)];
-                cards.Remove(gameCard);
-                _cards.Enqueue(gameCard);
+                int j = _random.Next(i, cards.Count);
+                (cards[i], cards[j]) = (cards[j], cards[i]);
             }
+
+            _cards = new Queue<Card>(cards);
         }
 
         public Card GiveCard()
         {
-            return Cards.Dequeue();
+            return _cards.Dequeue();
+        }
+
+        public int CardLeft()
+        {
+            return _cards.Count();
         }
     }
 
@@ -91,7 +94,7 @@ namespace ijuniorPractice
         public List<Card> ReturnCards()
         {
             int count = 0;
-            int maxMaps = _deck.Cards.Count();
+            int maxMaps = _deck.CardLeft();
 
             Console.Clear();
             Console.WriteLine($"Какое кол-во карт из колоды в карт отдать?");
@@ -99,14 +102,14 @@ namespace ijuniorPractice
             count = ReadInt(maxMaps);
 
             List<Card> cardList = new List<Card>();
-            
+
             for (int i = 0; i < count; i++)
             {
                 cardList.Add(_deck.GiveCard());
             }
 
             return cardList;
-            
+
 
             static int ReadInt(int maxMaps)
             {
