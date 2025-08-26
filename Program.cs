@@ -27,7 +27,6 @@ namespace ijuniorPractice
 
         public string Name { get; private set; }
         public string Suit { get; private set; }
-
     }
 
     class Deck
@@ -36,9 +35,8 @@ namespace ijuniorPractice
 
         private Random _random = new Random();
 
-        public List<Card> Fill()
+        private List<Card> Fill()
         {
-
             List<string> suitsCard = new List<string> { "♥", "♣", "♠", "♦" };
             List<string> namesCard = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
 
@@ -62,10 +60,10 @@ namespace ijuniorPractice
 
             int totalMaps = cards.Count();
 
-            for (int i = 0; i < totalMaps; i++)
+            for (int sequentialIndex = 0; sequentialIndex < totalMaps; sequentialIndex++)
             {
-                int j = _random.Next(i, cards.Count);
-                (cards[i], cards[j]) = (cards[j], cards[i]);
+                int randomIndex = _random.Next(sequentialIndex, cards.Count);
+                (cards[sequentialIndex], cards[randomIndex]) = (cards[randomIndex], cards[sequentialIndex]);
             }
 
             _cards = new Queue<Card>(cards);
