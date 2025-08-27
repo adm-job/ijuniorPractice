@@ -48,7 +48,6 @@ namespace ijuniorPractice
                 {
                     cards.Add(new Card(name, suits));
                 }
-
             }
 
             return cards;
@@ -59,6 +58,8 @@ namespace ijuniorPractice
             List<Card> cards = Fill();
 
             int totalMaps = cards.Count();
+
+            Console.WriteLine("Дилер перемешивает карты в колоде");
 
             for (int sequentialIndex = 0; sequentialIndex < totalMaps; sequentialIndex++)
             {
@@ -94,7 +95,6 @@ namespace ijuniorPractice
             int count = 0;
             int maxMaps = _deck.CardLeft();
 
-            Console.Clear();
             Console.WriteLine($"Какое кол-во карт из колоды в карт отдать?");
 
             count = ReadInt(maxMaps);
@@ -109,40 +109,43 @@ namespace ijuniorPractice
             return cardList;
 
 
-            static int ReadInt(int maxMaps)
+
+        }
+        private int ReadInt(int maxMaps)
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxMaps)
             {
-                int inputNumber;
-
-                while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxMaps)
-                {
-                    Console.WriteLine($"Введено не верное значение карт всего {maxMaps}");
-                }
-
-                return inputNumber;
+                Console.Clear();
+                Console.WriteLine($"Введено не верное значение карт всего {maxMaps}");
             }
+
+            return inputNumber;
         }
     }
 
     class Player
     {
-        private List<Card> CardsYourHand = new List<Card>();
+        private List<Card> Cards = new List<Card>();
 
         public void AcceptСards(List<Card> cards)
         {
             for (int i = 0; i < cards.Count; i++)
             {
-                CardsYourHand.Add(cards[i]);
+                Cards.Add(cards[i]);
             }
         }
 
         public void ShowCards()
         {
-            Console.Write("Карты в руке игрока: ");
+            Console.Write("Карты в руке игрока:\n ");
 
-            foreach (var card in CardsYourHand)
+            foreach (var card in Cards)
             {
                 Console.Write(card.Name + card.Suit + " ");
             }
+            Console.WriteLine();
         }
     }
 }
