@@ -15,6 +15,7 @@ namespace ijuniorPractice
             menu.Run();
         }
     }
+
     class Menu
     {
         private Dealer _dealer;
@@ -78,7 +79,9 @@ namespace ijuniorPractice
     {
         private Random _random = new Random();
 
-        public Queue<Card> Cards { get; private set; } = new();
+        private List<Card> _cards = new();
+
+        public Card Card { get; private set; }
 
         public void Shuffle()
         {
@@ -92,12 +95,12 @@ namespace ijuniorPractice
                 (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
             }
 
-            Cards = new Queue<Card>(cards);
+            _cards = new List<Card>(cards);
         }
 
         public Card GiveCard()
         {
-            return Cards.Dequeue();
+            return _cards.Dequeue();
         }
 
         private List<Card> Fill()
@@ -131,9 +134,9 @@ namespace ijuniorPractice
         public List<Card> ReturnCards()
         {
             int count = 0;
-            int maxMaps = _deck.Cards.Count;
+            int maxMaps = _deck._cards.Count;
 
-            Console.WriteLine("Введите кол=во карт");
+            Console.WriteLine("Введите кол-во карт");
 
             count = ReadInt(maxMaps);
 
