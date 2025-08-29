@@ -133,6 +133,8 @@ namespace ijuniorPractice
             int count = 0;
             int maxMaps = _deck.Cards.Count;
 
+            Console.WriteLine("Введите кол=во карт");
+
             count = ReadInt(maxMaps);
 
             List<Card> cardList = new List<Card>();
@@ -151,7 +153,6 @@ namespace ijuniorPractice
 
             while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxMaps)
             {
-                Console.Clear();
                 Console.WriteLine($"Введено не верное значение карт всего {maxMaps}");
             }
 
