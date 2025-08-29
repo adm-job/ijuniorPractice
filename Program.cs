@@ -30,9 +30,9 @@ namespace ijuniorPractice
 
         public void Run()
         {
-            const string IssueСards = "1" ;
-            const string ShowCards = "2" ;
-            const string Exit = "3" ;
+            const string IssueСards = "1";
+            const string ShowCards = "2";
+            const string Exit = "3";
 
             while (_isRunMenu)
             {
@@ -81,8 +81,6 @@ namespace ijuniorPractice
 
         private List<Card> _cards = new();
 
-        public Card Card { get; private set; }
-
         public void Shuffle()
         {
             List<Card> cards = Fill();
@@ -100,7 +98,9 @@ namespace ijuniorPractice
 
         public Card GiveCard()
         {
-            return _cards.Dequeue();
+            Card card = _cards[0];
+            _cards.RemoveAt(0);
+            return card;
         }
 
         private List<Card> Fill()
@@ -120,6 +120,11 @@ namespace ijuniorPractice
 
             return cards;
         }
+
+        public int CardsLeft()
+        {
+            return _cards.Count;
+        }
     }
 
     class Dealer
@@ -134,7 +139,7 @@ namespace ijuniorPractice
         public List<Card> ReturnCards()
         {
             int count = 0;
-            int maxMaps = _deck._cards.Count;
+            int maxMaps = _deck.CardsLeft();
 
             Console.WriteLine("Введите кол-во карт");
 
@@ -181,6 +186,7 @@ namespace ijuniorPractice
                 Console.Write(card.Name + card.Suit + " ");
             }
             Console.WriteLine();
+            List
         }
     }
 }
