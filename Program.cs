@@ -6,27 +6,28 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            Dealer dealer = new Dealer();
-            Player player = new Player();
-            Menu menu = new(dealer, player);
+            //Dealer dealer = new Dealer();
+            //Player player = new Player();
+            //Menu menu = new(dealer, player);
 
-            dealer.ShuffleDeck();
+            //dealer.ShuffleDeck();
 
-            menu.Run();
+            //menu.Run();
         }
     }
 
     class Menu
     {
-        private Dealer _dealer;
-        private Player _player;
+        //private Dealer _dealer;
+        //private Player _player;
         private bool _isRunMenu = true;
 
-        public Menu(Dealer dealer, Player player)
-        {
-            _dealer = dealer;
-            _player = player;
-        }
+        //public Menu(Dealer dealer, Player player)
+        //{
+        //    _dealer = dealer;
+        //    _player = player;
+        //}
+
 
         public void Run()
         {
@@ -47,13 +48,13 @@ namespace ijuniorPractice
                 switch (input)
                 {
                     case IssueСards:
-                        _player.AcceptСards(_dealer.ReturnCards());
+                        //_player.AcceptСards(_dealer.ReturnCards());
                         break;
                     case ShowCards:
-                        _player.ShowCards();
+                        //_player.ShowCards();
                         break;
                     case Exit:
-                        _isRunMenu = false;
+                        //_isRunMenu = false;
                         break;
                     default:
                         Console.WriteLine($"Пункта под номером {input} не существует");
@@ -61,99 +62,9 @@ namespace ijuniorPractice
                 }
             }
         }
-    }
+    
 
-    class Card
-    {
-        public Card(string name, string suit)
-        {
-            Name = name;
-            Suit = suit;
-        }
-
-        public string Name { get; private set; }
-        public string Suit { get; private set; }
-    }
-
-    class Deck
-    {
-        private Random _random = new Random();
-
-        private List<Card> _cards = new();
-
-        public void Shuffle()
-        {
-            List<Card> cards = Fill();
-
-            int totalMaps = cards.Count();
-
-            for (int i = totalMaps - 1; i > 0; i--)
-            {
-                int randomIndex = _random.Next(0, i + 1);
-                (cards[i], cards[randomIndex]) = (cards[randomIndex], cards[i]);
-            }
-
-            _cards = new List<Card>(cards);
-        }
-
-        public Card GiveCard()
-        {
-            Card card = _cards[0];
-            _cards.RemoveAt(0);
-            return card;
-        }
-
-        private List<Card> Fill()
-        {
-            List<string> suitsCard = new List<string> { "♥", "♣", "♠", "♦" };
-            List<string> namesCard = new List<string> { "6", "7", "8", "9", "10", "V", "D", "K", "A" };
-
-            List<Card> cards = new List<Card>();
-
-            foreach (var name in namesCard)
-            {
-                foreach (var suits in suitsCard)
-                {
-                    cards.Add(new Card(name, suits));
-                }
-            }
-
-            return cards;
-        }
-
-        public int CardsLeft()
-        {
-            return _cards.Count;
-        }
-    }
-
-    class Dealer
-    {
-        private Deck _deck = new();
-
-        public void ShuffleDeck()
-        {
-            _deck.Shuffle();
-        }
-
-        public List<Card> ReturnCards()
-        {
-            int count = 0;
-            int maxMaps = _deck.CardsLeft();
-
-            Console.WriteLine("Введите кол-во карт");
-
-            count = ReadInt(maxMaps);
-
-            List<Card> cardList = new List<Card>();
-
-            for (int i = 0; i < count; i++)
-            {
-                cardList.Add(_deck.GiveCard());
-            }
-
-            return cardList;
-        }
+   
 
         private int ReadInt(int maxMaps)
         {
@@ -166,26 +77,7 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
-    }
 
-    class Player
-    {
-        private List<Card> _cards = new();
 
-        public void AcceptСards(List<Card> cards)
-        {
-            _cards = cards;
-        }
-
-        public void ShowCards()
-        {
-            Console.Write("Карты в руке игрока:\n ");
-
-            foreach (var card in _cards)
-            {
-                Console.Write(card.Name + card.Suit + " ");
-            }
-            Console.WriteLine()Ж
-        }
     }
 }
