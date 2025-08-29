@@ -62,9 +62,6 @@ namespace ijuniorPractice
                 }
             }
         }
-    
-
-   
 
         private int ReadInt(int maxMaps)
         {
@@ -77,7 +74,27 @@ namespace ijuniorPractice
 
             return inputNumber;
         }
+    }
 
+    class Book
+    {
+        public string Name { get; private set; }
+        public string Author { get; private set; }
+        public string YearRelease { get; private set; }
+        public string Description { get; private set; }
+
+        public Book(string name, string author = "", string yearRelease = "", string description = "")
+        {
+            Name = name;
+            Author = author;
+            YearRelease = yearRelease;
+            Description = description;
+        }
+    }
+
+    class Library
+    {
 
     }
+
 }
