@@ -185,8 +185,7 @@ namespace ijuniorPractice
             {
                 Console.Write(card.Name + card.Suit + " ");
             }
-            Console.WriteLine();
-            List
+            Console.WriteLine()Ж
         }
     }
 }
