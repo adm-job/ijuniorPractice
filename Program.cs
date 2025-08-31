@@ -100,7 +100,7 @@ namespace ijuniorPractice
         {
             foreach (var book in _books)
             {
-                Console.Write($"Название {book.Name} : Автор {book.Author} : Год {book.YearRelease} : Примечание {book.Description}\n");
+                Show(book);
             }
         }
 
@@ -137,13 +137,23 @@ namespace ijuniorPractice
             _books.Remove(new Book(name));
         }
 
-        public void Search()
+        public void SearchName()
         {
             Console.WriteLine("Введите строку для поиска");
             string? input = Console.ReadLine()
                                   .ToLower();
 
-            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input));
+            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input) || name.Author.StartsWith(input) || name.YearRelease.StartsWith(input));
+
+            foreach (var book in result)
+            {
+                Show(book);
+            }
+        }
+
+        private void Show(Book book)
+        {
+            Console.Write($"Название {book.Name} : Автор {book.Author} : Год {book.YearRelease} : Примечание {book.Description}\n");
         }
     }
 }
