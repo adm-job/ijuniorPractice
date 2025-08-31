@@ -94,7 +94,56 @@ namespace ijuniorPractice
 
     class Library
     {
+        private List<Book> _books = new();
 
+        public void ShowAll()
+        {
+            foreach (var book in _books)
+            {
+                Console.Write($"Название {book.Name} : Автор {book.Author} : Год {book.YearRelease} : Примечание {book.Description}\n");
+            }
+        }
+
+        public void AddBook()
+        {
+            string? name;
+            string? author;
+            string? yearRelease;
+            string? description;
+
+            Console.WriteLine("Введите название книги");
+            name = Console.ReadLine()
+                          .ToLower();
+            Console.WriteLine("Введите автора книги");
+            author = Console.ReadLine()
+                            .ToLower();
+            Console.WriteLine("Введите год книги");
+            yearRelease = Console.ReadLine()
+                                 .ToLower();
+            Console.WriteLine("Введите примечание");
+            description = Console.ReadLine()
+                                 .ToLower();
+
+            _books.Add(new Book(name, author, yearRelease, description));
+        }
+
+        public void RemoveBook()
+        {
+            Console.WriteLine("Введите название книги");
+
+            string name = Console.ReadLine()
+                                 .ToLower();
+
+            _books.Remove(new Book(name));
+        }
+
+        public void Search()
+        {
+            Console.WriteLine("Введите строку для поиска");
+            string? input = Console.ReadLine()
+                                  .ToLower();
+
+            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input));
+        }
     }
-
 }
