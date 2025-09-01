@@ -6,40 +6,38 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            //Dealer dealer = new Dealer();
-            //Player player = new Player();
-            //Menu menu = new(dealer, player);
-
-            //dealer.ShuffleDeck();
-
-            //menu.Run();
+            Library library = new Library();
+            Menu menu = new(library);
+            menu.Run();
         }
     }
 
     class Menu
     {
-        //private Dealer _dealer;
-        //private Player _player;
+        private Library _library;
         private bool _isRunMenu = true;
 
-        //public Menu(Dealer dealer, Player player)
-        //{
-        //    _dealer = dealer;
-        //    _player = player;
-        //}
+        public Menu(Library library)
+        {
+            _library = library;
+        }
 
 
         public void Run()
         {
-            const string IssueСards = "1";
-            const string ShowCards = "2";
-            const string Exit = "3";
+            const string AddBook = "1";
+            const string ShowAll = "2";
+            const string RemoveBook = "3";
+            const string SearchName = "4";
+            const string Exit = "5";
 
             while (_isRunMenu)
             {
-                Console.WriteLine("\nМеню программы");
-                Console.WriteLine($"{IssueСards}. Выдать несколько карт игроку");
-                Console.WriteLine($"{ShowCards}. Игрок покажет свои карты");
+                Console.WriteLine("\nПолка с книгами");
+                Console.WriteLine($"{AddBook}. Добавить книгу");
+                Console.WriteLine($"{ShowAll}. Показать всю полку");
+                Console.WriteLine($"{RemoveBook}. Удалить книгу");
+                Console.WriteLine($"{SearchName}. Поиск на полке");
                 Console.WriteLine($"{Exit}. Выход");
                 Console.WriteLine("Введите номер пункта меню");
 
@@ -47,32 +45,26 @@ namespace ijuniorPractice
 
                 switch (input)
                 {
-                    case IssueСards:
-                        //_player.AcceptСards(_dealer.ReturnCards());
+                    case AddBook:
+                        _library.AddBook();
                         break;
-                    case ShowCards:
-                        //_player.ShowCards();
+                    case ShowAll:
+                        _library.ShowAll();
+                        break;
+                    case RemoveBook:
+                        _library.RemoveBook();
+                        break;
+                    case SearchName:
+                        _library.SearchName();
                         break;
                     case Exit:
-                        //_isRunMenu = false;
+                        _isRunMenu = false;
                         break;
                     default:
                         Console.WriteLine($"Пункта под номером {input} не существует");
                         break;
                 }
             }
-        }
-
-        private int ReadInt(int maxMaps)
-        {
-            int inputNumber;
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxMaps)
-            {
-                Console.WriteLine($"Введено не верное значение карт всего {maxMaps}");
-            }
-
-            return inputNumber;
         }
     }
 
@@ -112,17 +104,13 @@ namespace ijuniorPractice
             string? description;
 
             Console.WriteLine("Введите название книги");
-            name = Console.ReadLine()
-                          .ToLower();
+            name = InputUser();
             Console.WriteLine("Введите автора книги");
-            author = Console.ReadLine()
-                            .ToLower();
+            author = InputUser();
             Console.WriteLine("Введите год книги");
-            yearRelease = Console.ReadLine()
-                                 .ToLower();
+            yearRelease = InputUser();
             Console.WriteLine("Введите примечание");
-            description = Console.ReadLine()
-                                 .ToLower();
+            description = InputUser();
 
             _books.Add(new Book(name, author, yearRelease, description));
         }
@@ -131,8 +119,7 @@ namespace ijuniorPractice
         {
             Console.WriteLine("Введите название книги");
 
-            string name = Console.ReadLine()
-                                 .ToLower();
+            string name = InputUser();
 
             _books.Remove(new Book(name));
         }
@@ -140,8 +127,7 @@ namespace ijuniorPractice
         public void SearchName()
         {
             Console.WriteLine("Введите строку для поиска");
-            string? input = Console.ReadLine()
-                                  .ToLower();
+            string? input = InputUser();
 
             List<Book> result = _books.FindAll(name => name.Name.StartsWith(input) || name.Author.StartsWith(input) || name.YearRelease.StartsWith(input));
 
@@ -154,6 +140,12 @@ namespace ijuniorPractice
         private void Show(Book book)
         {
             Console.Write($"Название {book.Name} : Автор {book.Author} : Год {book.YearRelease} : Примечание {book.Description}\n");
+        }
+
+        private string InputUser()
+        {
+            return Console.ReadLine()
+                          .ToLower();
         }
     }
 }
