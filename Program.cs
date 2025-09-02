@@ -140,15 +140,30 @@ namespace ijuniorPractice
 
         public void RemoveBook()
         {
+            int number = 1;
+            int indexRemove = -1;
+
             Console.Clear();
             Console.WriteLine("Введите название книги");
 
             string name = InputUser();
 
-            Book bookRemove = _books.Find(book => book.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            List<Book> booksRemove = _books.FindAll(book => book.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
-            if (bookRemove != null)
+            if (booksRemove != null)
             {
+                foreach (var book in booksRemove)
+                {
+                    Console.Write(number++ + ": ");
+                    Console.WriteLine(book);
+                }
+
+                Console.WriteLine("Введите номер книги для удаления");
+
+                indexRemove = ReadInt(booksRemove.Count) - 1;
+
+                Book bookRemove = booksRemove[indexRemove];
+
                 _books.Remove(bookRemove);
                 Console.WriteLine($"Книга {name} удалена");
             }
@@ -165,12 +180,9 @@ namespace ijuniorPractice
 
             string? input = InputUser();
 
-            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input));
+            List<Book> result = _books.FindAll(name => name.Name.Contains(input, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var book in result)
-            {
-                Console.WriteLine(book);
-            }
+            PrintBooks(result);
         }
 
         public void SearchAuthor()
@@ -180,12 +192,9 @@ namespace ijuniorPractice
 
             string? input = InputUser();
 
-            List<Book> result = _books.FindAll(name => name.Author.StartsWith(input));
+            List<Book> result = _books.FindAll(name => name.Author.Contains(input, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var book in result)
-            {
-                Console.WriteLine(book);
-            }
+            PrintBooks(result);
         }
 
         public void SearchYear()
@@ -195,18 +204,35 @@ namespace ijuniorPractice
 
             string? input = InputUser();
 
-            List<Book> result = _books.FindAll(name => name.YearRelease.StartsWith(input));
+            List<Book> result = _books.FindAll(name => name.YearRelease.Contains(input, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var book in result)
-            {
-                Console.WriteLine(book);
-            }
+            PrintBooks(result);
         }
 
         private string InputUser()
         {
             return Console.ReadLine()
                           .ToLower();
+        }
+
+        private void PrintBooks(List<Book> books)
+        {
+            foreach (var book in books)
+            {
+                Console.WriteLine(book);
+            }
+        }
+
+        private int ReadInt(int maxIndex)
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
+            {
+                Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
+            }
+
+            return inputNumber;
         }
     }
 }
