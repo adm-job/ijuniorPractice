@@ -29,7 +29,9 @@ namespace ijuniorPractice
             const string ShowAll = "2";
             const string RemoveBook = "3";
             const string SearchName = "4";
-            const string Exit = "5";
+            const string SearchAuthor = "5";
+            const string SearchYear = "6";
+            const string Exit = "7";
 
             while (_isRunMenu)
             {
@@ -37,7 +39,9 @@ namespace ijuniorPractice
                 Console.WriteLine($"{AddBook}. Добавить книгу");
                 Console.WriteLine($"{ShowAll}. Показать всю полку");
                 Console.WriteLine($"{RemoveBook}. Удалить книгу");
-                Console.WriteLine($"{SearchName}. Поиск на полке");
+                Console.WriteLine($"{SearchName}. Поиск по названию");
+                Console.WriteLine($"{SearchAuthor}. Поиск по автору");
+                Console.WriteLine($"{SearchYear}. Поиск по году");
                 Console.WriteLine($"{Exit}. Выход");
                 Console.WriteLine("Введите номер пункта меню");
 
@@ -57,6 +61,12 @@ namespace ijuniorPractice
                     case SearchName:
                         _library.SearchName();
                         break;
+                    case SearchAuthor:
+                        _library.SearchAuthor();
+                        break;
+                    case SearchYear:
+                        _library.SearchYear();
+                        break;
                     case Exit:
                         _isRunMenu = false;
                         break;
@@ -70,17 +80,22 @@ namespace ijuniorPractice
 
     class Book
     {
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public string YearRelease { get; private set; }
-        public string Description { get; private set; }
-
         public Book(string name, string author = "", string yearRelease = "", string description = "")
         {
             Name = name;
             Author = author;
             YearRelease = yearRelease;
             Description = description;
+        }
+
+        public string Name { get; private set; }
+        public string Author { get; private set; }
+        public string YearRelease { get; private set; }
+        public string Description { get; private set; }
+
+        public override string ToString()
+        {
+            return $"Название {Name}\t\t\t : Автор {Author}\t\t\t : Год {YearRelease}\t : Примечание {Description}";
         }
     }
 
@@ -90,9 +105,16 @@ namespace ijuniorPractice
 
         public void ShowAll()
         {
+            Console.Clear();
+
+            if (_books.Count <= 0)
+            {
+                Console.WriteLine("Книг на полке нет");
+            }
+
             foreach (var book in _books)
             {
-                Show(book);
+                Console.WriteLine(book);
             }
         }
 
@@ -103,6 +125,7 @@ namespace ijuniorPractice
             string? yearRelease;
             string? description;
 
+            Console.Clear();
             Console.WriteLine("Введите название книги");
             name = InputUser();
             Console.WriteLine("Введите автора книги");
@@ -117,29 +140,67 @@ namespace ijuniorPractice
 
         public void RemoveBook()
         {
+            Console.Clear();
             Console.WriteLine("Введите название книги");
 
             string name = InputUser();
 
-            _books.Remove(new Book(name));
+            Book bookRemove = _books.Find(book => book.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (bookRemove != null)
+            {
+                _books.Remove(bookRemove);
+                Console.WriteLine($"Книга {name} удалена");
+            }
+            else
+            {
+                Console.WriteLine($"Введенная книга {name} не найдена");
+            }
         }
 
         public void SearchName()
         {
-            Console.WriteLine("Введите строку для поиска");
+            Console.Clear();
+            Console.WriteLine("Введите название для поиска");
+
             string? input = InputUser();
 
-            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input) || name.Author.StartsWith(input) || name.YearRelease.StartsWith(input));
+            List<Book> result = _books.FindAll(name => name.Name.StartsWith(input));
 
             foreach (var book in result)
             {
-                Show(book);
+                Console.WriteLine(book);
             }
         }
 
-        private void Show(Book book)
+        public void SearchAuthor()
         {
-            Console.Write($"Название {book.Name} : Автор {book.Author} : Год {book.YearRelease} : Примечание {book.Description}\n");
+            Console.Clear();
+            Console.WriteLine("Введите автора для поиска");
+
+            string? input = InputUser();
+
+            List<Book> result = _books.FindAll(name => name.Author.StartsWith(input));
+
+            foreach (var book in result)
+            {
+                Console.WriteLine(book);
+            }
+        }
+
+        public void SearchYear()
+        {
+            Console.Clear();
+            Console.WriteLine("Введите год книги для поиска");
+
+            string? input = InputUser();
+
+            List<Book> result = _books.FindAll(name => name.YearRelease.StartsWith(input));
+
+            foreach (var book in result)
+            {
+                Console.WriteLine(book);
+            }
         }
 
         private string InputUser()
