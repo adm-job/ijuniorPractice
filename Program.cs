@@ -22,7 +22,6 @@ namespace ijuniorPractice
             _library = library;
         }
 
-
         public void Run()
         {
             const string AddBook = "1";
