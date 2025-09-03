@@ -32,7 +32,8 @@ namespace ijuniorPractice
     class People
     {
         protected List<Products> _list = new();
-        public int Money { get; private set; }
+        public int Money { get; protected set; }
+        public string Name { get; private set; }
 
         public void ShowBalans()
         {
@@ -47,8 +48,9 @@ namespace ijuniorPractice
 
     class Seller : People
     {
-        public Products SellPrice()
+        public Products SellPrice(Products product, Bayer bayer)
         {
+
             return new Products("1", 1);//??????????????????????
         }
     }
@@ -58,6 +60,11 @@ namespace ijuniorPractice
         public void BayPrice(Products price)
         {
             _list.Add(price);
+        }
+
+        public void Pay(int price)
+        {
+            Money -= price;
         }
     }
 
