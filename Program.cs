@@ -6,13 +6,69 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            Library library = new Library();
-            Menu menu = new(library);
-            menu.Run();
+            //Library library = new Library();
+            //Menu menu = new(library);
+            //menu.Run();
         }
     }
 
-    class Menu
+    class Products
+    {
+        public Products(string title, int price = 0)
+        {
+            Title = title;
+            Price = price;
+        }
+
+        public string Title { get; private set; }
+        public int Price { get; private set; }
+
+        public override string ToString()
+        {
+            return $"Товар:{Title}\t\t\t\t\t\tЦена:{Price}";
+        }
+    }
+
+    class People
+    {
+        protected List<Products> _list = new();
+        public int Money { get; private set; }
+
+        public void ShowBalans()
+        {
+            Console.WriteLine($"В кошельке {Money} монет");
+        }
+
+        public void ShowList()
+        {
+            Console.WriteLine(string.Join("\n", _list));
+        }
+    }
+
+    class Seller : People
+    {
+        public Products SellPrice()
+        {
+            return new Products("1", 1);//??????????????????????
+        }
+    }
+
+    class Bayer : People
+    {
+        public void BayPrice(Products price)
+        {
+            _list.Add(price);
+        }
+    }
+
+
+
+
+
+
+
+
+    /* class Menu
     {
         private Library _library;
         private bool _isRunMenu = true;
@@ -74,164 +130,39 @@ namespace ijuniorPractice
                         break;
                 }
             }
-        }
-    }
+        }*/
 
-    class Book
-    {
-        public Book(string name, string author = "", string yearRelease = "", string description = "")
+    /*    class Book
         {
-            Name = name;
-            Author = author;
-            YearRelease = yearRelease;
-            Description = description;
-        }
-
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public string YearRelease { get; private set; }
-        public string Description { get; private set; }
-
-        public override string ToString()
-        {
-            return $"Название {Name}\t\t\t : Автор {Author}\t\t\t : Год {YearRelease}\t : Примечание {Description}";
-        }
-    }
-
-    class Library
-    {
-        private List<Book> _books = new();
-
-        public void ShowAll()
-        {
-            Console.Clear();
-
-            if (_books.Count <= 0)
+            public Book(string name, string author = "", string yearRelease = "", string description = "")
             {
-                Console.WriteLine("Книг на полке нет");
+                Name = name;
+                Author = author;
+                YearRelease = yearRelease;
+                Description = description;
             }
 
-            foreach (var book in _books)
+            public string Name { get; private set; }
+            public string Author { get; private set; }
+            public string YearRelease { get; private set; }
+            public string Description { get; private set; }
+
+            public override string ToString()
             {
-                Console.WriteLine(book);
+                return $"Название {Name}\t\t\t : Автор {Author}\t\t\t : Год {YearRelease}\t : Примечание {Description}";
             }
-        }
+        }*/
 
-        public void AddBook()
-        {
-            string? name;
-            string? author;
-            string? yearRelease;
-            string? description;
-
-            Console.Clear();
-            Console.WriteLine("Введите название книги");
-            name = InputUser();
-            Console.WriteLine("Введите автора книги");
-            author = InputUser();
-            Console.WriteLine("Введите год книги");
-            yearRelease = InputUser();
-            Console.WriteLine("Введите примечание");
-            description = InputUser();
-
-            _books.Add(new Book(name, author, yearRelease, description));
-        }
-
-        public void RemoveBook()
-        {
-            int number = 1;
-            int indexRemove = -1;
-
-            Console.Clear();
-            Console.WriteLine("Введите название книги");
-
-            string name = InputUser();
-
-            List<Book> booksRemove = _books.FindAll(book => book.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-            if (booksRemove != null)
+    /*        private int ReadInt(int maxIndex)
             {
-                foreach (var book in booksRemove)
+                int inputNumber;
+
+                while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
                 {
-                    Console.Write(number++ + ": ");
-                    Console.WriteLine(book);
+                    Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
                 }
 
-                Console.WriteLine("Введите номер книги для удаления");
+                return inputNumber;
+            }*/
 
-                indexRemove = ReadInt(booksRemove.Count) - 1;
-
-                Book bookRemove = booksRemove[indexRemove];
-
-                _books.Remove(bookRemove);
-                Console.WriteLine($"Книга {name} удалена");
-            }
-            else
-            {
-                Console.WriteLine($"Введенная книга {name} не найдена");
-            }
-        }
-
-        public void SearchName()
-        {
-            Console.Clear();
-            Console.WriteLine("Введите название для поиска");
-
-            string? input = InputUser();
-
-            List<Book> result = _books.FindAll(name => name.Name.Contains(input, StringComparison.OrdinalIgnoreCase));
-
-            PrintBooks(result);
-        }
-
-        public void SearchAuthor()
-        {
-            Console.Clear();
-            Console.WriteLine("Введите автора для поиска");
-
-            string? input = InputUser();
-
-            List<Book> result = _books.FindAll(name => name.Author.Contains(input, StringComparison.OrdinalIgnoreCase));
-
-            PrintBooks(result);
-        }
-
-        public void SearchYear()
-        {
-            Console.Clear();
-            Console.WriteLine("Введите год книги для поиска");
-
-            string? input = InputUser();
-
-            List<Book> result = _books.FindAll(name => name.YearRelease.Contains(input, StringComparison.OrdinalIgnoreCase));
-
-            PrintBooks(result);
-        }
-
-        private string InputUser()
-        {
-            return Console.ReadLine()
-                          .ToLower();
-        }
-
-        private void PrintBooks(List<Book> books)
-        {
-            foreach (var book in books)
-            {
-                Console.WriteLine(book);
-            }
-        }
-
-        private int ReadInt(int maxIndex)
-        {
-            int inputNumber;
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
-            {
-                Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
-            }
-
-            return inputNumber;
-        }
-    }
 }
