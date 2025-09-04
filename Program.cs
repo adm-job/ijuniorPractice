@@ -27,8 +27,8 @@
         {
             const string ShowProductsSeller = "1";
             const string ShowProductsBayer = "2";
-            const string ShowWolletSeller = "3";
-            const string ShowWolletBayer = "4";
+            const string ShowWalletSeller = "3";
+            const string ShowWalletBayer = "4";
             const string SellProduct = "5";
             const string AddProductSeller = "6";
             const string AddBayerMoney = "7";
@@ -36,11 +36,14 @@
 
             while (_isRunMenu)
             {
-                Console.WriteLine("\nМеню программы");
+                Console.WriteLine("\nСписок товаров магазина");
+                _seller.ShowList();
+
+                Console.WriteLine("\nМеню магазина");
                 Console.WriteLine($"{ShowProductsSeller}. Показать товары продавца");
                 Console.WriteLine($"{ShowProductsBayer}. Показать товары покупателя");
-                Console.WriteLine($"{ShowWolletSeller}. Показать деньги продавца");
-                Console.WriteLine($"{ShowWolletBayer}. Показать деньги покупателя");
+                Console.WriteLine($"{ShowWalletSeller}. Показать деньги продавца");
+                Console.WriteLine($"{ShowWalletBayer}. Показать деньги покупателя");
                 Console.WriteLine($"{SellProduct}. Продать товар из списка");
                 Console.WriteLine($"{AddProductSeller}. Добавить товары продавцу");
                 Console.WriteLine($"{AddBayerMoney}. Добавить деньги покупателю");
@@ -57,10 +60,10 @@
                     case ShowProductsBayer:
                         _bayer.ShowList();
                         break;
-                    case ShowWolletSeller:
+                    case ShowWalletSeller:
                         _seller.ShowBalans();
                         break;
-                    case ShowWolletBayer:
+                    case ShowWalletBayer:
                         _bayer.ShowBalans();
                         break;
                     case SellProduct:
@@ -83,9 +86,14 @@
         }
     }
 
-    class Products
+    class Shop
     {
-        public Products(string title, int price = 0)
+
+    }
+
+    class Product
+    {
+        public Product(string title, int price = 0)
         {
             Title = title;
             Price = price;
@@ -102,9 +110,8 @@
 
     class People
     {
-        protected List<Products> _list = new();
+        protected List<Product> List = new();
         public int Money { get; protected set; }
-        public string Name { get; private set; }
 
         public void ShowBalans()
         {
@@ -114,30 +121,30 @@
 
         public void ShowList()
         {
-            Console.Clear();
+            Console.WriteLine("**********************Список товаров**********************");
 
-            if (_list.Count > 0)
+            if (List.Count > 0)
             {
-                Console.WriteLine(string.Join("\n", _list));
+                Console.WriteLine(string.Join("\n", List));
             }
             else
             {
                 Console.WriteLine("Список товаров пуст");
             }
+            Console.WriteLine("**********************************************************");
         }
 
         public void AddProducts()
         {
-            int inputPrice = 0;
 
             Console.Clear();
             Console.WriteLine("Введите название товара");
             string inputProduct = Console.ReadLine();
-            
+
             Console.WriteLine("Введите цену товара");
-            int.TryParse(Console.ReadLine(), out inputPrice);
-            
-            _list.Add(new Products(inputProduct, inputPrice));
+            int inputPrice = ReadInt.Read();
+
+            List.Add(new Product(inputProduct, inputPrice));
 
         }
     }
@@ -147,26 +154,30 @@
         public void SellProduct(Bayer bayer)
         {
             Console.Clear();
-            ShowList();
 
-            Console.WriteLine("Введите номер покупки");
-         
-            int input = ReadInt(_list.Count) - 1;
+            if (List.Count > 0)
+            {
+                ShowList();
+                Console.WriteLine("Введите номер покупки");
 
-            if (_list[input].Price <= bayer.Money)
-            {
-                bayer.BayProduct(_list[input]);
-                Sell(_list[input]);
-            }
-            else
-            {
-                Console.WriteLine("Денег не достаточно");
+                int input = ReadInt.Read(List.Count);
+
+                if (List[input].Price <= bayer.Money)
+                {
+                    bayer.BayProduct(List[input]);
+                    Sell(List[input]);
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Денег не достаточно");
+                }
             }
         }
 
-        public void Sell(Products product)
+        public void Sell(Product product)
         {
-            _list.Remove(product);
+            List.Remove(product);
             Sell(product.Price);
         }
 
@@ -174,44 +185,53 @@
         {
             Money += price;
         }
-
-        private int ReadInt(int maxIndex)
-        {
-            int inputNumber;
-
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
-            {
-                Console.WriteLine($"Введено не верный номер продукта максимальный номер {maxIndex + 1}");
-            }
-
-            return inputNumber;
-        }
     }
 
     class Bayer : People
     {
-        public void BayProduct(Products product)
+        public void BayProduct(Product product)
         {
-            _list.Add(product);
+            List.Add(product);
             Pay(product.Price);
+        }
+        public void AddMoney()
+        {
+            Console.Clear();
+            Console.WriteLine("Введите сумму денег клиента");
+
+            int input = ReadInt.Read();
+            Money += input;
+
         }
 
         private void Pay(int price)
         {
             Money -= price;
         }
-
-        public void AddMoney()
+    }
+    static class ReadInt
+    {
+        public static int Read(int maxNumber)
         {
-            int input = 0;
+            int inputNumber;
 
-            Console.Clear();
-            Console.WriteLine("Введите сумму денег клиента");
-         
-            if (int.TryParse(Console.ReadLine(), out input))
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxNumber)
             {
-                Money += input;
+                Console.WriteLine($"Введено не верный номер продукта максимальный номер {maxNumber + 1}");
             }
+            return inputNumber - 1;
+        }
+
+        public static int Read()
+        {
+            int inputNumber;
+
+            if (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0)
+            {
+                Console.WriteLine($"Введено не число или отрицательное число");
+            }
+
+            return inputNumber;
         }
     }
 }
