@@ -1,14 +1,85 @@
-﻿using System;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            //Library library = new Library();
-            //Menu menu = new(library);
-            //menu.Run();
+            Bayer bayer = new Bayer();
+            Seller seller = new();
+            Menu menu = new(seller, bayer);
+            menu.Run();
+        }
+    }
+
+    class Menu
+    {
+        private Bayer _bayer;
+        private Seller _seller;
+        private bool _isRunMenu = true;
+
+        public Menu(Seller seller, Bayer bayer)
+        {
+            _seller = seller;
+            _bayer = bayer;
+        }
+
+        public void Run()
+        {
+            const string ShowProductsSeller = "1";
+            const string ShowProductsBayer = "2";
+            const string ShowWolletSeller = "3";
+            const string ShowWolletBayer = "4";
+            const string SellProduct = "5";
+            const string AddProductSeller = "6";
+            const string AddBayerMoney = "7";
+            const string Exit = "8";
+
+            while (_isRunMenu)
+            {
+                Console.WriteLine("\nМеню программы");
+                Console.WriteLine($"{ShowProductsSeller}. Показать товары продавца");
+                Console.WriteLine($"{ShowProductsBayer}. Показать товары покупателя");
+                Console.WriteLine($"{ShowWolletSeller}. Показать деньги продавца");
+                Console.WriteLine($"{ShowWolletBayer}. Показать деньги покупателя");
+                Console.WriteLine($"{SellProduct}. Продать товар из списка");
+                Console.WriteLine($"{AddProductSeller}. Добавить товары продавцу");
+                Console.WriteLine($"{AddBayerMoney}. Добавить деньги покупателю");
+                Console.WriteLine($"{Exit}. Выход");
+                Console.WriteLine("Введите номер пункта меню");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case ShowProductsSeller:
+                        _seller.ShowList();
+                        break;
+                    case ShowProductsBayer:
+                        _bayer.ShowList();
+                        break;
+                    case ShowWolletSeller:
+                        _seller.ShowBalans();
+                        break;
+                    case ShowWolletBayer:
+                        _bayer.ShowBalans();
+                        break;
+                    case SellProduct:
+                        _seller.SellProduct(_bayer);
+                        break;
+                    case AddProductSeller:
+                        _seller.AddProducts();
+                        break;
+                    case AddBayerMoney:
+                        _bayer.AddMoney();
+                        break;
+                    case Exit:
+                        _isRunMenu = false;
+                        break;
+                    default:
+                        Console.WriteLine($"Пункта под номером {input} не существует");
+                        break;
+                }
+            }
         }
     }
 
@@ -37,139 +108,110 @@ namespace ijuniorPractice
 
         public void ShowBalans()
         {
+            Console.Clear();
             Console.WriteLine($"В кошельке {Money} монет");
         }
 
         public void ShowList()
         {
-            Console.WriteLine(string.Join("\n", _list));
+            Console.Clear();
+
+            if (_list.Count > 0)
+            {
+                Console.WriteLine(string.Join("\n", _list));
+            }
+            else
+            {
+                Console.WriteLine("Список товаров пуст");
+            }
+        }
+
+        public void AddProducts()
+        {
+            int inputPrice = 0;
+
+            Console.Clear();
+            Console.WriteLine("Введите название товара");
+            string inputProduct = Console.ReadLine();
+            
+            Console.WriteLine("Введите цену товара");
+            int.TryParse(Console.ReadLine(), out inputPrice);
+            
+            _list.Add(new Products(inputProduct, inputPrice));
+
         }
     }
 
     class Seller : People
     {
-        public Products SellPrice(Products product, Bayer bayer)
+        public void SellProduct(Bayer bayer)
         {
+            Console.Clear();
+            ShowList();
 
-            return new Products("1", 1);//??????????????????????
+            Console.WriteLine("Введите номер покупки");
+         
+            int input = ReadInt(_list.Count) - 1;
+
+            if (_list[input].Price <= bayer.Money)
+            {
+                bayer.BayProduct(_list[input]);
+                Sell(_list[input]);
+            }
+            else
+            {
+                Console.WriteLine("Денег не достаточно");
+            }
+        }
+
+        public void Sell(Products product)
+        {
+            _list.Remove(product);
+            Sell(product.Price);
+        }
+
+        private void Sell(int price)
+        {
+            Money += price;
+        }
+
+        private int ReadInt(int maxIndex)
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
+            {
+                Console.WriteLine($"Введено не верный номер продукта максимальный номер {maxIndex + 1}");
+            }
+
+            return inputNumber;
         }
     }
 
     class Bayer : People
     {
-        public void BayPrice(Products price)
+        public void BayProduct(Products product)
         {
-            _list.Add(price);
+            _list.Add(product);
+            Pay(product.Price);
         }
 
-        public void Pay(int price)
+        private void Pay(int price)
         {
             Money -= price;
         }
-    }
 
-
-
-
-
-
-
-
-    /* class Menu
-    {
-        private Library _library;
-        private bool _isRunMenu = true;
-
-        public Menu(Library library)
+        public void AddMoney()
         {
-            _library = library;
+            int input = 0;
+
+            Console.Clear();
+            Console.WriteLine("Введите сумму денег клиента");
+         
+            if (int.TryParse(Console.ReadLine(), out input))
+            {
+                Money += input;
+            }
         }
-
-        public void Run()
-        {
-            const string AddBook = "1";
-            const string ShowAll = "2";
-            const string RemoveBook = "3";
-            const string SearchName = "4";
-            const string SearchAuthor = "5";
-            const string SearchYear = "6";
-            const string Exit = "7";
-
-            while (_isRunMenu)
-            {
-                Console.WriteLine("\nПолка с книгами");
-                Console.WriteLine($"{AddBook}. Добавить книгу");
-                Console.WriteLine($"{ShowAll}. Показать всю полку");
-                Console.WriteLine($"{RemoveBook}. Удалить книгу");
-                Console.WriteLine($"{SearchName}. Поиск по названию");
-                Console.WriteLine($"{SearchAuthor}. Поиск по автору");
-                Console.WriteLine($"{SearchYear}. Поиск по году");
-                Console.WriteLine($"{Exit}. Выход");
-                Console.WriteLine("Введите номер пункта меню");
-
-                string input = Console.ReadLine();
-
-                switch (input)
-                {
-                    case AddBook:
-                        _library.AddBook();
-                        break;
-                    case ShowAll:
-                        _library.ShowAll();
-                        break;
-                    case RemoveBook:
-                        _library.RemoveBook();
-                        break;
-                    case SearchName:
-                        _library.SearchName();
-                        break;
-                    case SearchAuthor:
-                        _library.SearchAuthor();
-                        break;
-                    case SearchYear:
-                        _library.SearchYear();
-                        break;
-                    case Exit:
-                        _isRunMenu = false;
-                        break;
-                    default:
-                        Console.WriteLine($"Пункта под номером {input} не существует");
-                        break;
-                }
-            }
-        }*/
-
-    /*    class Book
-        {
-            public Book(string name, string author = "", string yearRelease = "", string description = "")
-            {
-                Name = name;
-                Author = author;
-                YearRelease = yearRelease;
-                Description = description;
-            }
-
-            public string Name { get; private set; }
-            public string Author { get; private set; }
-            public string YearRelease { get; private set; }
-            public string Description { get; private set; }
-
-            public override string ToString()
-            {
-                return $"Название {Name}\t\t\t : Автор {Author}\t\t\t : Год {YearRelease}\t : Примечание {Description}";
-            }
-        }*/
-
-    /*        private int ReadInt(int maxIndex)
-            {
-                int inputNumber;
-
-                while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
-                {
-                    Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
-                }
-
-                return inputNumber;
-            }*/
-
+    }
 }
