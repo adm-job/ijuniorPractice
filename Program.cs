@@ -6,47 +6,44 @@
         {
             Bayer bayer = new Bayer();
             Seller seller = new();
-            Menu menu = new(seller, bayer);
+
+            bayer.AddMoney();
+            seller.AddProducts();
+
+            Shop shop = new(seller, bayer);
+            Menu menu = new(shop);
             menu.Run();
         }
     }
 
     class Menu
     {
-        private Bayer _bayer;
-        private Seller _seller;
+        private Shop _shop;
         private bool _isRunMenu = true;
 
-        public Menu(Seller seller, Bayer bayer)
+        public Menu(Shop shop)
         {
-            _seller = seller;
-            _bayer = bayer;
+        _shop = shop;
         }
 
         public void Run()
         {
-            const string ShowProductsSeller = "1";
-            const string ShowProductsBayer = "2";
-            const string ShowWalletSeller = "3";
-            const string ShowWalletBayer = "4";
-            const string SellProduct = "5";
-            const string AddProductSeller = "6";
-            const string AddBayerMoney = "7";
-            const string Exit = "8";
+            const string ShowProductsBayer = "1";
+            const string ShowWalletSeller = "2";
+            const string ShowWalletBayer = "3";
+            const string SellProduct = "4";
+            const string Exit = "5";
 
             while (_isRunMenu)
-            {
+            {   
                 Console.WriteLine("\nСписок товаров магазина");
-                _seller.ShowList();
+                _shop.ShowProducts();
 
                 Console.WriteLine("\nМеню магазина");
-                Console.WriteLine($"{ShowProductsSeller}. Показать товары продавца");
                 Console.WriteLine($"{ShowProductsBayer}. Показать товары покупателя");
                 Console.WriteLine($"{ShowWalletSeller}. Показать деньги продавца");
                 Console.WriteLine($"{ShowWalletBayer}. Показать деньги покупателя");
                 Console.WriteLine($"{SellProduct}. Продать товар из списка");
-                Console.WriteLine($"{AddProductSeller}. Добавить товары продавцу");
-                Console.WriteLine($"{AddBayerMoney}. Добавить деньги покупателю");
                 Console.WriteLine($"{Exit}. Выход");
                 Console.WriteLine("Введите номер пункта меню");
 
@@ -54,26 +51,17 @@
 
                 switch (input)
                 {
-                    case ShowProductsSeller:
-                        _seller.ShowList();
-                        break;
                     case ShowProductsBayer:
-                        _bayer.ShowList();
+                        _shop.ShowList();
                         break;
                     case ShowWalletSeller:
-                        _seller.ShowBalans();
+                        _shop.ShowKassBalans();
                         break;
                     case ShowWalletBayer:
-                        _bayer.ShowBalans();
+                        _shop.ShowBayerBalans();
                         break;
                     case SellProduct:
-                        _seller.SellProduct(_bayer);
-                        break;
-                    case AddProductSeller:
-                        _seller.AddProducts();
-                        break;
-                    case AddBayerMoney:
-                        _bayer.AddMoney();
+                        _shop.SellProduct();
                         break;
                     case Exit:
                         _isRunMenu = false;
@@ -88,7 +76,41 @@
 
     class Shop
     {
+        private Seller _seller;
+        private Bayer _bayer;
 
+        public Shop(Seller seller, Bayer bayer)
+        {
+            _seller = seller;
+            _bayer = bayer;
+        }
+
+        public  void ShowProducts()
+        {
+            _seller.ShowList();
+        }
+
+        public void ShowList()
+        {
+            _bayer.ShowList();
+        }
+
+        public void ShowKassBalans()
+        {
+            _seller.ShowBalans();
+        }
+
+        public void ShowBayerBalans()
+        {
+            _bayer.ShowBalans();
+        }
+
+        public void SellProduct()
+        {
+            _seller.SellProduct(_bayer);
+        }
+
+         
     }
 
     class Product
@@ -121,14 +143,15 @@
 
         public void ShowList()
         {
-            Console.WriteLine("**********************Список товаров**********************");
 
             if (List.Count > 0)
-            {
+            {   
+                Console.WriteLine("**********************Список товаров**********************");
                 Console.WriteLine(string.Join("\n", List));
             }
             else
             {
+                Console.WriteLine("**********************Список товаров**********************");
                 Console.WriteLine("Список товаров пуст");
             }
             Console.WriteLine("**********************************************************");
@@ -136,16 +159,9 @@
 
         public void AddProducts()
         {
-
-            Console.Clear();
-            Console.WriteLine("Введите название товара");
-            string inputProduct = Console.ReadLine();
-
-            Console.WriteLine("Введите цену товара");
-            int inputPrice = ReadInt.Read();
-
-            List.Add(new Product(inputProduct, inputPrice));
-
+            List.Add(new Product("Вода", 50));
+            List.Add(new Product("Мясо", 400));
+            List.Add(new Product("Картошка", 250));
         }
     }
 
@@ -196,11 +212,7 @@
         }
         public void AddMoney()
         {
-            Console.Clear();
-            Console.WriteLine("Введите сумму денег клиента");
-
-            int input = ReadInt.Read();
-            Money += input;
+            Money += 1000;
 
         }
 
