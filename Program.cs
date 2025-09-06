@@ -4,13 +4,13 @@
     {
         static void Main(string[] args)
         {
-            Bayer bayer = new Bayer();
+            Buyer buyer = new Buyer();
             Seller seller = new();
 
-            bayer.AddMoney();
+            buyer.AddMoney();
             seller.AddProducts();
 
-            Shop shop = new(seller, bayer);
+            Shop shop = new(seller, buyer);
             Menu menu = new(shop);
             menu.Run();
         }
@@ -23,7 +23,7 @@
 
         public Menu(Shop shop)
         {
-        _shop = shop;
+            _shop = shop;
         }
 
         public void Run()
@@ -35,7 +35,7 @@
             const string Exit = "5";
 
             while (_isRunMenu)
-            {   
+            {
                 Console.WriteLine("\nСписок товаров магазина");
                 _shop.ShowProducts();
 
@@ -61,7 +61,7 @@
                         _shop.ShowBayerBalans();
                         break;
                     case SellProduct:
-                        _shop.SellProduct();
+                        _shop.Trade();
                         break;
                     case Exit:
                         _isRunMenu = false;
@@ -77,22 +77,22 @@
     class Shop
     {
         private Seller _seller;
-        private Bayer _bayer;
+        private Buyer _buyer;
 
-        public Shop(Seller seller, Bayer bayer)
+        public Shop(Seller seller, Buyer buyer)
         {
             _seller = seller;
-            _bayer = bayer;
+            _buyer = buyer;
         }
 
-        public  void ShowProducts()
+        public void ShowProducts()
         {
             _seller.ShowList();
         }
 
         public void ShowList()
         {
-            _bayer.ShowList();
+            _buyer.ShowList();
         }
 
         public void ShowKassBalans()
@@ -102,15 +102,15 @@
 
         public void ShowBayerBalans()
         {
-            _bayer.ShowBalans();
+            _buyer.ShowBalans();
         }
 
-        public void SellProduct()
+        public void Trade()
         {
-            _seller.SellProduct(_bayer);
+            _seller.SellProduct(_buyer);
         }
 
-         
+
     }
 
     class Product
@@ -130,9 +130,9 @@
         }
     }
 
-    class People
+    class Human
     {
-        protected List<Product> List = new();
+        protected List<Product> Products = new();
         public int Money { get; protected set; }
 
         public void ShowBalans()
@@ -143,11 +143,10 @@
 
         public void ShowList()
         {
-
-            if (List.Count > 0)
-            {   
+            if (Products.Count > 0)
+            {
                 Console.WriteLine("**********************Список товаров**********************");
-                Console.WriteLine(string.Join("\n", List));
+                Console.WriteLine(string.Join("\n", Products));
             }
             else
             {
@@ -156,32 +155,25 @@
             }
             Console.WriteLine("**********************************************************");
         }
-
-        public void AddProducts()
-        {
-            List.Add(new Product("Вода", 50));
-            List.Add(new Product("Мясо", 400));
-            List.Add(new Product("Картошка", 250));
-        }
     }
 
-    class Seller : People
+    class Seller : Human
     {
-        public void SellProduct(Bayer bayer)
+        public void SellProduct(Buyer buyer)
         {
             Console.Clear();
 
-            if (List.Count > 0)
+            if (Products.Count > 0)
             {
                 ShowList();
                 Console.WriteLine("Введите номер покупки");
 
-                int input = ReadInt.Read(List.Count);
+                int input = Utils.Read(Products.Count);
 
-                if (List[input].Price <= bayer.Money)
+                if (Products[input].Price <= buyer.Money)
                 {
-                    bayer.BayProduct(List[input]);
-                    Sell(List[input]);
+                    buyer.BayProduct(Products[input]);
+                    Sell(Products[input]);
                 }
                 else
                 {
@@ -193,21 +185,27 @@
 
         public void Sell(Product product)
         {
-            List.Remove(product);
-            Sell(product.Price);
+            Products.Remove(product);
+            addMoney(product.Price);
         }
 
-        private void Sell(int price)
+        private void addMoney(int price)
         {
             Money += price;
         }
+        public void AddProducts()
+        {
+            Products.Add(new Product("Вода", 50));
+            Products.Add(new Product("Мясо", 400));
+            Products.Add(new Product("Картошка", 250));
+        }
     }
 
-    class Bayer : People
+    class Buyer : Human
     {
         public void BayProduct(Product product)
         {
-            List.Add(product);
+            Products.Add(product);
             Pay(product.Price);
         }
         public void AddMoney()
@@ -221,7 +219,7 @@
             Money -= price;
         }
     }
-    static class ReadInt
+    static class Utils
     {
         public static int Read(int maxNumber)
         {
