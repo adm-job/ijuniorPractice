@@ -1,4 +1,6 @@
-﻿namespace ijuniorPractice
+﻿using System;
+
+namespace ijuniorPractice
 {
     internal class Program
     {
@@ -107,10 +109,21 @@
 
         public void Trade()
         {
-            _seller.SellProduct(_buyer);
+            Product tradeProduct = _seller.SellProduct();
+
+            if (tradeProduct != null)
+            {
+                if (tradeProduct.Price <= _buyer.Money)
+                {
+                    _seller.RemoveProduct(tradeProduct);
+                    _buyer.AddProduct(tradeProduct);
+                }
+                else
+                {
+                    Console.WriteLine("Денег не достаточно");
+                }
+            }
         }
-
-
     }
 
     class Product
@@ -126,7 +139,7 @@
 
         public override string ToString()
         {
-            return $"Товар:{Title}\t\t\t\t\t\tЦена:{Price}";
+            return $"Товар:{Title}\t\t\t\t\tЦена:{Price}";
         }
     }
 
@@ -146,7 +159,13 @@
             if (Products.Count > 0)
             {
                 Console.WriteLine("**********************Список товаров**********************");
-                Console.WriteLine(string.Join("\n", Products));
+
+                int number = 1;
+                foreach (var product in Products)
+                {
+                    Console.Write(number++ + ":");
+                    Console.WriteLine(product);
+                }
             }
             else
             {
@@ -159,7 +178,7 @@
 
     class Seller : Human
     {
-        public void SellProduct(Buyer buyer)
+        public Product SellProduct()
         {
             Console.Clear();
 
@@ -169,21 +188,18 @@
                 Console.WriteLine("Введите номер покупки");
 
                 int input = Utils.Read(Products.Count);
-
-                if (Products[input].Price <= buyer.Money)
-                {
-                    buyer.BayProduct(Products[input]);
-                    Sell(Products[input]);
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Денег не достаточно");
-                }
+                if (input > Products.Count)
+                    Console.WriteLine("Товара с данным номером нет в продаже");
+                return Products[input];
+            }
+            else
+            {
+                Console.WriteLine("Товаров для продажи нет");
+                return null;
             }
         }
 
-        public void Sell(Product product)
+        public void RemoveProduct(Product product)
         {
             Products.Remove(product);
             addMoney(product.Price);
@@ -198,12 +214,13 @@
             Products.Add(new Product("Вода", 50));
             Products.Add(new Product("Мясо", 400));
             Products.Add(new Product("Картошка", 250));
+            Products.Add(new Product("Рыба", 750));
         }
     }
 
     class Buyer : Human
     {
-        public void BayProduct(Product product)
+        public void AddProduct(Product product)
         {
             Products.Add(product);
             Pay(product.Price);
@@ -236,9 +253,9 @@
         {
             int inputNumber;
 
-            if (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0)
+            if (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber < 0)
             {
-                Console.WriteLine($"Введено не число или отрицательное число");
+                Console.WriteLine($"Введено не число или отрицательное число или 0");
             }
 
             return inputNumber;
