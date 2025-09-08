@@ -56,18 +56,23 @@ namespace ijuniorPractice
                     case ShowProductsBayer:
                         _shop.ShowList();
                         break;
+
                     case ShowWalletSeller:
                         _shop.ShowKassBalans();
                         break;
+
                     case ShowWalletBayer:
                         _shop.ShowBayerBalans();
                         break;
+
                     case SellProduct:
                         _shop.Trade();
                         break;
+
                     case Exit:
                         _isRunMenu = false;
                         break;
+
                     default:
                         Console.WriteLine($"Пункта под номером {input} не существует");
                         break;
@@ -115,8 +120,8 @@ namespace ijuniorPractice
             {
                 if (tradeProduct.Price <= _buyer.Money)
                 {
-                    _seller.RemoveProduct(tradeProduct);
-                    _buyer.AddProduct(tradeProduct);
+                    _seller.Sell(tradeProduct);
+                    _buyer.Purchase(tradeProduct);
                 }
                 else
                 {
@@ -199,13 +204,13 @@ namespace ijuniorPractice
             }
         }
 
-        public void RemoveProduct(Product product)
+        public void Sell(Product product)
         {
             Products.Remove(product);
-            addMoney(product.Price);
+            AddMoney(product.Price);
         }
 
-        private void addMoney(int price)
+        private void AddMoney(int price)
         {
             Money += price;
         }
@@ -220,7 +225,7 @@ namespace ijuniorPractice
 
     class Buyer : Human
     {
-        public void AddProduct(Product product)
+        public void Purchase(Product product)
         {
             Products.Add(product);
             Pay(product.Price);
@@ -242,7 +247,7 @@ namespace ijuniorPractice
         {
             int inputNumber;
 
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxNumber)
+            if (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxNumber)
             {
                 Console.WriteLine($"Введено не верный номер продукта максимальный номер {maxNumber + 1}");
             }
