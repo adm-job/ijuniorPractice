@@ -251,6 +251,7 @@ namespace ijuniorPractice
             {
                 Console.WriteLine($"Введено не верный номер продукта максимальный номер {maxNumber + 1}");
             }
+
             return inputNumber - 1;
         }
 
