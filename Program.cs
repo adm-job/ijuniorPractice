@@ -23,10 +23,38 @@ namespace ijuniorPractice
 
     class Passenger
     {
-        private int _ticket;
-        public Passenger (int ticket)
+        public Passenger(int ticket)
         {
-            ticket = _ticket;
+            Ticket = ticket;
         }
+
+        public int Ticket { get; private set; }
+    }
+
+    class City
+    {
+        private List<string> _title = new();
+        private Random _random = new();
+
+        public void CityAdd()
+        {
+            _title.Add("Москва");
+            _title.Add("Екатеринбург");
+            _title.Add("Магадан");
+            _title.Add("Тюмень");
+            _title.Add("Челябинск");
+            _title.Add("Воркута");
+            _title.Add("Саратов");
+            _title.Add("Тверь");
+            _title.Add("Пермь");
+            _title.Add("Омск");
+        }
+
+        public string CityRandom()
+        {
+            return _title.FindIndex(_random.Next(0, _title.Count));
+        
+        }
+
     }
 }
