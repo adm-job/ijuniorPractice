@@ -52,8 +52,7 @@ namespace ijuniorPractice
 
         public string CityRandom()
         {
-            return _title.FindIndex(_random.Next(0, _title.Count));
-        
+            return _title[ _random.Next(0, _title.Count)];
         }
 
     }
