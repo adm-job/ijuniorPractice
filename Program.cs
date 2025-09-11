@@ -50,9 +50,9 @@ namespace ijuniorPractice
             _title.Add("Омск");
         }
 
-        public string CityRandom()
+        public List<string> CityRandom()
         {
-            return _title[ _random.Next(0, _title.Count)];
+            return _title.OrderBy(City => _random.Next()).Take(2).ToList();
         }
 
     }
