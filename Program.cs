@@ -26,11 +26,10 @@ namespace ijuniorPractice
             const string GettingStarted = "1";
             const string Exit = "2";
 
-
             while (_isRunMenu)
             {
                 Console.WriteLine("Работа диспетчера");
-                Console.WriteLine($"{GettingStarted} Начать работу");
+                Console.WriteLine($"{GettingStarted} Создать поезд");
                 Console.WriteLine($"{Exit} Выход");
 
                 input = Console.ReadLine();
@@ -38,12 +37,13 @@ namespace ijuniorPractice
                 switch (input)
                 {
                     case GettingStarted:
-                        _dispatcher.StartJob();
+                        _dispatcher.CreateTrain();
                         break;
 
                     case Exit:
                         _isRunMenu = false;
                         break;
+
                     default:
                         Console.WriteLine("Выбранного пункта нет в списке");
                         break;
@@ -52,13 +52,12 @@ namespace ijuniorPractice
         }
     }
 
-
     class Dispatcher
     {
-        Random random = new Random();
+        private Random _random = new Random();
 
-        City city;
-        Train train;
+        private RoutePoint _route = new();
+        private Train _train;
 
         private int _numberWagons = 0;
         private int _totalPassengers;
@@ -67,9 +66,8 @@ namespace ijuniorPractice
         private int _seatsСarriage = 81;
         private List<string> _routePoints;
 
-        public void StartJob()
+        public void CreateTrain()
         {
-            city.CityAdd();
             GetRoutePoints();
             AssignRoute();
             GetNumberPassengers();
@@ -78,32 +76,33 @@ namespace ijuniorPractice
 
         private void GetRoutePoints()
         {
-            _routePoints = city.CityRandom();
-            Console.WriteLine("Задаю направление маршрута поезда");
+            _routePoints = _route.RouteRandom();
+            Console.WriteLine("\nЗадаю направление маршрута поезда");
         }
 
         private void AssignRoute()
         {
-            train = new Train(_routePoints[0], _routePoints[1]);
-            Console.WriteLine(train);
+            _train = new Train(_routePoints[0], _routePoints[1]);
+
+            Console.WriteLine(_train);
         }
         private void GetNumberPassengers()
         {
-            _totalPassengers = random.Next(_minPassengers, _maxPassengers);
+            _totalPassengers = _random.Next(_minPassengers, _maxPassengers);
 
-            Console.WriteLine($"Билетов куплено на поезд - { _totalPassengers}"); ;
+            Console.WriteLine($"Билетов куплено на поезд - {_totalPassengers}"); ;
         }
 
         private void AssembleTrain()
         {
-            _numberWagons = _seatsСarriage / _totalPassengers;
+            _numberWagons = _totalPassengers / _seatsСarriage;
 
             if ((_seatsСarriage % _totalPassengers) != 0)
             {
                 _numberWagons++;
             }
 
-            Console.WriteLine($"В поезде {_numberWagons} вагонов");
+            Console.WriteLine($"В поезде {_numberWagons} вагонов\n");
         }
 
     }
@@ -125,12 +124,22 @@ namespace ijuniorPractice
         }
     }
 
-    class City
+    class Van
     {
-        private List<string> _title = new() { "Москва" };
+
+    }
+
+    class RoutePoint
+    {
+        private List<string> _title = new();
         private Random _random = new();
 
-        public void CityAdd()
+        public RoutePoint()
+        {
+            RouteAdd();
+        }
+
+        private void RouteAdd()
         {
             _title.Add("Москва");
             _title.Add("Екатеринбург");
@@ -144,7 +153,7 @@ namespace ijuniorPractice
             _title.Add("Омск");
         }
 
-        public List<string> CityRandom()
+        public List<string> RouteRandom()
         {
             return _title.OrderBy(City => _random.Next()).Take(2).ToList();
         }
