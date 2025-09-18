@@ -83,28 +83,26 @@ namespace ijuniorPractice
         private void AssignRoute()
         {
             _train = new Train(_routePoints[0], _routePoints[1]);
-
-            Console.WriteLine(_train);
         }
         private void GetNumberPassengers()
         {
             _totalPassengers = _random.Next(_minPassengers, _maxPassengers);
-
-            Console.WriteLine($"Билетов куплено на поезд - {_totalPassengers}"); ;
         }
 
         private void AssembleTrain()
         {
-            _numberWagons = _totalPassengers / _seatsСarriage;
 
-            if ((_seatsСarriage % _totalPassengers) != 0)
+            int capacityWagon = 81;
+            _numberWagons = (int)Math.Ceiling((double)_totalPassengers / _seatsСarriage);
+
+            for (int i=0;  i < _numberWagons; i++)
             {
-                _numberWagons++;
+                _train.AddWagon(new Wagon(i + 1, capacityWagon));
             }
 
-            Console.WriteLine($"В поезде {_numberWagons} вагонов\n");
+            Console.WriteLine($"{_train}");
+            Console.WriteLine($"Билетов куплено на поезд - {_totalPassengers}\n"); ;
         }
-
     }
 
     class Train
@@ -113,19 +111,34 @@ namespace ijuniorPractice
         {
             DeparturePoint = departurePoint;
             DestinationPoint = destinationPoint;
+            Wagons = new List<Wagon>();
         }
 
         public string DeparturePoint { get; private set; }
         public string DestinationPoint { get; private set; }
+        public List<Wagon> Wagons { get; private set; }
+
+        public void AddWagon(Wagon wagon)
+        {
+            Wagons.Add(wagon);
+        }
 
         public override string ToString()
         {
-            return $"Поезд следует из {DeparturePoint} в {DestinationPoint}";
+            return $"Поезд следует из {DeparturePoint} в {DestinationPoint} у него {Wagons.Count} вагонов";
         }
     }
 
-    class Van
+    class Wagon
     {
+        public Wagon(int number, int seats)
+        {
+            Number = number;
+            Seats = seats;
+        }
+
+        public int Number { get; private set; }
+        public int Seats { get; private set; }
 
     }
 
@@ -157,6 +170,5 @@ namespace ijuniorPractice
         {
             return _title.OrderBy(City => _random.Next()).Take(2).ToList();
         }
-
     }
 }
