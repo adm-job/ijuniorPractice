@@ -55,8 +55,8 @@ namespace ijuniorPractice
     class Dispatcher
     {
         private Random _random = new Random();
-
-        private RoutePoint _route = new();
+     
+        private RoutePoint _routePoint = new();
         private Train _train;
 
         private int _numberWagons = 0;
@@ -64,7 +64,6 @@ namespace ijuniorPractice
         private int _maxPassengers = 1000;
         private int _minPassengers = 50;
         private int _seatsСarriage = 81;
-        private List<string> _routePoints;
 
         public void CreateTrain()
         {
@@ -76,13 +75,13 @@ namespace ijuniorPractice
 
         private void GetRoutePoints()
         {
-            _routePoints = _route.RouteRandom();
-            Console.WriteLine("\nЗадаю направление маршрута поезда");
+            _routePoint.GetDeparturePoint();
+            _routePoint.GetDestinationPoint();
         }
 
         private void AssignRoute()
         {
-            _train = new Train(_routePoints[0], _routePoints[1]);
+            _train = new Train(_routePoint.DeparturePoint, _routePoint.DestinationPoint);
         }
         private void GetNumberPassengers()
         {
@@ -107,25 +106,24 @@ namespace ijuniorPractice
 
     class Train
     {
+        private List<Wagon> _wagons = new List<Wagon>();
+        private string _departurePoint;
+        private string _destinationPoint;
+
         public Train(string departurePoint, string destinationPoint)
         {
-            DeparturePoint = departurePoint;
-            DestinationPoint = destinationPoint;
-            Wagons = new List<Wagon>();
+            _departurePoint = departurePoint;
+            _destinationPoint = destinationPoint;
         }
-
-        public string DeparturePoint { get; private set; }
-        public string DestinationPoint { get; private set; }
-        public List<Wagon> Wagons { get; private set; }
 
         public void AddWagon(Wagon wagon)
         {
-            Wagons.Add(wagon);
+            _wagons.Add(wagon);
         }
 
         public override string ToString()
         {
-            return $"Поезд следует из {DeparturePoint} в {DestinationPoint} у него {Wagons.Count} вагонов";
+            return $"Поезд следует из {_departurePoint} в {_destinationPoint} у него {_wagons.Count} вагонов";
         }
     }
 
@@ -144,31 +142,19 @@ namespace ijuniorPractice
 
     class RoutePoint
     {
-        private List<string> _title = new();
-        private Random _random = new();
+        public string DeparturePoint { get; private set; }
+        public string DestinationPoint { get; private set; }
 
-        public RoutePoint()
+        public void GetDeparturePoint()
         {
-            RouteAdd();
+            Console.WriteLine("Введите станцию отправления");
+            DeparturePoint = Console.ReadLine();
         }
 
-        private void RouteAdd()
+        public void GetDestinationPoint()
         {
-            _title.Add("Москва");
-            _title.Add("Екатеринбург");
-            _title.Add("Магадан");
-            _title.Add("Тюмень");
-            _title.Add("Челябинск");
-            _title.Add("Воркута");
-            _title.Add("Саратов");
-            _title.Add("Тверь");
-            _title.Add("Пермь");
-            _title.Add("Омск");
-        }
-
-        public List<string> RouteRandom()
-        {
-            return _title.OrderBy(City => _random.Next()).Take(2).ToList();
+            Console.WriteLine("Введите станцию прибытия");
+            DestinationPoint = Console.ReadLine();
         }
     }
 }
