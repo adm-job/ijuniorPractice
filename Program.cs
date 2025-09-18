@@ -8,25 +8,24 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            Menu menu = new();
-            menu.Run();
+            DispatcherView dispatcherView = new();
+            dispatcherView.Begin();
         }
     }
 
-    class Menu()
+    class DispatcherView()
     {
         private Dispatcher _dispatcher = new();
+        private bool _isView = true;
 
-        private bool _isRunMenu = true;
-
-        public void Run()
+        public void Begin()
         {
             string input;
 
             const string GettingStarted = "1";
             const string Exit = "2";
 
-            while (_isRunMenu)
+            while (_isView)
             {
                 Console.WriteLine("Работа диспетчера");
                 Console.WriteLine($"{GettingStarted} Создать поезд");
@@ -41,7 +40,7 @@ namespace ijuniorPractice
                         break;
 
                     case Exit:
-                        _isRunMenu = false;
+                        _isView = false;
                         break;
 
                     default:
@@ -54,16 +53,13 @@ namespace ijuniorPractice
 
     class Dispatcher
     {
-        private Random _random = new Random();
-     
         private RoutePoint _routePoint = new();
         private Train _train;
-
-        private int _numberWagons = 0;
+        private Passenger _passenger = new();
+        private Wagon _wagon ;
         private int _totalPassengers;
-        private int _maxPassengers = 1000;
-        private int _minPassengers = 50;
-        private int _seatsСarriage = 81;
+        private int _seatsWagon = 81;
+
 
         public void CreateTrain()
         {
@@ -85,18 +81,16 @@ namespace ijuniorPractice
         }
         private void GetNumberPassengers()
         {
-            _totalPassengers = _random.Next(_minPassengers, _maxPassengers);
+            _totalPassengers = _passenger.GetQuantity();
         }
 
         private void AssembleTrain()
         {
+            int _numberWagons = (int)Math.Ceiling((double)_totalPassengers / _seatsWagon);
 
-            int capacityWagon = 81;
-            _numberWagons = (int)Math.Ceiling((double)_totalPassengers / _seatsСarriage);
-
-            for (int i=0;  i < _numberWagons; i++)
+            for (int i = 0; i < _numberWagons; i++)
             {
-                _train.AddWagon(new Wagon(i + 1, capacityWagon));
+                _train.AddWagon(new Wagon(i + 1));
             }
 
             Console.WriteLine($"{_train}");
@@ -129,15 +123,26 @@ namespace ijuniorPractice
 
     class Wagon
     {
-        public Wagon(int number, int seats)
+        public Wagon(int number)
         {
             Number = number;
-            Seats = seats;
         }
 
         public int Number { get; private set; }
         public int Seats { get; private set; }
+    }
 
+    class Passenger
+    {
+        private Random _random = new Random();
+
+        private int _maxPassengers = 1000;
+        private int _minPassengers = 50;
+
+        public int GetQuantity()
+        {
+            return _random.Next(_minPassengers, _maxPassengers);
+        }
     }
 
     class RoutePoint
