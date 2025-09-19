@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -53,48 +51,23 @@ namespace ijuniorPractice
 
     class Dispatcher
     {
-        private RoutePoint _routePoint = new();
-        private Train _train;
-        private Passenger _passenger = new();
-        private Wagon _wagon ;
-        private int _totalPassengers;
-        private int _seatsWagon = 81;
-
-
         public void CreateTrain()
         {
-            GetRoutePoints();
-            AssignRoute();
-            GetNumberPassengers();
             AssembleTrain();
-        }
-
-        private void GetRoutePoints()
-        {
-            _routePoint.GetDeparturePoint();
-            _routePoint.GetDestinationPoint();
-        }
-
-        private void AssignRoute()
-        {
-            _train = new Train(_routePoint.DeparturePoint, _routePoint.DestinationPoint);
-        }
-        private void GetNumberPassengers()
-        {
-            _totalPassengers = _passenger.GetQuantity();
         }
 
         private void AssembleTrain()
         {
-            int _numberWagons = (int)Math.Ceiling((double)_totalPassengers / _seatsWagon);
+            Point _point = new();
+            TicketOffice _ticketOffice = new();
+            int _seatsWagon = 81;
 
-            for (int i = 0; i < _numberWagons; i++)
-            {
-                _train.AddWagon(new Wagon(i + 1));
-            }
+            int numberWagons = (int)Math.Ceiling((double)_ticketOffice.GetQuantity() / _seatsWagon);
+
+            Train _train = new Train(_point.GetDeparturePoint(), _point.GetDestinationPoint(), numberWagons);
 
             Console.WriteLine($"{_train}");
-            Console.WriteLine($"Билетов куплено на поезд - {_totalPassengers}\n"); ;
+            Console.WriteLine($"Билетов куплено на поезд - {_ticketOffice.GetQuantity()}\n"); ;
         }
     }
 
@@ -104,15 +77,15 @@ namespace ijuniorPractice
         private string _departurePoint;
         private string _destinationPoint;
 
-        public Train(string departurePoint, string destinationPoint)
+        public Train(string departurePoint, string destinationPoint, int tikets)
         {
             _departurePoint = departurePoint;
             _destinationPoint = destinationPoint;
-        }
 
-        public void AddWagon(Wagon wagon)
-        {
-            _wagons.Add(wagon);
+            for (int i = 0; i < tikets; i++)
+            {
+                _wagons.Add(new Wagon(i + 1));
+            }
         }
 
         public override string ToString()
@@ -129,10 +102,9 @@ namespace ijuniorPractice
         }
 
         public int Number { get; private set; }
-        public int Seats { get; private set; }
     }
 
-    class Passenger
+    class TicketOffice
     {
         private Random _random = new Random();
 
@@ -145,21 +117,21 @@ namespace ijuniorPractice
         }
     }
 
-    class RoutePoint
+    class Point
     {
         public string DeparturePoint { get; private set; }
         public string DestinationPoint { get; private set; }
 
-        public void GetDeparturePoint()
+        public string GetDeparturePoint()
         {
             Console.WriteLine("Введите станцию отправления");
-            DeparturePoint = Console.ReadLine();
+            return DeparturePoint = Console.ReadLine();
         }
 
-        public void GetDestinationPoint()
+        public string GetDestinationPoint()
         {
             Console.WriteLine("Введите станцию прибытия");
-            DestinationPoint = Console.ReadLine();
+            return DestinationPoint = Console.ReadLine();
         }
     }
 }
