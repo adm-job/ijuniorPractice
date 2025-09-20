@@ -13,7 +13,7 @@ namespace ijuniorPractice
 
     class DispatcherView()
     {
-        private Dispatcher _dispatcher = new();
+        private Dispatcher _worker = new();
         private bool _isView = true;
 
         public void Begin()
@@ -34,7 +34,7 @@ namespace ijuniorPractice
                 switch (input)
                 {
                     case GettingStarted:
-                        _dispatcher.CreateTrain();
+                        _worker.CreateTrain();
                         break;
 
                     case Exit:
@@ -53,44 +53,45 @@ namespace ijuniorPractice
     {
         public void CreateTrain()
         {
-            AssembleTrain();
-        }
-
-        private void AssembleTrain()
-        {
-            Point _point = new();
             TicketOffice _ticketOffice = new();
+            List<Wagon> _wagonList = new();
             int _seatsWagon = 81;
 
-            int numberWagons = (int)Math.Ceiling((double)_ticketOffice.GetQuantity() / _seatsWagon);
+            Console.WriteLine("Введите станцию отправления");
+            string Departure = Console.ReadLine();
+            Console.WriteLine("Введите станцию прибытия");
+            string Destination = Console.ReadLine();
 
-            Train _train = new Train(_point.GetDeparturePoint(), _point.GetDestinationPoint(), numberWagons);
+            Point _point = new(Departure, Destination);
+
+            int numberWagons = (int)Math.Ceiling((double)_ticketOffice.Generate() / _seatsWagon);
+
+            for (int i = 0; i < numberWagons; i++)
+            {
+                _wagonList.Add(new(i+1));
+            }
+
+            Train _train = new Train(_point, _wagonList);
 
             Console.WriteLine($"{_train}");
-            Console.WriteLine($"Билетов куплено на поезд - {_ticketOffice.GetQuantity()}\n"); ;
+            Console.WriteLine($"Билетов куплено на поезд - {_ticketOffice.Generate()}\n"); ;
         }
     }
 
     class Train
     {
         private List<Wagon> _wagons = new List<Wagon>();
-        private string _departurePoint;
-        private string _destinationPoint;
+        private Point _point;
 
-        public Train(string departurePoint, string destinationPoint, int tikets)
-        {
-            _departurePoint = departurePoint;
-            _destinationPoint = destinationPoint;
-
-            for (int i = 0; i < tikets; i++)
-            {
-                _wagons.Add(new Wagon(i + 1));
-            }
+        public Train(Point point, List<Wagon> wagons)
+        { 
+            _point = point;
+           _wagons = wagons; 
         }
 
         public override string ToString()
         {
-            return $"Поезд следует из {_departurePoint} в {_destinationPoint} у него {_wagons.Count} вагонов";
+            return $"Поезд следует из {_point.DeparturePoint} в {_point.DestinationPoint} у него {_wagons.Count} вагонов";
         }
     }
 
@@ -108,10 +109,16 @@ namespace ijuniorPractice
     {
         private Random _random = new Random();
 
-        private int _maxPassengers = 1000;
-        private int _minPassengers = 50;
+        private int _maxPassengers;
+        private int _minPassengers;
 
-        public int GetQuantity()
+        public TicketOffice(int minPassengers = 50, int maxPassengers = 1000)
+        {
+            _maxPassengers = maxPassengers;
+            _minPassengers = minPassengers;
+        }
+
+        public int Generate()
         {
             return _random.Next(_minPassengers, _maxPassengers);
         }
@@ -122,16 +129,10 @@ namespace ijuniorPractice
         public string DeparturePoint { get; private set; }
         public string DestinationPoint { get; private set; }
 
-        public string GetDeparturePoint()
+        public Point(string departurePoint, string destinationPoint)
         {
-            Console.WriteLine("Введите станцию отправления");
-            return DeparturePoint = Console.ReadLine();
-        }
-
-        public string GetDestinationPoint()
-        {
-            Console.WriteLine("Введите станцию прибытия");
-            return DestinationPoint = Console.ReadLine();
+            DeparturePoint = departurePoint;
+            DestinationPoint = destinationPoint;
         }
     }
 }
