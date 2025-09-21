@@ -126,13 +126,13 @@ namespace ijuniorPractice
 
     class Point
     {
-        public string DeparturePoint { get; private set; }
-        public string DestinationPoint { get; private set; }
-
         public Point(string departurePoint, string destinationPoint)
         {
             DeparturePoint = departurePoint;
             DestinationPoint = destinationPoint;
         }
+
+        public string DeparturePoint { get; private set; }
+        public string DestinationPoint { get; private set; }
     }
 }
