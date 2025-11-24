@@ -8,6 +8,9 @@ namespace ijuniorPractice
         {
             //DispatcherView dispatcherView = new();
             //dispatcherView.Begin();
+
+            BattleBoard battleBoard = new BattleBoard();
+            battleBoard.Begin();
         }
     }
 
@@ -24,7 +27,7 @@ namespace ijuniorPractice
 
             while (_isShowBattle)
             {
-                Console.WriteLine("Бои гладиаторов");
+                Console.WriteLine("Колизей");
                 Console.WriteLine($"{StartBattle} Начать поединок");
                 Console.WriteLine($"{Exit} Выход");
 
@@ -45,6 +48,25 @@ namespace ijuniorPractice
                 }
             }
         }
+    }
+
+    class Warrior
+    {
+        public Warrior(string title, int damage, int protection, int health)
+        {
+            Titel = title;
+            Damage = damage;
+            Protection = protection;
+            Health = health;
+
+        }
+
+        public string Titel { get; private set; }
+        public int Damage { get; private set; }
+        public int Protection { get; private set; }
+        public int Health { get; private set; }
+    
+    }
     //class DispatcherView()
     //{
     //    private Dispatcher _dispatcher = new();
