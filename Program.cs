@@ -15,8 +15,38 @@ namespace ijuniorPractice
 
     class BattleBoard
     {
+        private bool _isShowBattle = true;
 
-    }
+        public void Begin()
+        {
+            string input;
+
+            const string StartBattle = "1";
+            const string Exit = "2";
+
+            while (_isShowBattle)
+            {
+                Console.WriteLine("Бои гладиаторов");
+                Console.WriteLine($"{StartBattle} Начать поединок");
+                Console.WriteLine($"{Exit} Выход");
+
+                input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case StartBattle:
+                        break;
+
+                    case Exit:
+                        _isShowBattle = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Выбранного пункта нет в списке");
+                        break;
+                }
+            }
+        }
     //class DispatcherView()
     //{
     //    private Dispatcher _dispatcher = new();
