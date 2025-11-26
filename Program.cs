@@ -67,6 +67,16 @@ namespace ijuniorPractice
         public int Protection { get; private set; }
         public int Health { get; private set; }
 
+
+        public void Attack()
+        {
+
+        }
+
+        public void TakeDamage()
+        {
+
+        }
     }
 
     class Assassine : Warrior
@@ -103,7 +113,7 @@ namespace ijuniorPractice
         private int _fireballDamage = 100;
         private int _manaFireball = 25;
 
-        public Mage(string title, int damage = 25 int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Mage(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
         {
         }
     }
