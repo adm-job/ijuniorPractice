@@ -31,6 +31,8 @@ namespace ijuniorPractice
                 Console.WriteLine($"{StartBattle} Начать поединок");
                 Console.WriteLine($"{Exit} Выход");
 
+                Console.WriteLine(UserUtils.GenerateRandomNumber());
+
                 input = Console.ReadLine();
 
                 switch (input)
@@ -52,59 +54,92 @@ namespace ijuniorPractice
 
     class Warrior
     {
-        public Warrior(string title, int damage, int protection, int health)
+        public Warrior(string title, int damage = 25, int protection = 10, int health = 1000)
         {
             Titel = title;
             Damage = damage;
             Protection = protection;
             Health = health;
-
         }
 
         public string Titel { get; private set; }
         public int Damage { get; private set; }
         public int Protection { get; private set; }
         public int Health { get; private set; }
-    
+
     }
-    //class DispatcherView()
-    //{
-    //    private Dispatcher _dispatcher = new();
-    //    private bool _isView = true;
 
-    //    public void Begin()
-    //    {
-    //        string input;
+    class Assassine : Warrior
+    {
+        private float _chanceDubleDamage = 15f;
+        public Assassine(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
 
-    //        const string GettingStarted = "1";
-    //        const string Exit = "2";
+    }
 
-    //        while (_isView)
-    //        {
-    //            Console.WriteLine("Работа диспетчера");
-    //            Console.WriteLine($"{GettingStarted} Создать поезд");
-    //            Console.WriteLine($"{Exit} Выход");
+    class Barbarian : Warrior
+    {
+        private int _scoreAttack = 3;
 
-    //            input = Console.ReadLine();
+        public Barbarian(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
+    }
 
-    //            switch (input)
-    //            {
-    //                case GettingStarted:
-    //                    _dispatcher.CreateTrain();
-    //                    break;
+    class Berserker : Warrior
+    {
+        private int _rageCounter = 0;
+        private int _rageGetting = 25;
 
-    //                case Exit:
-    //                    _isView = false;
-    //                    break;
+        public Berserker(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
+    }
 
-    //                default:
-    //                    Console.WriteLine("Выбранного пункта нет в списке");
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //}
+    class Mage : Warrior
+    {
+        private int _mana = 100;
+        private int _fireballDamage = 100;
+        private int _manaFireball = 25;
 
+        public Mage(string title, int damage = 25 int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
+    }
+
+    class Monkey : Warrior
+    {
+        private int _evasion = 35;
+
+        public Monkey(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
+
+    }
+
+    class Tank : Warrior
+    {
+        private float _boostProtection = 5;
+
+        public Tank(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        {
+        }
+    }
+
+
+
+
+
+    class UserUtils
+    {
+        private static Random s_random = new();
+
+        public static int GenerateRandomNumber(int min = 1, int max = 100)
+        {
+            return s_random.Next(min, max);
+        }
+    }
     //class Dispatcher
     //{
     //    private RoutePoint _routePoint = new();
