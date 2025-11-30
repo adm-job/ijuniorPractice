@@ -17,6 +17,7 @@ namespace ijuniorPractice
     class BattleBoard
     {
         private bool _isShowBattle = true;
+        private Arena _arena = new();
 
         public void Begin()
         {
@@ -31,13 +32,12 @@ namespace ijuniorPractice
                 Console.WriteLine($"{StartBattle} Начать поединок");
                 Console.WriteLine($"{Exit} Выход");
 
-                Console.WriteLine(UserUtils.GenerateRandomNumber());
-
                 input = Console.ReadLine();
 
                 switch (input)
                 {
                     case StartBattle:
+                        _arena.ShowWarrior();
                         break;
 
                     case Exit:
@@ -52,30 +52,56 @@ namespace ijuniorPractice
         }
     }
 
+    class Arena
+    {
+        private Assassine _assassine = new("Убийца");
+        private Barbarian _barbarian = new("Варвар");
+        private Berserker _breker = new("Берсерк");
+        private Mage _mage = new("Маг");
+        private Monkey _monkey = new("Изворотливый");
+        private Tank _tank = new("Бронированный");
+
+        public void ShowWarrior()
+        {
+            Console.WriteLine(_assassine);
+            Console.WriteLine(_barbarian);
+            Console.WriteLine(_breker);
+            Console.WriteLine(_mage);
+            Console.WriteLine(_monkey);
+            Console.WriteLine(_tank);
+        }
+
+    }
+
     class Warrior
     {
         public Warrior(string title, int damage = 25, int protection = 10, int health = 1000)
         {
-            Titel = title;
+            Title = title;
             Damage = damage;
             Protection = protection;
             Health = health;
         }
 
-        public string Titel { get; private set; }
+        public string Title { get; private set; }
         public int Damage { get; private set; }
         public int Protection { get; private set; }
         public int Health { get; private set; }
 
 
-        public void Attack()
+        public float Attack(float health)
         {
-
+            return health -= Damage;
         }
 
-        public void TakeDamage()
+        public float TakeDamage(float damage)
         {
+            return damage -= Damage;
+        }
 
+        public override string ToString()
+        {
+            return $"Гладиатор  {Title}\t\t Урон {Damage}\t\t Защита {Protection}\t\t Жизни {Health}";
         }
     }
 
