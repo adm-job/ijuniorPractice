@@ -75,7 +75,9 @@ namespace ijuniorPractice
 
     class Warrior
     {
-        public Warrior(string title, int damage = 25, int protection = 10, int health = 1000)
+        private float percent = 100f;
+
+        public Warrior(string title, float damage = 25, float protection = 10, float health = 1000)
         {
             Title = title;
             Damage = damage;
@@ -84,9 +86,9 @@ namespace ijuniorPractice
         }
 
         public string Title { get; private set; }
-        public int Damage { get; private set; }
-        public int Protection { get; private set; }
-        public int Health { get; private set; }
+        public float Damage { get; private set; }
+        public float Protection { get; private set; }
+        public float Health { get; private set; }
 
 
         public float Attack(float health)
@@ -96,7 +98,7 @@ namespace ijuniorPractice
 
         public float TakeDamage(float damage)
         {
-            return damage -= Damage;
+            return Health -=  (damage - (damage * Protection / percent));
         }
 
         public override string ToString()
@@ -108,7 +110,7 @@ namespace ijuniorPractice
     class Assassine : Warrior
     {
         private float _chanceDubleDamage = 15f;
-        public Assassine(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Assassine(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
 
@@ -118,7 +120,7 @@ namespace ijuniorPractice
     {
         private int _scoreAttack = 3;
 
-        public Barbarian(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Barbarian(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
     }
@@ -128,7 +130,7 @@ namespace ijuniorPractice
         private int _rageCounter = 0;
         private int _rageGetting = 25;
 
-        public Berserker(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Berserker(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
     }
@@ -139,7 +141,7 @@ namespace ijuniorPractice
         private int _fireballDamage = 100;
         private int _manaFireball = 25;
 
-        public Mage(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Mage(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
     }
@@ -148,7 +150,7 @@ namespace ijuniorPractice
     {
         private int _evasion = 35;
 
-        public Monkey(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Monkey(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
 
@@ -158,14 +160,10 @@ namespace ijuniorPractice
     {
         private float _boostProtection = 5;
 
-        public Tank(string title, int damage = 25, int protection = 10, int health = 1000) : base(title, damage, protection, health)
+        public Tank(string title, float damage = 25, float protection = 10, float health = 1000) : base(title, damage, protection, health)
         {
         }
     }
-
-
-
-
 
     class UserUtils
     {
