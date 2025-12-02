@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml.Linq;
 
 namespace ijuniorPractice
 {
@@ -7,9 +6,6 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            //DispatcherView dispatcherView = new();
-            //dispatcherView.Begin();
-
             BattleBoard battleBoard = new BattleBoard();
             battleBoard.Begin();
         }
@@ -25,12 +21,14 @@ namespace ijuniorPractice
             string input;
 
             const string StartBattle = "1";
-            const string Exit = "2";
+            const string ShowGladiators = "2";
+            const string Exit = "3";
 
             while (_isShowBattle)
             {
                 Console.WriteLine("Колизей");
                 Console.WriteLine($"{StartBattle} Начать поединок");
+                Console.WriteLine($"{ShowGladiators} Показать гладиаторов");
                 Console.WriteLine($"{Exit} Выход");
 
                 input = Console.ReadLine();
@@ -38,6 +36,10 @@ namespace ijuniorPractice
                 switch (input)
                 {
                     case StartBattle:
+                        _arena.Battle();
+                        break;
+
+                    case ShowGladiators:
                         _arena.WarriorShow();
                         break;
 
@@ -55,6 +57,10 @@ namespace ijuniorPractice
 
     class Arena
     {
+        private int _fighterNomber;
+        private Warrior _firstFighter;
+        private Warrior _secondFighter;
+
         private List<Warrior> _warriors = new List<Warrior>
         {
             new Assassine("Убийца"),
@@ -70,6 +76,9 @@ namespace ijuniorPractice
         public void WarriorShow()
         {
             int number = 1;
+
+            Console.Clear();
+
             foreach (var warrior in _warriors)
             {
                 Console.Write(number + " ");
@@ -78,6 +87,47 @@ namespace ijuniorPractice
             }
         }
 
+        public void Battle()
+        {
+            WarriorShow();
+
+            Console.WriteLine("Выберете первого бойца");
+            _fighterNomber = ReadInt() - 1;
+            _firstFighter = _warriors[_fighterNomber];
+
+            Console.WriteLine("Выберете второго бойца");
+            _fighterNomber = ReadInt() - 1;
+            _secondFighter = _warriors[_fighterNomber];
+
+            while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
+            {
+                float damage1 = _firstFighter.Attack();
+                _secondFighter.TakeDamage(damage1);
+                Console.Write($"Гладиатор {_firstFighter.Name} нанес {damage1}\t");
+                Console.WriteLine(_secondFighter.ShowCurrentHealth());
+
+                if (_secondFighter.Health <= 0)
+                    break;
+
+                float damage2 = _secondFighter.Attack();
+                _firstFighter.TakeDamage(damage2);
+                Console.Write($"Гладиатор {_secondFighter.Name} нанес {damage2}\t");
+                Console.WriteLine(_firstFighter.ShowCurrentHealth());
+
+            }
+
+            static int ReadInt()
+            {
+                int inputNumber;
+
+                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+                {
+                    Console.WriteLine("Введено не число");
+                }
+
+                return inputNumber;
+            }
+        }
     }
 
     class Warrior
@@ -97,9 +147,9 @@ namespace ijuniorPractice
         public float Defence { get; protected set; }
         public float Health { get; protected set; }
 
-        public void ShowCurrentHelth()
+        public string ShowCurrentHealth()
         {
-            Console.WriteLine($"Гладиатор {Name} имеет {Health} жизней");
+            return $"Гладиатор {Name} имеет {Health} жизней и {Defence} зашиты";
         }
 
         public virtual float Attack()
@@ -113,13 +163,13 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"Гладиатор\n ---{Name}---\t\t Урон-{Damage}-\t\t Защита-{Defence}-\t\t Жизни-{Health}-";
+            return $"Гладиатор\n ---{Name}---\t\t Урон({Damage})\t\t Защита({Defence})\t\t Жизни({Health}) \n";
         }
     }
 
     class Assassine : Warrior
     {
-        private float _chanceDubleDamage = 15f;
+        private float _chanceDubleDamage = 19f;
         public Assassine(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
@@ -127,7 +177,7 @@ namespace ijuniorPractice
         public override float Attack()
         {
             if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
-                return Damage * 2;
+                return Damage * 3;
             else
                 return Damage;
         }
@@ -136,7 +186,7 @@ namespace ijuniorPractice
 
     class Barbarian : Warrior
     {
-        private int _scoreAttack = 3;
+        private int _scoreMaxAttack = 3;
         private int _score = 0;
 
         public Barbarian(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
@@ -145,7 +195,7 @@ namespace ijuniorPractice
 
         public override float Attack()
         {
-            if (_scoreAttack > _score)
+            if (_score < _scoreMaxAttack)
             {
                 _score++;
                 return Damage;
@@ -172,10 +222,11 @@ namespace ijuniorPractice
 
         public override float TakeDamage(float damage)
         {
+            float healedAmount = 50f;
+            float remainingHealth = base.TakeDamage(damage);
+
             _rageCounter += _rageGetting;
 
-            float healedAmount = 375;
-            float remainingHealth = base.TakeDamage(damage);
 
             if (_rageCounter >= _rageMax)
             {
@@ -205,17 +256,12 @@ namespace ijuniorPractice
         {
             if (_mana >= _manaFireball)
             {
-                Damage = _fireballDamage;
-            }
-            else
-            {
-                Damage = 25;
+                _mana -= _manaFireball;
+                return _fireballDamage;
             }
 
             return Damage;
         }
-
-
     }
 
     class Monkey : Warrior
@@ -236,23 +282,19 @@ namespace ijuniorPractice
 
             return base.TakeDamage(damage);
         }
-
     }
 
     class Tank : Warrior
     {
         private float _boostProtection = 1;
-        private float _startProtection = 0;
 
-        public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence   , health)
+        public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
         public override float TakeDamage(float damage)
         {
-            Defence += _startProtection;
-
-            _startProtection += _boostProtection;
+            Defence += _boostProtection;
 
             return base.TakeDamage(damage);
         }
@@ -267,115 +309,6 @@ namespace ijuniorPractice
             return s_random.Next(min, max);
         }
     }
-    //class Dispatcher
-    //{
-    //    private RoutePoint _routePoint = new();
-    //    private Train _train;
-    //    private Passenger _passenger = new();
-    //    private Wagon _wagon ;
-    //    private int _totalPassengers;
-    //    private int _seatsWagon = 81;
-
-
-    //    public void CreateTrain()
-    //    {
-    //        GetRoutePoints();
-    //        AssignRoute();
-    //        GetNumberPassengers();
-    //        AssembleTrain();
-    //    }
-
-    //    private void GetRoutePoints()
-    //    {
-    //        _routePoint.GetDeparturePoint();
-    //        _routePoint.GetDestinationPoint();
-    //    }
-
-    //    private void AssignRoute()
-    //    {
-    //        _train = new Train(_routePoint.DeparturePoint, _routePoint.DestinationPoint);
-    //    }
-    //    private void GetNumberPassengers()
-    //    {
-    //        _totalPassengers = _passenger.GetQuantity();
-    //    }
-
-    //    private void AssembleTrain()
-    //    {
-    //        int _numberWagons = (int)Math.Ceiling((double)_totalPassengers / _seatsWagon);
-
-    //        for (int i = 0; i < _numberWagons; i++)
-    //        {
-    //            _train.AddWagon(new Wagon(i + 1));
-    //        }
-
-    //        Console.WriteLine($"{_train}");
-    //        Console.WriteLine($"Билетов куплено на поезд - {_totalPassengers}\n"); ;
-    //    }
-    //}
-
-    //class Train
-    //{
-    //    private List<Wagon> _wagons = new List<Wagon>();
-    //    private string _departurePoint;
-    //    private string _destinationPoint;
-
-    //    public Train(string departurePoint, string destinationPoint)
-    //    {
-    //        _departurePoint = departurePoint;
-    //        _destinationPoint = destinationPoint;
-    //    }
-
-    //    public void AddWagon(Wagon wagon)
-    //    {
-    //        _wagons.Add(wagon);
-    //    }
-
-    //    public override string ToString()
-    //    {
-    //        return $"Поезд следует из {_departurePoint} в {_destinationPoint} у него {_wagons.Count} вагонов";
-    //    }
-    //}
-
-    //class Wagon
-    //{
-    //    public Wagon(int number)
-    //    {
-    //        Number = number;
-    //    }
-
-    //    public int Number { get; private set; }
-    //    public int Seats { get; private set; }
-    //}
-
-    //class Passenger
-    //{
-    //    private Random _random = new Random();
-
-    //    private int _maxPassengers = 1000;
-    //    private int _minPassengers = 50;
-
-    //    public int GetQuantity()
-    //    {
-    //        return _random.Next(_minPassengers, _maxPassengers);
-    //    }
-    //}
-
-    //class RoutePoint
-    //{
-    //    public string DeparturePoint { get; private set; }
-    //    public string DestinationPoint { get; private set; }
-
-    //    public void GetDeparturePoint()
-    //    {
-    //        Console.WriteLine("Введите станцию отправления");
-    //        DeparturePoint = Console.ReadLine();
-    //    }
-
-    //    public void GetDestinationPoint()
-    //    {
-    //        Console.WriteLine("Введите станцию прибытия");
-    //        DestinationPoint = Console.ReadLine();
-    //    }
-    //}
 }
+
+
