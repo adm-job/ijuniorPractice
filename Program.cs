@@ -84,17 +84,17 @@ namespace ijuniorPractice
     {
         protected float percent = 100f;
 
-        public Warrior(string name, float damage = 25, float protection = 10, float health = 1000)
+        public Warrior(string name, float damage = 25, float defence = 10, float health = 1000)
         {
             Name = name;
             Damage = damage;
-            Protection = protection;
+            Defence = defence;
             Health = health;
         }
 
         public string Name { get; private set; }
         public float Damage { get; protected set; }
-        public float Protection { get; protected set; }
+        public float Defence { get; protected set; }
         public float Health { get; protected set; }
 
         public void ShowCurrentHelth()
@@ -108,19 +108,19 @@ namespace ijuniorPractice
         }
         public virtual float TakeDamage(float damage)
         {
-            return Health -= (damage - (damage * Protection / percent));
+            return Health -= (damage - (damage * Defence / percent));
         }
 
         public override string ToString()
         {
-            return $"Гладиатор\n ---{Name}---\t\t Урон-{Damage}-\t\t Защита-{Protection}-\t\t Жизни-{Health}-";
+            return $"Гладиатор\n ---{Name}---\t\t Урон-{Damage}-\t\t Защита-{Defence}-\t\t Жизни-{Health}-";
         }
     }
 
     class Assassine : Warrior
     {
         private float _chanceDubleDamage = 15f;
-        public Assassine(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Assassine(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
@@ -139,7 +139,7 @@ namespace ijuniorPractice
         private int _scoreAttack = 3;
         private int _score = 0;
 
-        public Barbarian(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Barbarian(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
@@ -166,7 +166,7 @@ namespace ijuniorPractice
         private int _rageGetting = 25;
         private int _rageMax = 100;
 
-        public Berserker(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Berserker(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
@@ -197,7 +197,7 @@ namespace ijuniorPractice
         private int _fireballDamage = 100;
         private int _manaFireball = 25;
 
-        public Mage(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Mage(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
@@ -222,7 +222,7 @@ namespace ijuniorPractice
     {
         private int _evasion = 35;
 
-        public Monkey(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Monkey(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
@@ -244,13 +244,13 @@ namespace ijuniorPractice
         private float _boostProtection = 1;
         private float _startProtection = 0;
 
-        public Tank(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
+        public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence   , health)
         {
         }
 
         public override float TakeDamage(float damage)
         {
-            Protection += _startProtection;
+            Defence += _startProtection;
 
             _startProtection += _boostProtection;
 
