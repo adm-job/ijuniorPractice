@@ -82,7 +82,7 @@ namespace ijuniorPractice
 
     class Warrior
     {
-        private float percent = 100f;
+        protected float percent = 100f;
 
         public Warrior(string name, float damage = 25, float protection = 10, float health = 1000)
         {
@@ -93,17 +93,20 @@ namespace ijuniorPractice
         }
 
         public string Name { get; private set; }
-        public float Damage { get; private set; }
-        public float Protection { get; private set; }
-        public float Health { get; private set; }
+        public float Damage { get; protected set; }
+        public float Protection { get; protected set; }
+        public float Health { get; protected set; }
 
         public void ShowCurrentHelth()
         {
             Console.WriteLine($"Гладиатор {Name} имеет {Health} жизней");
         }
 
-
-        public float TakeDamage(float damage)
+        public virtual float Attack()
+        {
+            return Damage;
+        }
+        public virtual float TakeDamage(float damage)
         {
             return Health -= (damage - (damage * Protection / percent));
         }
@@ -121,24 +124,70 @@ namespace ijuniorPractice
         {
         }
 
+        public override float Attack()
+        {
+            if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
+                return Damage * 2;
+            else
+                return Damage;
+        }
+
     }
 
     class Barbarian : Warrior
     {
         private int _scoreAttack = 3;
+        private int _score = 0;
 
         public Barbarian(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
         {
         }
+
+        public override float Attack()
+        {
+            if (_scoreAttack > _score)
+            {
+                _score++;
+                return Damage;
+            }
+            else
+            {
+                _score = 0;
+                return Damage + Damage;
+            }
+
+        }
+
     }
 
     class Berserker : Warrior
     {
         private int _rageCounter = 0;
         private int _rageGetting = 25;
+        private int _rageMax = 100;
 
         public Berserker(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
         {
+        }
+
+        public override float TakeDamage(float damage)
+        {
+            _rageCounter += _rageGetting;
+
+            float healedAmount = 375;
+            float remainingHealth = base.TakeDamage(damage);
+
+            if (_rageCounter >= _rageMax)
+            {
+                _rageCounter = 0;
+
+
+                Health += healedAmount;
+
+                return Health;
+            }
+
+            return Health;
         }
     }
 
@@ -151,6 +200,22 @@ namespace ijuniorPractice
         public Mage(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
         {
         }
+
+        public override float Attack()
+        {
+            if (_mana >= _manaFireball)
+            {
+                Damage = _fireballDamage;
+            }
+            else
+            {
+                Damage = 25;
+            }
+
+            return Damage;
+        }
+
+
     }
 
     class Monkey : Warrior
@@ -161,14 +226,35 @@ namespace ijuniorPractice
         {
         }
 
+        public override float TakeDamage(float damage)
+        {
+            if (UserUtils.GenerateRandomNumber() < _evasion)
+            {
+                Console.WriteLine($"{Name} Уклонился от атаки");
+                damage = 0;
+            }
+
+            return base.TakeDamage(damage);
+        }
+
     }
 
     class Tank : Warrior
     {
-        private float _boostProtection = 5;
+        private float _boostProtection = 1;
+        private float _startProtection = 0;
 
         public Tank(string name, float damage = 25, float protection = 10, float health = 1000) : base(name, damage, protection, health)
         {
+        }
+
+        public override float TakeDamage(float damage)
+        {
+            Protection += _startProtection;
+
+            _startProtection += _boostProtection;
+
+            return base.TakeDamage(damage);
         }
     }
 
@@ -176,7 +262,7 @@ namespace ijuniorPractice
     {
         private static Random s_random = new();
 
-        public static int GenerateRandomNumber(int min = 1, int max = 100)
+        public static int GenerateRandomNumber(int min = 0, int max = 100)
         {
             return s_random.Next(min, max);
         }
