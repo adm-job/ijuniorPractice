@@ -71,7 +71,7 @@ namespace ijuniorPractice
             new Tank("Бронированный")
         };
 
-        internal List<Warrior> Warriors { get => _warriors; set => _warriors = value; }
+        //internal List<Warrior> Warriors { get => _warriors;private set => _warriors = value; }
 
         public void WarriorShow()
         {
@@ -93,11 +93,11 @@ namespace ijuniorPractice
 
             Console.WriteLine("Выберете первого бойца");
             _fighterNomber = ReadInt() - 1;
-            _firstFighter = _warriors[_fighterNomber];
+            _firstFighter = GetWarrior(_fighterNomber);
 
             Console.WriteLine("Выберете второго бойца");
             _fighterNomber = ReadInt() - 1;
-            _secondFighter = _warriors[_fighterNomber];
+            _secondFighter = GetWarrior(_fighterNomber);
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
@@ -115,200 +115,210 @@ namespace ijuniorPractice
                 Console.WriteLine(_firstFighter.ShowCurrentHealth());
 
             }
+        }
+        private static int ReadInt()
+        {
+            int inputNumber;
 
-            static int ReadInt()
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
             {
-                int inputNumber;
-
-                while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
-                {
-                    Console.WriteLine("Введено не число");
-                }
-
-                return inputNumber;
-            }
-        }
-    }
-
-    class Warrior
-    {
-        protected float percent = 100f;
-
-        public Warrior(string name, float damage = 25, float defence = 10, float health = 1000)
-        {
-            Name = name;
-            Damage = damage;
-            Defence = defence;
-            Health = health;
-        }
-
-        public string Name { get; private set; }
-        public float Damage { get; protected set; }
-        public float Defence { get; protected set; }
-        public float Health { get; protected set; }
-
-        public string ShowCurrentHealth()
-        {
-            return $"Гладиатор {Name} имеет {Health} жизней и {Defence} зашиты";
-        }
-
-        public virtual float Attack()
-        {
-            return Damage;
-        }
-        public virtual float TakeDamage(float damage)
-        {
-            return Health -= (damage - (damage * Defence / percent));
-        }
-
-        public override string ToString()
-        {
-            return $"Гладиатор\n ---{Name}---\t\t Урон({Damage})\t\t Защита({Defence})\t\t Жизни({Health}) \n";
-        }
-    }
-
-    class Assassine : Warrior
-    {
-        private float _chanceDubleDamage = 19f;
-        public Assassine(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override float Attack()
-        {
-            if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
-                return Damage * 3;
-            else
-                return Damage;
-        }
-
-    }
-
-    class Barbarian : Warrior
-    {
-        private int _scoreMaxAttack = 3;
-        private int _score = 0;
-
-        public Barbarian(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override float Attack()
-        {
-            if (_score < _scoreMaxAttack)
-            {
-                _score++;
-                return Damage;
-            }
-            else
-            {
-                _score = 0;
-                return Damage + Damage;
+                Console.WriteLine("Введено не число");
             }
 
+            return inputNumber;
         }
 
-    }
-
-    class Berserker : Warrior
-    {
-        private int _rageCounter = 0;
-        private int _rageGetting = 25;
-        private int _rageMax = 100;
-
-        public Berserker(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+        private Warrior GetWarrior(int index)
         {
-        }
-
-        public override float TakeDamage(float damage)
-        {
-            float healedAmount = 50f;
-            float remainingHealth = base.TakeDamage(damage);
-
-            _rageCounter += _rageGetting;
-
-
-            if (_rageCounter >= _rageMax)
-            {
-                _rageCounter = 0;
-
-
-                Health += healedAmount;
-
-                return Health;
-            }
-
-            return Health;
-        }
-    }
-
-    class Mage : Warrior
-    {
-        private int _mana = 100;
-        private int _fireballDamage = 100;
-        private int _manaFireball = 25;
-
-        public Mage(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override float Attack()
-        {
-            if (_mana >= _manaFireball)
-            {
-                _mana -= _manaFireball;
-                return _fireballDamage;
-            }
-
-            return Damage;
-        }
-    }
-
-    class Monkey : Warrior
-    {
-        private int _evasion = 35;
-
-        public Monkey(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override float TakeDamage(float damage)
-        {
-            if (UserUtils.GenerateRandomNumber() < _evasion)
-            {
-                Console.WriteLine($"{Name} Уклонился от атаки");
-                damage = 0;
-            }
-
-            return base.TakeDamage(damage);
-        }
-    }
-
-    class Tank : Warrior
-    {
-        private float _boostProtection = 1;
-
-        public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override float TakeDamage(float damage)
-        {
-            Defence += _boostProtection;
-
-            return base.TakeDamage(damage);
-        }
-    }
-
-    class UserUtils
-    {
-        private static Random s_random = new();
-
-        public static int GenerateRandomNumber(int min = 0, int max = 100)
-        {
-            return s_random.Next(min, max);
+            return _warriors.ElementAt(index);
         }
     }
 }
+
+
+class Warrior
+{
+    protected float PercentMax = 100f;
+
+    public Warrior(string name, float damage = 25, float defence = 10, float health = 1000)
+    {
+        Name = name;
+        Damage = damage;
+        Defence = defence;
+        Health = health;
+    }
+
+    public string Name { get; private set; }
+    public float Damage { get; protected set; }
+    public float Defence { get; protected set; }
+    public float Health { get; protected set; }
+
+    public string ShowCurrentHealth()
+    {
+        return $"Гладиатор {Name} имеет {Health} жизней и {Defence} зашиты";
+    }
+
+    public virtual float Attack()
+    {
+        return Damage;
+    }
+    public virtual float TakeDamage(float damage)
+    {
+        return Health -= (damage - (damage * Defence / PercentMax));
+    }
+
+
+
+    public override string ToString()
+    {
+        return $"Гладиатор\n ---{Name}---\t\t Урон({Damage})\t\t Защита({Defence})\t\t Жизни({Health}) \n";
+    }
+}
+
+class Assassine : Warrior
+{
+    private float _chanceDubleDamage = 19f;
+    private float _damageMultiplier = 3;
+
+    public Assassine(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float Attack()
+    {
+        if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
+            return Damage * _damageMultiplier;
+        else
+            return Damage;
+    }
+
+}
+
+class Barbarian : Warrior
+{
+    private int _scoreMaxAttack = 3;
+    private int _score = 0;
+
+    public Barbarian(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float Attack()
+    {
+        if (_score < _scoreMaxAttack)
+        {
+            _score++;
+            return Damage;
+        }
+        else
+        {
+            _score = 0;
+            return Damage + Damage;
+        }
+
+    }
+
+}
+
+class Berserker : Warrior
+{
+    private int _rageCounter = 0;
+    private int _rageGetting = 25;
+    private int _rageMax = 100;
+
+    public Berserker(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float TakeDamage(float damage)
+    {
+        float healedAmount = 50f;
+        float remainingHealth = base.TakeDamage(damage);
+
+        _rageCounter += _rageGetting;
+
+
+        if (_rageCounter >= _rageMax)
+        {
+            _rageCounter = 0;
+
+
+            Health += healedAmount;
+
+            return Health;
+        }
+
+        return Health;
+    }
+}
+
+class Mage : Warrior
+{
+    private int _mana = 100;
+    private int _fireballDamage = 100;
+    private int _manaFireball = 25;
+
+    public Mage(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float Attack()
+    {
+        if (_mana >= _manaFireball)
+        {
+            _mana -= _manaFireball;
+            return _fireballDamage;
+        }
+
+        return Damage;
+    }
+}
+
+class Monkey : Warrior
+{
+    private int _evasion = 35;
+
+    public Monkey(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float TakeDamage(float damage)
+    {
+        if (UserUtils.GenerateRandomNumber() < _evasion)
+        {
+            Console.WriteLine($"{Name} Уклонился от атаки");
+            damage = 0;
+        }
+
+        return base.TakeDamage(damage);
+    }
+}
+
+class Tank : Warrior
+{
+    private float _boostProtection = 1;
+
+    public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+    {
+    }
+
+    public override float TakeDamage(float damage)
+    {
+        Defence += _boostProtection;
+
+        return base.TakeDamage(damage);
+    }
+}
+
+class UserUtils
+{
+    private static Random s_random = new();
+
+    public static int GenerateRandomNumber(int min = 0, int max = 100)
+    {
+        return s_random.Next(min, max);
+    }
+}
+
 
 
