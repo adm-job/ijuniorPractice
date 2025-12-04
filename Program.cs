@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace ijuniorPractice
 {
@@ -130,7 +131,9 @@ namespace ijuniorPractice
 
         private Warrior GetWarrior(int index)
         {
-            return _warriors.ElementAt(index);
+            Warrior warriorCopy = new Warrior(_warriors[index].Name, _warriors[index].Damage, _warriors[index].Defence, _warriors[index].Health);
+
+            return warriorCopy;
         }
     }
 }
@@ -166,8 +169,6 @@ class Warrior
     {
         return Health -= (damage - (damage * Defence / PercentMax));
     }
-
-
 
     public override string ToString()
     {
