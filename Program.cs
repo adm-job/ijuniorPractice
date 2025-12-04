@@ -155,9 +155,9 @@ namespace ijuniorPractice
         {
             return Damage;
         }
-        public virtual float TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
-            return Health -= (damage - (damage * Defence / PercentMax));
+            Health -= (damage - (damage * Defence / PercentMax));
         }
 
         public override string ToString()
@@ -180,7 +180,10 @@ namespace ijuniorPractice
         public override float Attack()
         {
             if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
+            {
+                Console.WriteLine($"{this.Name} нанес увеличенный на {_damageMultiplier} урон");
                 return Damage * _damageMultiplier;
+            }
             else
                 return Damage;
         }
@@ -206,11 +209,14 @@ namespace ijuniorPractice
             if (_score < _scoreMaxAttack)
             {
                 _score++;
+
                 return Damage;
             }
             else
             {
                 _score = 0;
+                Console.WriteLine($"{this.Name} произвел серию из {_scoreMaxAttack} ударов и нанес двойной урон");
+
                 return Damage + Damage;
             }
 
@@ -233,10 +239,9 @@ namespace ijuniorPractice
         {
         }
 
-        public override float TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             float healedAmount = 50f;
-            float remainingHealth = base.TakeDamage(damage);
 
             _rageCounter += _rageGetting;
 
@@ -244,14 +249,13 @@ namespace ijuniorPractice
             if (_rageCounter >= _rageMax)
             {
                 _rageCounter = 0;
-
+                Console.WriteLine($"{this.Name} ярость накоплена, получено лечение {healedAmount}");
 
                 Health += healedAmount;
-
-                return Health;
             }
 
-            return Health;
+            base.TakeDamage(damage);
+
         }
         public override Warrior Clone()
         {
@@ -274,6 +278,7 @@ namespace ijuniorPractice
             if (_mana >= _manaFireball)
             {
                 _mana -= _manaFireball;
+                Console.WriteLine($"{this.Name} читает заклинание с уроном {_fireballDamage}");
                 return _fireballDamage;
             }
 
@@ -294,16 +299,16 @@ namespace ijuniorPractice
         {
         }
 
-        public override float TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             if (UserUtils.GenerateRandomNumber() < _evasion)
             {
                 Console.WriteLine($"{Name} Уклонился от атаки");
                 damage = 0;
             }
-
-            return base.TakeDamage(damage);
+            base.TakeDamage(damage);
         }
+
         public override Warrior Clone()
         {
             return new Monkey(this.Name, this.Damage, this.Defence, this.Health);
@@ -313,16 +318,20 @@ namespace ijuniorPractice
     class Tank : Warrior
     {
         private float _boostProtection = 1;
+        private float _maxBoostProtection = 60;
 
         public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
         }
 
-        public override float TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
-            Defence += _boostProtection;
+            Console.WriteLine($"{this.Name} защита увеличена на {_boostProtection}");
 
-            return base.TakeDamage(damage);
+            if (Defence < _maxBoostProtection)
+                Defence += _boostProtection;
+
+            base.TakeDamage(damage);
         }
         public override Warrior Clone()
         {
