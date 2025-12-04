@@ -72,8 +72,6 @@ namespace ijuniorPractice
             new Tank("Бронированный")
         };
 
-        //internal List<Warrior> Warriors { get => _warriors;private set => _warriors = value; }
-
         public void WarriorShow()
         {
             int number = 1;
