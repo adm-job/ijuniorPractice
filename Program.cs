@@ -115,6 +115,7 @@ namespace ijuniorPractice
 
             }
         }
+
         private static int ReadInt()
         {
             int inputNumber;
@@ -155,6 +156,7 @@ namespace ijuniorPractice
         {
             return Damage;
         }
+
         public virtual void TakeDamage(float damage)
         {
             Health -= (damage - (damage * Defence / PercentMax));
@@ -192,7 +194,6 @@ namespace ijuniorPractice
         {
             return new Assassine(this.Name, this.Damage, this.Defence, this.Health);
         }
-
     }
 
     class Barbarian : Warrior
@@ -219,8 +220,8 @@ namespace ijuniorPractice
 
                 return Damage + Damage;
             }
-
         }
+
         public override Warrior Clone()
         {
             return new Barbarian(this.Name, this.Damage, this.Defence, this.Health);
@@ -245,7 +246,6 @@ namespace ijuniorPractice
 
             _rageCounter += _rageGetting;
 
-
             if (_rageCounter >= _rageMax)
             {
                 _rageCounter = 0;
@@ -255,8 +255,8 @@ namespace ijuniorPractice
             }
 
             base.TakeDamage(damage);
-
         }
+
         public override Warrior Clone()
         {
             return new Berserker(this.Name, this.Damage, this.Defence, this.Health);
@@ -284,6 +284,7 @@ namespace ijuniorPractice
 
             return Damage;
         }
+
         public override Warrior Clone()
         {
             return new Mage(this.Name, this.Damage, this.Defence, this.Health);
@@ -306,6 +307,7 @@ namespace ijuniorPractice
                 Console.WriteLine($"{Name} Уклонился от атаки");
                 damage = 0;
             }
+
             base.TakeDamage(damage);
         }
 
@@ -333,9 +335,10 @@ namespace ijuniorPractice
 
             base.TakeDamage(damage);
         }
+
         public override Warrior Clone()
         {
-            return new Tank(this.Name, this.Damage, this.Defence, this.Health);
+            return new Tank(Name, Damage, Defence, Health);
         }
     }
 
