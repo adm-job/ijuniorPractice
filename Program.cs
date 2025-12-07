@@ -101,17 +101,15 @@ namespace ijuniorPractice
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
-                float damage1 = _firstFighter.Attack();
-                _secondFighter.TakeDamage(damage1);
-                Console.Write($"Гладиатор {_firstFighter.Name} нанес {damage1}\t");
+                _firstFighter.Attack(_secondFighter);
+                //Console.Write($"Гладиатор {_firstFighter.Name} нанес {_firstFighter.Damage}\t");
                 Console.WriteLine(_secondFighter.ShowCurrentHealth());
 
                 if (_secondFighter.Health <= 0)
                     break;
 
-                float damage2 = _secondFighter.Attack();
-                _firstFighter.TakeDamage(damage2);
-                Console.Write($"Гладиатор {_secondFighter.Name} нанес {damage2}\t");
+                _secondFighter.Attack(_firstFighter);
+                //Console.Write($"Гладиатор {_secondFighter.Name} нанес {_secondFighter.Damage}\t");
                 Console.WriteLine(_firstFighter.ShowCurrentHealth());
 
             }
@@ -140,7 +138,7 @@ namespace ijuniorPractice
                         Console.WriteLine("Бойца с данным номером нет");
                     }
                 }
-            }while (isNotCorrect);
+            } while (isNotCorrect);
 
 
             return inputNumber;
@@ -170,12 +168,13 @@ namespace ijuniorPractice
             return $"Гладиатор {Name} имеет {Health} жизней и {Defence} зашиты";
         }
 
-        public virtual float Attack()
+        public virtual void Attack(Warrior warrior)
         {
-            //return Damage; <<<<<-----
+            Console.WriteLine($"{Name} нанес {warrior.Name} урона {Damage}");
+            warrior.TakeDamage(Damage);
         }
 
-        public virtual void TakeDamage(float damage)
+        protected virtual void TakeDamage(float damage)
         {
             float totalDamage = (damage - (damage * Defence / PercentMax));
             Health -= totalDamage > 0 ? totalDamage : 1;
@@ -183,7 +182,7 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"Гладиатор\n {Name}: Урон({Damage}), Защита({Defence}), Жизни({Health}) \n";
+            return $"Гладиатор\n {Name}: Урон({Damage}), Защита({Defence}), Жизни({Health}) ";
         }
 
         public abstract Warrior Clone();
@@ -198,16 +197,20 @@ namespace ijuniorPractice
         {
         }
 
-        public override float Attack()
+        public override void Attack(Warrior warrior)
         {
             if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
             {
                 Console.WriteLine($"{this.Name} нанес увеличенный на {_damageMultiplier} урон");
-                return Damage * _damageMultiplier;
+                Console.WriteLine($"{Name} нанес {warrior.Name} урона {Damage * _damageMultiplier}");
+
+                base.TakeDamage(Damage * _damageMultiplier);
             }
             else
             {
-                return Damage;
+                Console.WriteLine($"{Name} нанес {warrior.Name} урона {Damage}");
+
+                base.TakeDamage(Damage);
             }
         }
 
@@ -226,20 +229,22 @@ namespace ijuniorPractice
         {
         }
 
-        public override float Attack()
+        public override void Attack(Warrior warrior)
         {
             if (_score < _scoreMaxAttack)
             {
                 _score++;
-
-                return Damage;
+                Console.WriteLine($"{Name} нанес {Damage} урон");
+                TakeDamage(Damage);
             }
             else
             {
                 _score = 0;
-                Console.WriteLine($"{this.Name} произвел серию из {_scoreMaxAttack} ударов и нанес двойной урон");
+                Console.WriteLine($"{this.Name} произвел серию из {_scoreMaxAttack} ударов и первый урон");
+                TakeDamage(Damage);
+                Console.WriteLine($"{this.Name} произвел серию из {_scoreMaxAttack} ударов и второй урон");
+                TakeDamage(Damage);
 
-                return Damage + Damage;
             }
         }
 
@@ -261,7 +266,7 @@ namespace ijuniorPractice
         {
         }
 
-        public override void TakeDamage(float damage)
+        protected override void TakeDamage(float damage)
         {
             float healedAmount = 50f;
 
@@ -270,12 +275,12 @@ namespace ijuniorPractice
             if (_rageCounter >= _rageMax)
             {
                 _rageCounter = 0;
-                Console.WriteLine($"{this.Name} ярость накоплена, получено лечение {healedAmount}");
+                Console.WriteLine($"{Name} ярость накоплена, получено лечение {healedAmount}");
 
                 Health += healedAmount;
             }
 
-            base.TakeDamage(damage);
+            TakeDamage(damage);
         }
 
         public override Warrior Clone()
@@ -294,16 +299,20 @@ namespace ijuniorPractice
         {
         }
 
-        public override float Attack()
+        public override void Attack(Warrior warrior)
         {
             if (_mana >= _manaFireball)
             {
                 _mana -= _manaFireball;
-                Console.WriteLine($"{this.Name} читает заклинание с уроном {_fireballDamage}");
-                return _fireballDamage;
+                Console.WriteLine($"{Name} читает заклинание с уроном {_fireballDamage}");
+                Console.WriteLine($"{Name} нанес {warrior.Name} урона {_fireballDamage}");
+                TakeDamage(_fireballDamage);
             }
-
-            return Damage;
+            else
+            {
+                Console.WriteLine($"{Name} нанес {warrior.Name} урона {Damage}");
+                TakeDamage(Damage);
+            }
         }
 
         public override Warrior Clone()
@@ -321,7 +330,7 @@ namespace ijuniorPractice
         {
         }
 
-        public override void TakeDamage(float damage)
+        protected override void TakeDamage(float damage)
         {
             if (UserUtils.GenerateRandomNumber() < _evasion)
             {
@@ -347,13 +356,13 @@ namespace ijuniorPractice
         {
         }
 
-        public override void TakeDamage(float damage)
+        protected override void TakeDamage(float damage)
         {
             Console.WriteLine($"{Name} защита увеличена на {_boostProtection}");
 
             if (Defence < _maxBoostProtection)
                 Defence += _boostProtection;
-
+            
             base.TakeDamage(damage);
         }
 
