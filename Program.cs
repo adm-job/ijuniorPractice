@@ -172,7 +172,7 @@ namespace ijuniorPractice
 
         public virtual float Attack()
         {
-            return Damage;
+            //return Damage; <<<<<-----
         }
 
         public virtual void TakeDamage(float damage)
