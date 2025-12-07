@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ijuniorPractice
 {
@@ -91,11 +92,11 @@ namespace ijuniorPractice
             WarriorShow();
 
             Console.WriteLine("Выберете первого бойца");
-            _fighterNomber = ReadInt() - 1;
+            _fighterNomber = ReadCorrectInt(_warriors.Count) - 1;
             _firstFighter = _warriors[_fighterNomber].Clone();
 
             Console.WriteLine("Выберете второго бойца");
-            _fighterNomber = ReadInt() - 1;
+            _fighterNomber = ReadCorrectInt(_warriors.Count) - 1;
             _secondFighter = _warriors[_fighterNomber].Clone();
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
@@ -116,14 +117,31 @@ namespace ijuniorPractice
             }
         }
 
-        private static int ReadInt()
+        private static int ReadCorrectInt(int totalFighters)
         {
             int inputNumber;
+            bool isNotCorrect = true;
 
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
+            do
             {
-                Console.WriteLine("Введено не число");
-            }
+                if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
+                {
+                    Console.WriteLine("Введено не число");
+                    continue;
+                }
+                else
+                {
+                    if (inputNumber <= totalFighters && inputNumber > 0)
+                    {
+                        isNotCorrect = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Бойца с данным номером нет");
+                    }
+                }
+            }while (isNotCorrect);
+
 
             return inputNumber;
         }
@@ -159,7 +177,8 @@ namespace ijuniorPractice
 
         public virtual void TakeDamage(float damage)
         {
-            Health -= (damage - (damage * Defence / PercentMax));
+            float totalDamage = (damage - (damage * Defence / PercentMax));
+            Health -= totalDamage > 0 ? totalDamage : 1;
         }
 
         public override string ToString()
@@ -187,7 +206,9 @@ namespace ijuniorPractice
                 return Damage * _damageMultiplier;
             }
             else
+            {
                 return Damage;
+            }
         }
 
         public override Warrior Clone()
@@ -294,7 +315,7 @@ namespace ijuniorPractice
 
     class Monkey : Warrior
     {
-        private int _evasion = 35;
+        private int _evasion = 45;
 
         public Monkey(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
         {
@@ -328,7 +349,7 @@ namespace ijuniorPractice
 
         public override void TakeDamage(float damage)
         {
-            Console.WriteLine($"{this.Name} защита увеличена на {_boostProtection}");
+            Console.WriteLine($"{Name} защита увеличена на {_boostProtection}");
 
             if (Defence < _maxBoostProtection)
                 Defence += _boostProtection;
