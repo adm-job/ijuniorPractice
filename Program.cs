@@ -92,11 +92,11 @@ namespace ijuniorPractice
             ShowWarriors();
 
             Console.WriteLine("Выберете первого бойца");
-            _fighterIndex = ReadCorrectInt(_warriors.Count) - 1;
+            _fighterIndex = ReadFighterInt(_warriors.Count) - 1;
             _firstFighter = _warriors[_fighterIndex].Clone();
 
             Console.WriteLine("Выберете второго бойца");
-            _fighterIndex = ReadCorrectInt(_warriors.Count) - 1;
+            _fighterIndex = ReadFighterInt(_warriors.Count) - 1;
             _secondFighter = _warriors[_fighterIndex].Clone();
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
@@ -112,11 +112,11 @@ namespace ijuniorPractice
             }
         }
 
-        private static int ReadCorrectInt(int totalFighters)
+        private static int ReadFighterInt(int totalFighters)
         {
             int inputNumber;
             bool isNotCorrect = true;
-
+            
             do
             {
                 if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
@@ -237,10 +237,12 @@ namespace ijuniorPractice
             {
                 _score = 0;
                 Console.WriteLine($"Гладиатор {Name} произвел серию ударов");
-                Console.WriteLine($"Первый урон {Damage}");
-                warrior.TakeDamage(Damage);
-                Console.WriteLine($"Второй урон {Damage}");
-                warrior.TakeDamage(Damage);
+
+                for (int i = 1; i < _scoreMaxAttack; i++)
+                {
+                    Console.WriteLine($"Нанесен {i} удар - урон {Damage}");
+                    warrior.TakeDamage(Damage);
+                }
             }
         }
 
