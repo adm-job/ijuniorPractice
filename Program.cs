@@ -212,7 +212,7 @@ namespace ijuniorPractice
 
         public override Warrior Clone()
         {
-            return new Assassine(this.Name, this.Damage, this.Defence, this.Health);
+            return new Assassine(Name, Damage, Defence, Health);
         }
     }
 
