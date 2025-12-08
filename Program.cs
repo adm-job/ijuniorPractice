@@ -59,7 +59,7 @@ namespace ijuniorPractice
 
     class Arena
     {
-        private int _fighterNomber;
+        private int _fighterIndex;
         private Warrior _firstFighter;
         private Warrior _secondFighter;
 
@@ -92,12 +92,12 @@ namespace ijuniorPractice
             ShowWarriors();
 
             Console.WriteLine("Выберете первого бойца");
-            _fighterNomber = ReadCorrectInt(_warriors.Count) - 1;
-            _firstFighter = _warriors[_fighterNomber].Clone();
+            _fighterIndex = ReadCorrectInt(_warriors.Count) - 1;
+            _firstFighter = _warriors[_fighterIndex].Clone();
 
             Console.WriteLine("Выберете второго бойца");
-            _fighterNomber = ReadCorrectInt(_warriors.Count) - 1;
-            _secondFighter = _warriors[_fighterNomber].Clone();
+            _fighterIndex = ReadCorrectInt(_warriors.Count) - 1;
+            _secondFighter = _warriors[_fighterIndex].Clone();
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
@@ -109,7 +109,6 @@ namespace ijuniorPractice
 
                 _secondFighter.Attack(_firstFighter);
                 Console.WriteLine(_firstFighter.ShowCurrentHealth());
-
             }
         }
 
@@ -137,7 +136,6 @@ namespace ijuniorPractice
                     }
                 }
             } while (isNotCorrect);
-
 
             return inputNumber;
         }
@@ -201,8 +199,8 @@ namespace ijuniorPractice
             {
                 Console.WriteLine($"Гладиатор {Name} нанес увеличенный на {_damageMultiplier} урон");
                 Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {Damage * _damageMultiplier}");
-
-                warrior.TakeDamage(Damage * _damageMultiplier);
+                float damageTotal = Damage * _damageMultiplier;
+                warrior.TakeDamage(damageTotal);
             }
             else
             {
@@ -317,7 +315,6 @@ namespace ijuniorPractice
         {
             return new Mage(this.Name, this.Damage, this.Defence, this.Health);
         }
-
     }
 
     class Monkey : Warrior
@@ -360,7 +357,7 @@ namespace ijuniorPractice
 
             if (Defence < _maxBoostProtection)
                 Defence += _boostProtection;
-            
+
             base.TakeDamage(damage);
         }
 
