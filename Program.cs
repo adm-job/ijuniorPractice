@@ -1,372 +1,159 @@
-﻿using System;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿namespace ijuniorPractice
 
-namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            BattleBoard battleBoard = new BattleBoard();
-            battleBoard.Begin();
+
         }
     }
 
-    class BattleBoard
+    class Supermarket
     {
-        private bool _isShowBattle = true;
-        private Arena _arena = new();
+        private List<Products> _products = new List<Products>();
+        private Queue<Bayer> _bayer = new Queue<Bayer>();
+        private float _money = 0;
+        private bool _isWork = true;
 
-        public void Begin()
+        public void AddProductsShowcase()
         {
-            const string StartBattle = "1";
-            const string ShowGladiators = "2";
+            _products.Add(new("Банан", 75.5f));
+            _products.Add(new("Тушенка", 245f));
+            _products.Add(new("Колбаса", 345.8f));
+            _products.Add(new("Молоко", 90f));
+            _products.Add(new("Пельмени", 419.2f));
+            _products.Add(new("Вода", 39.9f));
+            _products.Add(new("Чипсы", 189.9f));
+            _products.Add(new("Хлеб", 55f));
+            _products.Add(new("Соль", 25.4f));
+            _products.Add(new("Сахар", 65.7f));
+            _products.Add(new("Сыр", 465.7f));
+            _products.Add(new("Кефир", 115.7f));
+            _products.Add(new("Йогурт", 55.3f));
+            _products.Add(new("Булочка", 35.7f));
+            _products.Add(new("Шоколадка", 150.5f));
+            _products.Add(new("Икра", 1599.9f));
+
+        }
+
+
+        public void StartStore()
+        {
+            const string LaunchBuyers = "1";
+            const string ShowProducts = "2";
             const string Exit = "3";
 
             string input;
 
-            while (_isShowBattle)
+            while (_isWork)
             {
-                Console.WriteLine("Колизей");
-                Console.WriteLine($"{StartBattle} Начать поединок");
-                Console.WriteLine($"{ShowGladiators} Показать гладиаторов");
+                Console.WriteLine("Супермаркет");
+                Console.WriteLine($"{} Запустить случайное количество покупателей");
+                Console.WriteLine($"{} Показать товары");
                 Console.WriteLine($"{Exit} Выход");
 
                 input = Console.ReadLine();
 
                 switch (input)
                 {
-                    case StartBattle:
-                        _arena.Battle();
+                    case LaunchBuyers:
                         break;
 
-                    case ShowGladiators:
-                        _arena.ShowWarriors();
+                    case ShowProducts:
                         break;
 
                     case Exit:
-                        _isShowBattle = false;
+                        _isWork = false;
                         break;
 
                     default:
-                        Console.WriteLine("Выбранного пункта нет в списке");
+                        Console.WriteLine("Выбранного пункта нет в меню управления магазином");
                         break;
                 }
             }
         }
+
     }
-
-    class Arena
+    class Kassa
     {
-        private int _fighterIndex;
-        private Warrior _firstFighter;
-        private Warrior _secondFighter;
+        private bool _isShowBattle = true;
+        private Arena _arena = new();
 
-        private List<Warrior> _warriors = new List<Warrior>
-        {
-            new Assassine("Убийца"),
-            new Barbarian("Варвар"),
-            new Berserker("Берсерк"),
-            new Mage("Маг"),
-            new Monkey("Изворотливый"),
-            new Tank("Бронированный")
-        };
 
-        public void ShowWarriors()
-        {
-            int number = 1;
-
-            Console.Clear();
-
-            foreach (var warrior in _warriors)
-            {
-                Console.Write(number + " ");
-                Console.WriteLine(warrior);
-                number++;
-            }
-        }
-
-        public void Battle()
-        {
-            ShowWarriors();
-
-            Console.WriteLine("Выберете первого бойца");
-            _fighterIndex = ReadFighterInt(_warriors.Count) - 1;
-            _firstFighter = _warriors[_fighterIndex].Clone();
-
-            Console.WriteLine("Выберете второго бойца");
-            _fighterIndex = ReadFighterInt(_warriors.Count) - 1;
-            _secondFighter = _warriors[_fighterIndex].Clone();
-
-            while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
-            {
-                _firstFighter.Attack(_secondFighter);
-                Console.WriteLine(_secondFighter.ShowCurrentHealth());
-
-                if (_secondFighter.Health <= 0)
-                    break;
-
-                _secondFighter.Attack(_firstFighter);
-                Console.WriteLine(_firstFighter.ShowCurrentHealth());
-            }
-        }
-
-        private static int ReadFighterInt(int totalFighters)
-        {
-            int inputNumber;
-            bool isNotCorrect = true;
-            
-            do
-            {
-                if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
-                {
-                    Console.WriteLine("Введено не число");
-                    continue;
-                }
-                else
-                {
-                    if (inputNumber <= totalFighters && inputNumber > 0)
-                    {
-                        isNotCorrect = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Бойца с данным номером нет");
-                    }
-                }
-            } while (isNotCorrect);
-
-            return inputNumber;
-        }
     }
 
 
-    abstract class Warrior
+    //private static int ReadFighterInt(int totalFighters)
+    //{
+    //    int inputNumber;
+    //    bool isNotCorrect = true;
+
+    //    do
+    //    {
+    //        if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
+    //        {
+    //            Console.WriteLine("Введено не число");
+    //            continue;
+    //        }
+    //        else
+    //        {
+    //            if (inputNumber <= totalFighters && inputNumber > 0)
+    //            {
+    //                isNotCorrect = false;
+    //            }
+    //            else
+    //            {
+    //                Console.WriteLine("Бойца с данным номером нет");
+    //            }
+    //        }
+    //    } while (isNotCorrect);
+
+    //    return inputNumber;
+    //}
+
+    //public abstract Warrior Clone();
+
+    //public override Warrior Clone()
+    //{
+    //    return new Assassine(Name, Damage, Defence, Health);
+    //}
+
+
+
+
+    class Products
     {
-        protected float PercentMax = 100f;
+        private string _title;
+        private float _price;
+        private string _description;
 
-        public Warrior(string name, float damage = 25, float defence = 10, float health = 1000)
+        public Products(string title, float price, string description = "")
         {
-            Name = name;
-            Damage = damage;
-            Defence = defence;
-            Health = health;
-        }
-
-        public string Name { get; private set; }
-        public float Damage { get; protected set; }
-        public float Defence { get; protected set; }
-        public float Health { get; protected set; }
-
-        public string ShowCurrentHealth()
-        {
-            return $"Гладиатор {Name} имеет {Health} жизней и {Defence} зашиты";
-        }
-
-        public virtual void Attack(Warrior warrior)
-        {
-            Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {Damage}");
-            warrior.TakeDamage(Damage);
-        }
-
-        public virtual void TakeDamage(float damage)
-        {
-            float totalDamage = (damage - (damage * Defence / PercentMax));
-            Health -= totalDamage > 0 ? totalDamage : 1;
+            _title = title;
+            _price = price;
+            _description = description;
         }
 
         public override string ToString()
         {
-            return $"Гладиатор\n {Name}: Урон({Damage}), Защита({Defence}), Жизни({Health}) ";
-        }
-
-        public abstract Warrior Clone();
-    }
-
-    class Assassine : Warrior
-    {
-        private float _chanceDubleDamage = 19f;
-        private float _damageMultiplier = 3;
-
-        public Assassine(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override void Attack(Warrior warrior)
-        {
-            if (UserUtils.GenerateRandomNumber() < _chanceDubleDamage)
-            {
-                Console.WriteLine($"Гладиатор {Name} нанес увеличенный на {_damageMultiplier} урон");
-                Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {Damage * _damageMultiplier}");
-                float damageTotal = Damage * _damageMultiplier;
-                warrior.TakeDamage(damageTotal);
-            }
-            else
-            {
-                Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {Damage}");
-
-                warrior.TakeDamage(Damage);
-            }
-        }
-
-        public override Warrior Clone()
-        {
-            return new Assassine(Name, Damage, Defence, Health);
+            return $"Продукт {_title}, цена {_price}, примечание {_description}";
         }
     }
 
-    class Barbarian : Warrior
+    class Bayer
     {
-        private int _scoreMaxAttack = 3;
-        private int _score = 0;
+        private string _name;
+        private float _wallet;
 
-        public Barbarian(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
+        private List<Products> _shoppingBasket;
+        private List<Products> _bag;
+
+        public Bayer(string name, float wallet)
         {
+
         }
 
-        public override void Attack(Warrior warrior)
-        {
-            if (_score < _scoreMaxAttack)
-            {
-                _score++;
-                Console.WriteLine($"Гладиатор {Name} нанес {Damage} урон");
-                warrior.TakeDamage(Damage);
-            }
-            else
-            {
-                _score = 0;
-                Console.WriteLine($"Гладиатор {Name} произвел серию ударов");
-
-                for (int i = 1; i < _scoreMaxAttack; i++)
-                {
-                    Console.WriteLine($"Нанесен {i} удар - урон {Damage}");
-                    warrior.TakeDamage(Damage);
-                }
-            }
-        }
-
-        public override Warrior Clone()
-        {
-            return new Barbarian(this.Name, this.Damage, this.Defence, this.Health);
-        }
-
-
-    }
-
-    class Berserker : Warrior
-    {
-        private int _rageCounter = 0;
-        private int _rageGetting = 25;
-        private int _rageMax = 100;
-
-        public Berserker(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            float healedAmount = 50f;
-
-            _rageCounter += _rageGetting;
-
-            if (_rageCounter >= _rageMax)
-            {
-                _rageCounter = 0;
-                Console.WriteLine($"Гладиатор {Name} ярость накоплена, получено лечение {healedAmount}");
-
-                Health += healedAmount;
-            }
-
-            base.TakeDamage(damage);
-        }
-
-        public override Warrior Clone()
-        {
-            return new Berserker(this.Name, this.Damage, this.Defence, this.Health);
-        }
-    }
-
-    class Mage : Warrior
-    {
-        private int _mana = 100;
-        private int _fireballDamage = 100;
-        private int _manaFireball = 25;
-
-        public Mage(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override void Attack(Warrior warrior)
-        {
-            if (_mana >= _manaFireball)
-            {
-                _mana -= _manaFireball;
-                Console.WriteLine($"Гладиатор {Name} читает заклинание с уроном {_fireballDamage}");
-                Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {_fireballDamage}");
-                warrior.TakeDamage(_fireballDamage);
-            }
-            else
-            {
-                Console.WriteLine($"Гладиатор {Name} нанес {warrior.Name} урона {Damage}");
-                warrior.TakeDamage(Damage);
-            }
-        }
-
-        public override Warrior Clone()
-        {
-            return new Mage(this.Name, this.Damage, this.Defence, this.Health);
-        }
-    }
-
-    class Monkey : Warrior
-    {
-        private int _evasion = 45;
-
-        public Monkey(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            if (UserUtils.GenerateRandomNumber() < _evasion)
-            {
-                Console.WriteLine($"Гладиатор {Name} Уклонился от атаки");
-                damage = 0;
-            }
-
-            base.TakeDamage(damage);
-        }
-
-        public override Warrior Clone()
-        {
-            return new Monkey(this.Name, this.Damage, this.Defence, this.Health);
-        }
-    }
-
-    class Tank : Warrior
-    {
-        private float _boostProtection = 1;
-        private float _maxBoostProtection = 60;
-
-        public Tank(string name, float damage = 25, float defence = 10, float health = 1000) : base(name, damage, defence, health)
-        {
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            Console.WriteLine($"Гладиатор {Name} защита увеличена на {_boostProtection}");
-
-            if (Defence < _maxBoostProtection)
-                Defence += _boostProtection;
-
-            base.TakeDamage(damage);
-        }
-
-        public override Warrior Clone()
-        {
-            return new Tank(Name, Damage, Defence, Health);
-        }
     }
 
     class UserUtils
