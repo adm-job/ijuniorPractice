@@ -12,7 +12,7 @@
     class Supermarket
     {
         private List<Products> _products = new List<Products>();
-        private Queue<Bayer> _bayer = new Queue<Bayer>();
+        private Queue<Buyer> _bayer = new Queue<Buyer>();
         private float _money = 0;
         private bool _isWork = true;
 
@@ -34,9 +34,7 @@
             _products.Add(new("Булочка", 35.7f));
             _products.Add(new("Шоколадка", 150.5f));
             _products.Add(new("Икра", 1599.9f));
-
         }
-
 
         public void StartStore()
         {
@@ -74,12 +72,25 @@
             }
         }
 
+        public void AddRandomBuyer()
+        {
+            int minBuyer = 1;
+            int maxBuyer = 15;
+            int minWalletMoney = 1000;
+            int maxWalletMoney = 5000;
+
+
+            int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, minBuyer);
+
+            for (int i = 0; i < TotalBuyer; i++)
+            {
+                _bayer.Enqueue(new("Покупатель" + i + 1, UserUtils.GenerateRandomNumber(minWalletMoney,maxWalletMoney)));
+            }
+        }
+
     }
     class Kassa
     {
-        private bool _isShowBattle = true;
-        private Arena _arena = new();
-
 
     }
 
@@ -141,7 +152,7 @@
         }
     }
 
-    class Bayer
+    class Buyer
     {
         private string _name;
         private float _wallet;
@@ -149,7 +160,7 @@
         private List<Products> _shoppingBasket;
         private List<Products> _bag;
 
-        public Bayer(string name, float wallet)
+        public Buyer(string name, float wallet)
         {
 
         }
