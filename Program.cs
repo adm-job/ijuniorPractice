@@ -21,22 +21,22 @@
 
         public void AddProductsShowcase()
         {
-            _products.Add(new("Банан", 75.5f));
-            _products.Add(new("Тушенка", 245f));
-            _products.Add(new("Колбаса", 345.8f));
-            _products.Add(new("Молоко", 90f));
-            _products.Add(new("Пельмени", 419.2f));
-            _products.Add(new("Вода", 39.9f));
-            _products.Add(new("Чипсы", 189.9f));
-            _products.Add(new("Хлеб", 55f));
-            _products.Add(new("Соль", 25.4f));
-            _products.Add(new("Сахар", 65.7f));
-            _products.Add(new("Сыр", 465.7f));
-            _products.Add(new("Кефир", 115.7f));
-            _products.Add(new("Йогурт", 55.3f));
-            _products.Add(new("Булочка", 35.7f));
-            _products.Add(new("Шоколадка", 150.5f));
-            _products.Add(new("Икра", 1599.9f));
+            _products.Add(new("Банан", 75.5f,"Желтый"));
+            _products.Add(new("Тушенка", 245f,"Вкусная"));
+            _products.Add(new("Колбаса", 345.8f,"Из мяса"));
+            _products.Add(new("Молоко", 90f,"Свежее"));
+            _products.Add(new("Пельмени", 419.2f,"Свинина-Говядина"));
+            _products.Add(new("Вода", 39.9f, "Не газированная"));
+            _products.Add(new("Чипсы", 189.9f, "Сметана с зеленью"));
+            _products.Add(new("Хлеб", 55f, "Бородинский"));
+            _products.Add(new("Соль", 25.4f, "Экстра мелкая"));
+            _products.Add(new("Сахар", 65.7f, "Рафинад"));
+            _products.Add(new("Сыр", 465.7f, "Твердый"));
+            _products.Add(new("Кефир", 115.7f, "Обезжиренный 1%"));
+            _products.Add(new("Йогурт", 55.3f, "Клубника-банан"));
+            _products.Add(new("Булочка", 35.7f, "С наполнителем вишня"));
+            _products.Add(new("Шоколадка", 150.5f," Наполнитель орехи"));
+            _products.Add(new("Икра", 1599.9f, "Банка 250г"));
         }
 
         public void ShowProducts()
@@ -59,7 +59,7 @@
             {
                 Console.WriteLine("Супермаркет");
                 Console.WriteLine($"{LaunchBuyers} Запустить случайное количество покупателей");
-                Console.WriteLine($"{ShowProducts} Показать товары");
+                Console.WriteLine($"{ShowAllProducts} Показать товары");
                 Console.WriteLine($"{Exit} Выход");
 
                 input = Console.ReadLine();
@@ -160,7 +160,7 @@
 
         public override string ToString()
         {
-            return $"Продукт {_title}, цена {_price}, примечание {_description}";
+            return $"Продукт {_title}, цена {_price}, ({_description})";
         }
     }
 
