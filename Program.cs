@@ -4,8 +4,11 @@
     internal class Program
     {
         static void Main(string[] args)
-        {
-
+        { 
+            Supermarket supermarket = new Supermarket();
+            supermarket.AddProductsShowcase();
+            supermarket.StartStore();
+            
         }
     }
 
@@ -36,10 +39,18 @@
             _products.Add(new("Икра", 1599.9f));
         }
 
+        public void ShowProducts()
+        {
+            foreach (var product in _products)
+            {
+                Console.WriteLine(product);
+            }
+        }
+
         public void StartStore()
         {
             const string LaunchBuyers = "1";
-            const string ShowProducts = "2";
+            const string ShowAllProducts = "2";
             const string Exit = "3";
 
             string input;
@@ -47,8 +58,8 @@
             while (_isWork)
             {
                 Console.WriteLine("Супермаркет");
-                Console.WriteLine($"{} Запустить случайное количество покупателей");
-                Console.WriteLine($"{} Показать товары");
+                Console.WriteLine($"{LaunchBuyers} Запустить случайное количество покупателей");
+                Console.WriteLine($"{ShowProducts} Показать товары");
                 Console.WriteLine($"{Exit} Выход");
 
                 input = Console.ReadLine();
@@ -58,7 +69,8 @@
                     case LaunchBuyers:
                         break;
 
-                    case ShowProducts:
+                    case ShowAllProducts:
+                        ShowProducts();
                         break;
 
                     case Exit:
