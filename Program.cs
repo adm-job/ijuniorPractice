@@ -165,6 +165,11 @@
 
         }
 
+        
+        public void AddProductBasket(Products products) 
+            {
+                _shoppingBasket.Add(products);
+            }
     }
 
     class UserUtils
