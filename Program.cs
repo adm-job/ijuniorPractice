@@ -14,7 +14,7 @@
 
     class Supermarket
     {
-        private List<Products> _products = new List<Products>();
+        private List<Product> _products = new List<Product>();
         private Queue<Buyer> _bayer = new Queue<Buyer>();
         private float _money = 0;
         private bool _isWork = true;
@@ -145,13 +145,13 @@
 
 
 
-    class Products
+    class Product
     {
         private string _title;
         private float _price;
         private string _description;
 
-        public Products(string title, float price, string description = "")
+        public Product(string title, float price, string description = "")
         {
             _title = title;
             _price = price;
@@ -169,8 +169,8 @@
         private string _name;
         private float _wallet;
 
-        private List<Products> _shoppingBasket;
-        private List<Products> _bag;
+        private List<Product> _basket;
+        private List<Product> _bag;
 
         public Buyer(string name, float wallet)
         {
@@ -178,10 +178,28 @@
         }
 
         
-        public void AddProductBasket(Products products) 
+        public void AddProductBasket(Product products) 
             {
-                _shoppingBasket.Add(products);
+                _basket.Add(products);
             }
+    }
+
+    class Bag
+    {
+        private List<Product> _bag = new();
+
+        public void AddProduct(Product product)
+        {
+            _bag.Add(product);
+        }
+
+        public void Show()
+        {
+            foreach (var product in _bag)
+            {
+                Console.WriteLine(product);                
+            }
+        }
     }
 
     class UserUtils
