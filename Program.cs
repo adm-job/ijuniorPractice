@@ -179,48 +179,35 @@
 
     }
 
-    class Basket
-    {
-        private List<Product> _basket = new();
-
-        public void AddProduct(Product product)
-        {
-            _basket.Add(product);
-        }
-
-        public Product GetProduct(int index)
-        {
-
-            return _basket[index];
-
-        }
-
-        public void Show()
-        {
-            foreach (var product in _basket)
-            {
-                Console.WriteLine(product);
-            }
-        }
-    }
-
     class Bag
     {
-        private List<Product> _bag = new();
+        protected List<Product> _products = new();
 
         public void AddProduct(Product product)
         {
-            _bag.Add(product);
+            _products.Add(product);
         }
 
         public void Show()
         {
-            foreach (var product in _bag)
+            foreach (var product in _products)
             {
                 Console.WriteLine(product);
             }
         }
     }
+
+    class Basket : Bag
+    {
+        public Product GetProduct(int index)
+        {
+            Product product = _products[index];
+            _products.RemoveAt(index);
+
+            return product;
+        }
+    }
+
 
     class UserUtils
     {
