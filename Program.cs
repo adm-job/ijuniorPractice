@@ -4,11 +4,11 @@
     internal class Program
     {
         static void Main(string[] args)
-        { 
+        {
             Supermarket supermarket = new Supermarket();
             supermarket.AddProductsShowcase();
             supermarket.StartStore();
-            
+
         }
     }
 
@@ -21,11 +21,11 @@
 
         public void AddProductsShowcase()
         {
-            _products.Add(new("Банан", 75.5f,"Желтый"));
-            _products.Add(new("Тушенка", 245f,"Вкусная"));
-            _products.Add(new("Колбаса", 345.8f,"Из мяса"));
-            _products.Add(new("Молоко", 90f,"Свежее"));
-            _products.Add(new("Пельмени", 419.2f,"Свинина-Говядина"));
+            _products.Add(new("Банан", 75.5f, "Желтый"));
+            _products.Add(new("Тушенка", 245f, "Вкусная"));
+            _products.Add(new("Колбаса", 345.8f, "Из мяса"));
+            _products.Add(new("Молоко", 90f, "Свежее"));
+            _products.Add(new("Пельмени", 419.2f, "Свинина-Говядина"));
             _products.Add(new("Вода", 39.9f, "Не газированная"));
             _products.Add(new("Чипсы", 189.9f, "Сметана с зеленью"));
             _products.Add(new("Хлеб", 55f, "Бородинский"));
@@ -35,7 +35,7 @@
             _products.Add(new("Кефир", 115.7f, "Обезжиренный 1%"));
             _products.Add(new("Йогурт", 55.3f, "Клубника-банан"));
             _products.Add(new("Булочка", 35.7f, "С наполнителем вишня"));
-            _products.Add(new("Шоколадка", 150.5f," Наполнитель орехи"));
+            _products.Add(new("Шоколадка", 150.5f, " Наполнитель орехи"));
             _products.Add(new("Икра", 1599.9f, "Банка 250г"));
         }
 
@@ -96,7 +96,7 @@
 
             for (int i = 0; i < TotalBuyer; i++)
             {
-                _bayer.Enqueue(new("Покупатель" + i + 1, UserUtils.GenerateRandomNumber(minWalletMoney,maxWalletMoney)));
+                _bayer.Enqueue(new("Покупатель" + i + 1, UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney)));
             }
         }
 
@@ -169,19 +169,39 @@
         private string _name;
         private float _wallet;
 
-        private List<Product> _basket;
-        private List<Product> _bag;
+        private Basket _basket;
+        private Bag _bag;
 
         public Buyer(string name, float wallet)
         {
 
         }
 
-        
-        public void AddProductBasket(Product products) 
+    }
+
+    class Basket
+    {
+        private List<Product> _basket = new();
+
+        public void AddProduct(Product product)
+        {
+            _basket.Add(product);
+        }
+
+        public Product GetProduct(int index)
+        {
+
+            return _basket[index];
+
+        }
+
+        public void Show()
+        {
+            foreach (var product in _basket)
             {
-                _basket.Add(products);
+                Console.WriteLine(product);
             }
+        }
     }
 
     class Bag
@@ -197,7 +217,7 @@
         {
             foreach (var product in _bag)
             {
-                Console.WriteLine(product);                
+                Console.WriteLine(product);
             }
         }
     }
