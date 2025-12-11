@@ -67,6 +67,7 @@
                 switch (input)
                 {
                     case LaunchBuyers:
+                        AddRandomBuyer();
                         break;
 
                     case ShowAllProducts:
@@ -92,20 +93,106 @@
             int maxWalletMoney = 5000;
 
 
-            int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, minBuyer);
+            int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
 
             for (int i = 0; i < TotalBuyer; i++)
             {
                 _bayer.Enqueue(new("Покупатель" + i + 1, UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney)));
+                Console.WriteLine(_bayer.Peek());
             }
         }
-
     }
+    
     class Kassa
     {
 
     }
 
+    class Product
+    {
+        private string _title;
+        private float _price;
+        private string _description;
+
+        public Product(string title, float price, string description = "")
+        {
+            _title = title;
+            _price = price;
+            _description = description;
+        }
+
+        public override string ToString()
+        {
+            return $"Продукт {_title}, цена {_price}, ({_description})";
+        }
+    }
+
+    class Buyer
+    {
+        private string _name;
+        private float _wallet;
+
+        private Basket _basket;
+        private Bag _bag;
+
+        public Buyer(string name, float wallet)
+        {
+            _name = name;   
+            _wallet = wallet;
+        }
+
+        public void AddRandomProduct()
+        {
+
+
+
+        }
+
+        public override string ToString()
+        {
+            return $"{_name} денег {_wallet}";
+        }
+    }
+
+    class Bag
+    {
+        protected List<Product> _products = new();
+
+        public void AddProduct(Product product)
+        {
+            _products.Add(product);
+        }
+
+        public void Show()
+        {
+            foreach (var product in _products)
+            {
+                Console.WriteLine(product);
+            }
+        }
+    }
+
+    class Basket : Bag
+    {
+        public Product GetProduct(int index)
+        {
+            Product product = _products[index];
+            _products.RemoveAt(index);
+
+            return product;
+        }
+    }
+
+    class UserUtils
+    {
+        private static Random s_random = new();
+
+        public static int GenerateRandomNumber(int min = 0, int max = 100)
+        {
+            return s_random.Next(min, max);
+        }
+    }
+}
 
     //private static int ReadFighterInt(int totalFighters)
     //{
@@ -144,81 +231,6 @@
 
 
 
-
-    class Product
-    {
-        private string _title;
-        private float _price;
-        private string _description;
-
-        public Product(string title, float price, string description = "")
-        {
-            _title = title;
-            _price = price;
-            _description = description;
-        }
-
-        public override string ToString()
-        {
-            return $"Продукт {_title}, цена {_price}, ({_description})";
-        }
-    }
-
-    class Buyer
-    {
-        private string _name;
-        private float _wallet;
-
-        private Basket _basket;
-        private Bag _bag;
-
-        public Buyer(string name, float wallet)
-        {
-
-        }
-
-    }
-
-    class Bag
-    {
-        protected List<Product> _products = new();
-
-        public void AddProduct(Product product)
-        {
-            _products.Add(product);
-        }
-
-        public void Show()
-        {
-            foreach (var product in _products)
-            {
-                Console.WriteLine(product);
-            }
-        }
-    }
-
-    class Basket : Bag
-    {
-        public Product GetProduct(int index)
-        {
-            Product product = _products[index];
-            _products.RemoveAt(index);
-
-            return product;
-        }
-    }
-
-
-    class UserUtils
-    {
-        private static Random s_random = new();
-
-        public static int GenerateRandomNumber(int min = 0, int max = 100)
-        {
-            return s_random.Next(min, max);
-        }
-    }
-}
 
 
 
