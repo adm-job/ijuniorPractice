@@ -97,7 +97,7 @@
 
             for (int i = 0; i < TotalBuyer; i++)
             {
-                _bayer.Enqueue(new("Покупатель" + i + 1, UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney)));
+                _bayer.Enqueue(new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney)));
                 Console.WriteLine(_bayer.Peek());
             }
         }
