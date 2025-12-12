@@ -17,8 +17,9 @@ namespace ijuniorPractice
 
     class Supermarket
     {
-        private List<Product> _products = new List<Product>();
-        private Queue<Buyer> _bayer = new Queue<Buyer>();
+        private List<Product> _products = new();
+        private Queue<Buyer> _bayer = new();
+        private Cashier _cashier = new();
         private float _money = 0;
         private bool _isWork = true;
 
@@ -62,6 +63,7 @@ namespace ijuniorPractice
             {
                 Console.WriteLine("Супермаркет");
                 Console.WriteLine($"{LaunchBuyers} Запустить случайное количество покупателей");
+                Console.WriteLine($"{ShowAllProducts} Обработать заказы текущей очереди покупателей");
                 Console.WriteLine($"{ShowAllProducts} Показать товары");
                 Console.WriteLine($"{Exit} Выход");
 
@@ -76,6 +78,10 @@ namespace ijuniorPractice
                     case ShowAllProducts:
                         ShowProducts();
                         break;
+
+                    //case ShowAllProducts:
+                    //    ShowProducts();
+                    //    break;
 
                     case Exit:
                         _isWork = false;
@@ -107,7 +113,7 @@ namespace ijuniorPractice
         }
     }
 
-    class Kassa
+    class Cashier
     {
 
     }
