@@ -54,8 +54,9 @@ namespace ijuniorPractice
         public void StartStore()
         {
             const string LaunchBuyers = "1";
-            const string ShowAllProducts = "2";
-            const string Exit = "3";
+            const string Seller = "2";
+            const string ShowAllProducts = "3";
+            const string Exit = "4";
 
             string input;
 
@@ -63,7 +64,7 @@ namespace ijuniorPractice
             {
                 Console.WriteLine("Супермаркет");
                 Console.WriteLine($"{LaunchBuyers} Запустить случайное количество покупателей");
-                Console.WriteLine($"{ShowAllProducts} Обработать заказы текущей очереди покупателей");
+                Console.WriteLine($"{Seller} Обработать заказы текущей очереди покупателей");
                 Console.WriteLine($"{ShowAllProducts} Показать товары");
                 Console.WriteLine($"{Exit} Выход");
 
@@ -79,9 +80,9 @@ namespace ijuniorPractice
                         ShowProducts();
                         break;
 
-                    //case ShowAllProducts:
-                    //    ShowProducts();
-                    //    break;
+                    case Seller:
+                        ShowProducts();// ПЕРЕДЕЛАТЬ
+                        break;
 
                     case Exit:
                         _isWork = false;
