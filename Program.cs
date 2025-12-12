@@ -1,4 +1,8 @@
-﻿namespace ijuniorPractice
+﻿using System.Diagnostics;
+using System.Threading;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace ijuniorPractice
 
 {
     internal class Program
@@ -6,7 +10,6 @@
         static void Main(string[] args)
         {
             Supermarket supermarket = new Supermarket();
-            supermarket.AddProductsShowcase();
             supermarket.StartStore();
 
         }
@@ -19,7 +22,7 @@
         private float _money = 0;
         private bool _isWork = true;
 
-        public void AddProductsShowcase()
+        public Supermarket()
         {
             _products.Add(new("Банан", 75.5f, "Желтый"));
             _products.Add(new("Тушенка", 245f, "Вкусная"));
@@ -96,12 +99,14 @@
 
             for (int i = 0; i < TotalBuyer; i++)
             {
-                _bayer.Enqueue(new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney)));
-                Console.WriteLine(_bayer.Peek());
+                Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
+                Console.WriteLine(buyer + "\n");
+                buyer.AddRandomProduct(_products);
+                _bayer.Enqueue(buyer);
             }
         }
     }
-    
+
     class Kassa
     {
 
@@ -119,6 +124,10 @@
             _price = price;
             _description = description;
         }
+        public Product Take()
+        {
+            return new Product(_title, _price, _description);
+        }
 
         public override string ToString()
         {
@@ -131,19 +140,29 @@
         private string _name;
         private float _wallet;
 
-        private Basket _basket;
-        private Bag _bag;
+        private Basket _basket = new();
+        private Bag _bag = new();
 
         public Buyer(string name, float wallet)
         {
-            _name = name;   
+            _name = name;
             _wallet = wallet;
         }
 
-        public void AddRandomProduct()
+        public void AddRandomProduct(List<Product> products)
         {
+            int minQuantityProducts = 1;
+            int maxQuantityProducts = products.Count();
+            int randomNumber = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
 
+            for (int i = 0; i < randomNumber; i++)
+            {
+                int randomIndex = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
+                Product product = products[randomIndex-1].Take();
+                Console.WriteLine($"В корзине - {product}");
+                _basket.AddProduct(products[randomIndex - 1].Take());
 
+            }
 
         }
 
@@ -193,40 +212,40 @@
     }
 }
 
-    //private static int ReadFighterInt(int totalFighters)
-    //{
-    //    int inputNumber;
-    //    bool isNotCorrect = true;
+//private static int ReadFighterInt(int totalFighters)
+//{
+//    int inputNumber;
+//    bool isNotCorrect = true;
 
-    //    do
-    //    {
-    //        if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
-    //        {
-    //            Console.WriteLine("Введено не число");
-    //            continue;
-    //        }
-    //        else
-    //        {
-    //            if (inputNumber <= totalFighters && inputNumber > 0)
-    //            {
-    //                isNotCorrect = false;
-    //            }
-    //            else
-    //            {
-    //                Console.WriteLine("Бойца с данным номером нет");
-    //            }
-    //        }
-    //    } while (isNotCorrect);
+//    do
+//    {
+//        if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
+//        {
+//            Console.WriteLine("Введено не число");
+//            continue;
+//        }
+//        else
+//        {
+//            if (inputNumber <= totalFighters && inputNumber > 0)
+//            {
+//                isNotCorrect = false;
+//            }
+//            else
+//            {
+//                Console.WriteLine("Бойца с данным номером нет");
+//            }
+//        }
+//    } while (isNotCorrect);
 
-    //    return inputNumber;
-    //}
+//    return inputNumber;
+//}
 
-    //public abstract Warrior Clone();
+//public abstract Warrior Clone();
 
-    //public override Warrior Clone()
-    //{
-    //    return new Assassine(Name, Damage, Defence, Health);
-    //}
+//public override Warrior Clone()
+//{
+//    return new Assassine(Name, Damage, Defence, Health);
+//}
 
 
 
