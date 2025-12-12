@@ -100,7 +100,7 @@ namespace ijuniorPractice
             for (int i = 0; i < TotalBuyer; i++)
             {
                 Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
-                Console.WriteLine(buyer + "\n");
+                Console.WriteLine(buyer);
                 buyer.AddRandomProduct(_products);
                 _bayer.Enqueue(buyer);
             }
@@ -158,12 +158,23 @@ namespace ijuniorPractice
             for (int i = 0; i < randomNumber; i++)
             {
                 int randomIndex = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
+              
                 Product product = products[randomIndex-1].Take();
+                
                 Console.WriteLine($"В корзине - {product}");
+                
                 _basket.AddProduct(products[randomIndex - 1].Take());
-
             }
 
+            Console.WriteLine();
+        }
+
+        public  void BuyProduct(List<Product> products)
+        {
+            foreach (var product in products)
+            {
+            _bag.AddProduct(product);
+            }
         }
 
         public override string ToString()
