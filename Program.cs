@@ -92,7 +92,6 @@
             int minWalletMoney = 1000;
             int maxWalletMoney = 5000;
 
-
             int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
 
             for (int i = 0; i < TotalBuyer; i++)
