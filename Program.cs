@@ -139,7 +139,9 @@ namespace ijuniorPractice
         }
 
         public void SumProduct()
-        { }
+        {
+
+        }
 
     }
 
@@ -163,6 +165,11 @@ namespace ijuniorPractice
         public override string ToString()
         {
             return $"Продукт {_title}, цена {_price}, ({_description})";
+        }
+
+        public float ShowPrice()
+        {
+            return _price;
         }
     }
 
