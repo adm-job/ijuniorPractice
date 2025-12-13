@@ -243,6 +243,11 @@
             return _wallet;
         }
 
+        public void RemoveRandomProduct()
+        {
+            int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.)
+        }
+
         public override string ToString()
         {
             return $"{_name} денег {_wallet}";
@@ -281,6 +286,8 @@
 
             return product;
         }
+
+        public void RemoveProduct(Product product) { }
     }
 
     class UserUtils
