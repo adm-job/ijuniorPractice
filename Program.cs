@@ -81,7 +81,7 @@ namespace ijuniorPractice
                         break;
 
                     case Seller:
-                        ShowProducts();// ПЕРЕДЕЛАТЬ
+                        ServeBuyer();
                         break;
 
                     case Exit:
@@ -112,10 +112,16 @@ namespace ijuniorPractice
                 _bayer.Enqueue(buyer);
             }
         }
+
+        public void ServeBuyer()
+        {
+
+        }
     }
 
     class Cashier
     {
+        private Buyer _buyer;
 
     }
 
