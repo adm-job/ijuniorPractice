@@ -18,7 +18,7 @@ namespace ijuniorPractice
     class Supermarket
     {
         private List<Product> _products = new();
-        private Queue<Buyer> _bayer = new();
+        private Queue<Buyer> _bayers = new();
         private Cashier _cashier = new();
         private float _money = 0;
         private bool _isWork = true;
@@ -109,12 +109,20 @@ namespace ijuniorPractice
                 Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
                 Console.WriteLine(buyer);
                 buyer.AddRandomProduct(_products);
-                _bayer.Enqueue(buyer);
+                _bayers.Enqueue(buyer);
             }
         }
 
         public void ServeBuyer()
         {
+            while (_bayers.Count > 0)
+            {
+                Buyer buyer = _bayers.Dequeue();
+                _cashier.PunchProduct(buyer);
+            }
+
+
+
 
         }
     }
@@ -122,6 +130,16 @@ namespace ijuniorPractice
     class Cashier
     {
         private Buyer _buyer;
+        private List<Product> _sellProducts;
+
+        public void PunchProduct(Buyer buyer)
+        {
+            _buyer = buyer;
+            _sellProducts = _buyer.TransferProduct();
+        }
+
+        public void SumProduct()
+        { }
 
     }
 
@@ -171,24 +189,33 @@ namespace ijuniorPractice
             for (int i = 0; i < randomNumber; i++)
             {
                 int randomIndex = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
-              
-                Product product = products[randomIndex-1].Take();
-                
+
+                Product product = products[randomIndex - 1].Take();
+
                 Console.WriteLine($"В корзине - {product}");
-                
+
                 _basket.AddProduct(products[randomIndex - 1].Take());
             }
 
             Console.WriteLine();
         }
 
-        public  void BuyProduct(List<Product> products)
+        public void BuyProduct(List<Product> products)
         {
             foreach (var product in products)
             {
-            _bag.AddProduct(product);
+                _bag.AddProduct(product);
             }
         }
+
+        public List<Product> TransferProduct()
+        {
+            return _basket.PullProduct();
+        }
+        //public List<Product> PullProduct()
+        //{
+        //    return _basket;
+        //}
 
         public override string ToString()
         {
@@ -211,6 +238,11 @@ namespace ijuniorPractice
             {
                 Console.WriteLine(product);
             }
+        }
+
+        public List<Product> PullProduct()
+        {
+            return _products;
         }
     }
 
