@@ -114,12 +114,8 @@
             while (_bayers.Count > 0)
             {
                 Buyer buyer = _bayers.Dequeue();
-                _cashier.PunchProduct(buyer);
+                _cashier.PurchaseProcessing(buyer);
             }
-
-
-
-
         }
     }
 
@@ -131,17 +127,25 @@
 
         public void PurchaseProcessing(Buyer buyer)
         {
+            bool isNotPayment = true;
+
             PunchProduct(buyer);
             SumProduct();
 
-            if (EnoughMoney())
-            {
-                // Продать все товары так как денег хватает 
-            }
-            else
-            {
-                _buyer.RemoveRandomProduct();
-            }
+            do
+                if (EnoughMoney())
+                {
+                    // Продать все товары так как денег хватает 
+                    SumProduct();
+
+                    isNotPayment = false;
+                }
+                else
+                {
+                    _buyer.RemoveRandomProduct();
+                }
+
+            while (isNotPayment);
         }
 
         private void PunchProduct(Buyer buyer)
@@ -297,6 +301,7 @@
 
         public void RemoveProduct(int index)
         {
+            Console.WriteLine($"Товар {_products[index]} ----- УБРАН ИЗ КОРЗИРНЫ");
             _products.RemoveAt(index);
         }
     }
