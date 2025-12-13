@@ -133,22 +133,24 @@
         {
             PunchProduct(buyer);
             SumProduct();
+
             if (EnoughMoney())
             {
-
+                // Продать все товары так как денег хватает 
             }
             else
             {
+                _buyer.RemoveRandomProduct();
             }
         }
 
-        public void PunchProduct(Buyer buyer)
+        private void PunchProduct(Buyer buyer)
         {
             _buyer = buyer;
             _sellProducts = _buyer.TransferProduct();
         }
 
-        public void SumProduct()
+        private void SumProduct()
         {
             foreach (var product in _sellProducts)
             {
@@ -156,7 +158,7 @@
             }
         }
 
-        public bool EnoughMoney()
+        private bool EnoughMoney()
         {
             return _sumPriceProduct > _buyer.ShowMoney();
         }
@@ -245,7 +247,8 @@
 
         public void RemoveRandomProduct()
         {
-            int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.)
+            int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.TotalProducts());
+            _basket.RemoveProduct(indexProduct);
         }
 
         public override string ToString()
@@ -287,7 +290,15 @@
             return product;
         }
 
-        public void RemoveProduct(Product product) { }
+        public int TotalProducts()
+        {
+            return _products.Count;
+        }
+
+        public void RemoveProduct(int index)
+        {
+            _products.RemoveAt(index);
+        }
     }
 
     class UserUtils
