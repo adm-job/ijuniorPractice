@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 
 {
     internal class Program
@@ -131,6 +127,20 @@ namespace ijuniorPractice
     {
         private Buyer _buyer;
         private List<Product> _sellProducts;
+        private float _sumPriceProduct;
+
+        public void PurchaseProcessing(Buyer buyer)
+        {
+            PunchProduct(buyer);
+            SumProduct();
+            if (EnoughMoney())
+            {
+
+            }
+            else
+            {
+            }
+        }
 
         public void PunchProduct(Buyer buyer)
         {
@@ -140,7 +150,15 @@ namespace ijuniorPractice
 
         public void SumProduct()
         {
+            foreach (var product in _sellProducts)
+            {
+                _sumPriceProduct += product.ShowPrice();
+            }
+        }
 
+        public bool EnoughMoney()
+        {
+            return _sumPriceProduct > _buyer.ShowMoney();
         }
 
     }
@@ -219,10 +237,11 @@ namespace ijuniorPractice
         {
             return _basket.PullProduct();
         }
-        //public List<Product> PullProduct()
-        //{
-        //    return _basket;
-        //}
+
+        public float ShowMoney()
+        {
+            return _wallet;
+        }
 
         public override string ToString()
         {
