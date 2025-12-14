@@ -127,25 +127,29 @@
 
         public void PurchaseProcessing(Buyer buyer)
         {
-            bool isNotPayment = true;
+            bool isNoMoney = true;
 
             PunchProduct(buyer);
             SumProduct();
 
             do
+            {
+                SumProduct();
+
                 if (EnoughMoney())
                 {
+                    isNoMoney = false;
                     // Продать все товары так как денег хватает 
-                    SumProduct();
 
-                    isNotPayment = false;
+                    _buyer.GiveMoney(_sumPriceProduct);
+                
                 }
                 else
                 {
                     _buyer.RemoveRandomProduct();
                 }
-
-            while (isNotPayment);
+            }
+            while (isNoMoney);
         }
 
         private void PunchProduct(Buyer buyer)
@@ -253,6 +257,12 @@
         {
             int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.TotalProducts());
             _basket.RemoveProduct(indexProduct);
+        }
+
+        public float GiveMoney(float needMoney)
+        {
+            _wallet -= needMoney;
+            return needMoney;
         }
 
         public override string ToString()
