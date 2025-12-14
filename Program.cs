@@ -19,6 +19,8 @@
         private float _money = 0;
         private bool _isWork = true;
 
+        
+        
         public Supermarket()
         {
             _products.Add(new("Банан", 75.5f, "Желтый"));
@@ -121,9 +123,12 @@
 
     class Cashier
     {
+        public Action<float> Sale { get; private set; }
+
         private Buyer _buyer;
         private List<Product> _sellProducts;
         private float _sumPriceProduct;
+        private float _money;
 
         public void PurchaseProcessing(Buyer buyer)
         {
@@ -141,8 +146,9 @@
                     isNoMoney = false;
                     // Продать все товары так как денег хватает 
 
-                    _buyer.GiveMoney(_sumPriceProduct);
-                
+                    _money =  _buyer.GiveMoney(_sumPriceProduct);
+                    Sale?.Invoke(_money);
+
                 }
                 else
                 {
