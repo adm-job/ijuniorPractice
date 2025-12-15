@@ -19,8 +19,8 @@
         private float _moneyCashDesk = 0;
         private bool _isWork = true;
 
-        
-        
+
+
         public Supermarket()
         {
             _products.Add(new("Банан", 75.5f, "Желтый"));
@@ -146,12 +146,12 @@
                     isNoMoney = false;
                     // Продать все товары так как денег хватает 
 
-                    _money =  _buyer.GiveMoney(_sumPriceProduct);
-
+                    _buyer.TakeOutAllProduct();
+                    _money = _buyer.GiveMoney(_sumPriceProduct);
                 }
                 else
                 {
-                    
+
                     _buyer.RemoveRandomProduct();
                 }
             }
@@ -162,6 +162,7 @@
         {
             _buyer = buyer;
             _sellProducts = _buyer.TransferProduct();
+
         }
 
         private void SumProduct()
@@ -250,6 +251,11 @@
             Console.WriteLine();
         }
 
+        public void AddBagProduct()
+        {
+
+        }
+
         public void BuyProduct(List<Product> products)
         {
             foreach (var product in products)
@@ -266,6 +272,11 @@
         public float ShowMoney()
         {
             return _wallet;
+        }
+
+        public void TakeOutAllProduct()
+        {
+            _basket.RemoveAllProduct();
         }
 
         public void RemoveRandomProduct()
@@ -324,6 +335,11 @@
         {
             return _products.Count;
         }
+        public void RemoveAllProduct()
+        {
+            _products = null;
+        }
+
 
         public void RemoveProduct(int index)
         {
