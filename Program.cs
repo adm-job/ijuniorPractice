@@ -16,7 +16,7 @@
         private List<Product> _products = new();
         private Queue<Buyer> _bayers = new();
         private Cashier _cashier = new();
-        private float _money = 0;
+        private float _moneyCashDesk = 0;
         private bool _isWork = true;
 
         
@@ -95,7 +95,7 @@
 
         public void AddRandomBuyer()
         {
-            int minBuyer = 1;
+            int minBuyer = 3;
             int maxBuyer = 15;
             int minWalletMoney = 1000;
             int maxWalletMoney = 5000;
@@ -117,14 +117,15 @@
             {
                 Buyer buyer = _bayers.Dequeue();
                 _cashier.PurchaseProcessing(buyer);
+                _moneyCashDesk += _cashier.RemoveCashDesk();
             }
+
+            Console.WriteLine($"\nСумма в кассе = {_moneyCashDesk}\n");
         }
     }
 
     class Cashier
     {
-        public Action<float> Sale { get; private set; }
-
         private Buyer _buyer;
         private List<Product> _sellProducts;
         private float _sumPriceProduct;
@@ -146,11 +147,11 @@
                     // Продать все товары так как денег хватает 
 
                     _money =  _buyer.GiveMoney(_sumPriceProduct);
-                    Sale?.Invoke(_money);
 
                 }
                 else
                 {
+                    
                     _buyer.RemoveRandomProduct();
                 }
             }
@@ -175,7 +176,14 @@
 
         private bool EnoughMoney()
         {
-            return _sumPriceProduct < _buyer.ShowMoney();// ?????????
+            return _sumPriceProduct < _buyer.ShowMoney();
+        }
+
+        public float RemoveCashDesk()
+        {
+            float cash = _money;
+            _money = 0;
+            return cash;
         }
 
     }
@@ -262,6 +270,7 @@
 
         public void RemoveRandomProduct()
         {
+            Console.Write($"{_name} выкладывает: ");
             int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.TotalProducts());
             _basket.RemoveProduct(indexProduct);
         }
@@ -333,42 +342,6 @@
         }
     }
 }
-
-//private static int ReadFighterInt(int totalFighters)
-//{
-//    int inputNumber;
-//    bool isNotCorrect = true;
-
-//    do
-//    {
-//        if ((int.TryParse(Console.ReadLine(), out inputNumber)) == false)
-//        {
-//            Console.WriteLine("Введено не число");
-//            continue;
-//        }
-//        else
-//        {
-//            if (inputNumber <= totalFighters && inputNumber > 0)
-//            {
-//                isNotCorrect = false;
-//            }
-//            else
-//            {
-//                Console.WriteLine("Бойца с данным номером нет");
-//            }
-//        }
-//    } while (isNotCorrect);
-
-//    return inputNumber;
-//}
-
-//public abstract Warrior Clone();
-
-//public override Warrior Clone()
-//{
-//    return new Assassine(Name, Damage, Defence, Health);
-//}
-
 
 
 
