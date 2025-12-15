@@ -70,7 +70,7 @@
                     case LaunchBuyers:
                         AddRandomBuyer();
                         break;
-                    
+
                     case Seller:
                         ServeBuyer();
                         break;
@@ -102,11 +102,11 @@
             for (int i = 0; i < TotalBuyer; i++)
             {
                 Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
-        
+
                 Console.WriteLine(buyer);
-                
+
                 buyer.AddRandomProduct(_products);
-                
+
                 _bayers.Enqueue(buyer);
             }
         }
@@ -117,16 +117,16 @@
             {
                 Console.WriteLine($"\nПокупателей нет впустите их\n");
             }
-            
+
             while (_bayers.Count > 0)
             {
                 Buyer buyer = _bayers.Dequeue();
-                
+
                 _cashier.PurchaseProcessing(buyer);
-                
+
                 _moneyCashDesk += _cashier.RemoveCashDesk();
             }
-            
+
             Console.WriteLine($"\nСумма в кассе = {_moneyCashDesk}\n");
         }
     }
@@ -151,13 +151,13 @@
                 if (EnoughMoney())
                 {
                     isNoMoney = false;
-                    
+
                     _buyer.TakeOutAllProduct();
-            
+
                     _money = _buyer.GiveMoney(_sumPriceProduct);
-                    
+
                     Console.WriteLine($"{_buyer} купил товары на сумму {_money}\n");
-                    
+
                     _sellProducts.Clear();
                 }
                 else
@@ -172,8 +172,8 @@
         {
             _buyer = buyer;
             _sellProducts = _buyer.TransferProduct();
-            
-            _buyer.BuyProduct( _sellProducts );
+
+            _buyer.BuyProduct(_sellProducts);
         }
 
         private void SumProduct()
@@ -211,7 +211,7 @@
             _price = price;
             _description = description;
         }
-     
+
         public Product Take()
         {
             return new Product(_title, _price, _description);
@@ -309,7 +309,7 @@
 
         public void AddProduct(Product product)
         {
-                _products.Add(product);
+            _products.Add(product);
         }
 
         public void Show()
@@ -319,7 +319,7 @@
                 Console.WriteLine(product);
             }
         }
-        
+
         public List<Product> PullProduct()
         {
             return _products;
@@ -332,15 +332,16 @@
         {
             return _products.Count;
         }
+
         public void RemoveAllProduct()
         {
             _products = null;
         }
 
-
         public void RemoveProduct(int index)
         {
             Console.WriteLine($"Товар {_products[index]} ----- УБРАН ИЗ КОРЗИРНЫ");
+
             _products.RemoveAt(index);
         }
     }
@@ -355,8 +356,3 @@
         }
     }
 }
-
-
-
-
-
