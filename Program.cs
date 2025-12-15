@@ -310,7 +310,7 @@
         public void AddProduct(Product product)
         {
                 _products.Add(product);
-        } 
+        }
 
         public void Show()
         {
@@ -319,7 +319,7 @@
                 Console.WriteLine(product);
             }
         }
-
+        
         public List<Product> PullProduct()
         {
             return _products;
@@ -328,14 +328,6 @@
 
     class Basket : Bag
     {
-        public Product GetProduct(int index)
-        {
-            Product product = _products[index];
-            _products.RemoveAt(index);
-
-            return product;
-        }
-
         public int TotalProducts()
         {
             return _products.Count;
