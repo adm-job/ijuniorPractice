@@ -7,7 +7,6 @@
         {
             Supermarket supermarket = new Supermarket();
             supermarket.StartStore();
-
         }
     }
 
@@ -18,8 +17,6 @@
         private Cashier _cashier = new();
         private float _moneyCashDesk = 0;
         private bool _isWork = true;
-
-
 
         public Supermarket()
         {
@@ -73,13 +70,13 @@
                     case LaunchBuyers:
                         AddRandomBuyer();
                         break;
+                    
+                    case Seller:
+                        ServeBuyer();
+                        break;
 
                     case ShowAllProducts:
                         ShowProducts();
-                        break;
-
-                    case Seller:
-                        ServeBuyer();
                         break;
 
                     case Exit:
@@ -105,21 +102,31 @@
             for (int i = 0; i < TotalBuyer; i++)
             {
                 Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
+        
                 Console.WriteLine(buyer);
+                
                 buyer.AddRandomProduct(_products);
+                
                 _bayers.Enqueue(buyer);
             }
         }
 
         public void ServeBuyer()
         {
+            if (_bayers.Count == 0)
+            {
+                Console.WriteLine($"\nПокупателей нет впустите их\n");
+            }
+            
             while (_bayers.Count > 0)
             {
                 Buyer buyer = _bayers.Dequeue();
+                
                 _cashier.PurchaseProcessing(buyer);
+                
                 _moneyCashDesk += _cashier.RemoveCashDesk();
             }
-
+            
             Console.WriteLine($"\nСумма в кассе = {_moneyCashDesk}\n");
         }
     }
@@ -144,14 +151,17 @@
                 if (EnoughMoney())
                 {
                     isNoMoney = false;
-                    // Продать все товары так как денег хватает 
-
+                    
                     _buyer.TakeOutAllProduct();
+            
                     _money = _buyer.GiveMoney(_sumPriceProduct);
+                    
+                    Console.WriteLine($"{_buyer} купил товары на сумму {_money}\n");
+                    
+                    _sellProducts.Clear();
                 }
                 else
                 {
-
                     _buyer.RemoveRandomProduct();
                 }
             }
@@ -162,7 +172,8 @@
         {
             _buyer = buyer;
             _sellProducts = _buyer.TransferProduct();
-
+            
+            _buyer.BuyProduct( _sellProducts );
         }
 
         private void SumProduct()
@@ -186,7 +197,6 @@
             _money = 0;
             return cash;
         }
-
     }
 
     class Product
@@ -201,6 +211,7 @@
             _price = price;
             _description = description;
         }
+     
         public Product Take()
         {
             return new Product(_title, _price, _description);
@@ -221,7 +232,6 @@
     {
         private string _name;
         private float _wallet;
-
         private Basket _basket = new();
         private Bag _bag = new();
 
@@ -249,11 +259,6 @@
             }
 
             Console.WriteLine();
-        }
-
-        public void AddBagProduct()
-        {
-
         }
 
         public void BuyProduct(List<Product> products)
@@ -304,8 +309,8 @@
 
         public void AddProduct(Product product)
         {
-            _products.Add(product);
-        }
+                _products.Add(product);
+        } 
 
         public void Show()
         {
