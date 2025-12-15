@@ -135,7 +135,6 @@
             bool isNoMoney = true;
 
             PunchProduct(buyer);
-            SumProduct();
 
             do
             {
@@ -166,6 +165,8 @@
 
         private void SumProduct()
         {
+            _sumPriceProduct = 0;
+
             foreach (var product in _sellProducts)
             {
                 _sumPriceProduct += product.ShowPrice();
@@ -174,7 +175,7 @@
 
         private bool EnoughMoney()
         {
-            return _sumPriceProduct > _buyer.ShowMoney();
+            return _sumPriceProduct < _buyer.ShowMoney();// ?????????
         }
 
     }
