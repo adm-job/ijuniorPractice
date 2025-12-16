@@ -1,4 +1,6 @@
-﻿namespace ijuniorPractice
+﻿using System.Collections.Generic;
+
+namespace ijuniorPractice
 
 {
     internal class Program
@@ -142,23 +144,25 @@
         {
             bool isNoMoney = true;
 
-            PunchProduct(buyer);
+            _buyer = buyer;
+
+            int TotalProductBasket = 0;
 
             do
             {
-                SumProduct();
+                TotalProductBasket = _buyer.TotalProduct();
+            
+                SumProduct(TotalProductBasket);
 
                 if (EnoughMoney())
                 {
                     isNoMoney = false;
 
-                    _buyer.TakeOutAllProduct();
-
                     _money = _buyer.GiveMoney(_sumPriceProduct);
 
-                    Console.WriteLine($"{_buyer} купил товары на сумму {_money}\n");
+                    _buyer.BuyProduct();
 
-                    _sellProducts.Clear();
+                    Console.WriteLine($"{_buyer} купил товары на сумму {_money}\n");
                 }
                 else
                 {
@@ -168,27 +172,20 @@
             while (isNoMoney);
         }
 
-        private void PunchProduct(Buyer buyer)
-        {
-            _buyer = buyer;
-            _sellProducts = _buyer.TransferProduct();
-
-            _buyer.BuyProduct(_sellProducts);
-        }
-
-        private void SumProduct()
+        private void SumProduct(int totalProduct)
         {
             _sumPriceProduct = 0;
 
-            foreach (var product in _sellProducts)
+            for (int i = 0; i < totalProduct; i++)
             {
-                _sumPriceProduct += product.ShowPrice();
+                _sumPriceProduct += _buyer.ReturnPrice(i);
             }
+
         }
 
         private bool EnoughMoney()
         {
-            return _sumPriceProduct < _buyer.ShowMoney();
+            return _sumPriceProduct < _buyer.ReturnMoney();
         }
 
         public float RemoveCashDesk()
@@ -261,27 +258,25 @@
             Console.WriteLine();
         }
 
-        public void BuyProduct(List<Product> products)
+        public int TotalProduct()
         {
-            foreach (var product in products)
-            {
-                _bag.AddProduct(product);
-            }
+            return _basket.TotalProducts();
         }
 
-        public List<Product> TransferProduct()
+        public void BuyProduct()
         {
-            return _basket.PullProduct();
+            _bag = _basket;
+            _basket.RemoveAllProduct();
         }
 
-        public float ShowMoney()
+        public float ReturnMoney()
         {
             return _wallet;
         }
 
-        public void TakeOutAllProduct()
+        public float ReturnPrice(int index)
         {
-            _basket.RemoveAllProduct();
+            return _basket.ReturnPriceProduct(index);
         }
 
         public void RemoveRandomProduct()
@@ -296,7 +291,7 @@
             _wallet -= needMoney;
             return needMoney;
         }
-
+        
         public override string ToString()
         {
             return $"{_name} денег {_wallet}";
@@ -305,24 +300,19 @@
 
     class Bag
     {
-        protected List<Product> _products = new();
+        protected List<Product> Products = new();
 
         public void AddProduct(Product product)
         {
-            _products.Add(product);
+            Products.Add(product);
         }
 
         public void Show()
         {
-            foreach (var product in _products)
+            foreach (var product in Products)
             {
                 Console.WriteLine(product);
             }
-        }
-
-        public List<Product> PullProduct()
-        {
-            return _products;
         }
     }
 
@@ -330,19 +320,24 @@
     {
         public int TotalProducts()
         {
-            return _products.Count;
+            return Products.Count;
         }
 
         public void RemoveAllProduct()
         {
-            _products = null;
+            Products = null;
         }
 
         public void RemoveProduct(int index)
         {
-            Console.WriteLine($"Товар {_products[index]} ----- УБРАН ИЗ КОРЗИРНЫ");
+            Console.WriteLine($"Товар {Products[index]} ----- УБРАН ИЗ КОРЗИРНЫ");
 
-            _products.RemoveAt(index);
+            Products.RemoveAt(index);
+        }
+
+        public float ReturnPriceProduct(int index)
+        {
+            return Products[index].ShowPrice();
         }
     }
 
