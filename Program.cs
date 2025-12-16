@@ -98,7 +98,6 @@ namespace ijuniorPractice
             int maxBuyer = 15;
             int minWalletMoney = 1000;
             int maxWalletMoney = 5000;
-
             int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
 
             for (int i = 0; i < TotalBuyer; i++)
@@ -143,15 +142,14 @@ namespace ijuniorPractice
         public void PurchaseProcessing(Buyer buyer)
         {
             bool isNoMoney = true;
+            int TotalProductBasket = 0;
 
             _buyer = buyer;
-
-            int TotalProductBasket = 0;
 
             do
             {
                 TotalProductBasket = _buyer.TotalProduct();
-            
+
                 SumProduct(TotalProductBasket);
 
                 if (EnoughMoney())
@@ -180,7 +178,6 @@ namespace ijuniorPractice
             {
                 _sumPriceProduct += _buyer.ReturnPrice(i);
             }
-
         }
 
         private bool EnoughMoney()
@@ -291,7 +288,7 @@ namespace ijuniorPractice
             _wallet -= needMoney;
             return needMoney;
         }
-        
+
         public override string ToString()
         {
             return $"{_name} денег {_wallet}";
