@@ -216,7 +216,7 @@ namespace ijuniorPractice
             return $"Продукт {_title}, цена {_price}, ({_description})";
         }
 
-        public float GetPrice()
+        public float ShowPrice()
         {
             return _price;
         }
@@ -334,7 +334,7 @@ namespace ijuniorPractice
 
         public float ReturnPriceProduct(int index)
         {
-            return Products[index].GetPrice();
+            return Products[index].ShowPrice();
         }
     }
 
