@@ -98,9 +98,9 @@ namespace ijuniorPractice
             int maxBuyer = 15;
             int minWalletMoney = 1000;
             int maxWalletMoney = 5000;
-            int TotalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
+            int totalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
 
-            for (int i = 0; i < TotalBuyer; i++)
+            for (int i = 0; i < totalBuyer; i++)
             {
                 Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
 
@@ -142,15 +142,15 @@ namespace ijuniorPractice
         public void PurchaseProcessing(Buyer buyer)
         {
             bool isNoMoney = true;
-            int TotalProductBasket = 0;
+            int totalProductBasket = 0;
 
             _buyer = buyer;
 
             do
             {
-                TotalProductBasket = _buyer.TotalProduct();
+                totalProductBasket = _buyer.TotalProduct();
 
-                SumProduct(TotalProductBasket);
+                SumProduct(totalProductBasket);
 
                 if (EnoughMoney())
                 {
