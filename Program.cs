@@ -263,7 +263,7 @@ namespace ijuniorPractice
         public void BuyProduct()
         {
             _bag = _basket;
-            _basket.RemoveAllProduct();
+            _basket = null;
         }
 
         public float ReturnMoney()
@@ -318,11 +318,6 @@ namespace ijuniorPractice
         public int TotalProducts()
         {
             return Products.Count;
-        }
-
-        public void RemoveAllProduct()
-        {
-            Products = null;
         }
 
         public void RemoveProduct(int index)
