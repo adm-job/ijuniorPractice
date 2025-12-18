@@ -216,7 +216,7 @@ namespace ijuniorPractice
             return $"Продукт {_title}, цена {_price}, ({_description})";
         }
 
-        public float ShowPrice()
+        public float GetPrice()
         {
             return _price;
         }
@@ -257,13 +257,13 @@ namespace ijuniorPractice
 
         public int TotalProduct()
         {
-            return _basket.TotalProducts();
+            return _basket.ReturnTotalProducts();
         }
 
         public void BuyProduct()
         {
             _bag = _basket;
-            _basket.RemoveAllProduct();
+            _basket = null;
         }
 
         public float ReturnMoney()
@@ -279,7 +279,7 @@ namespace ijuniorPractice
         public void RemoveRandomProduct()
         {
             Console.Write($"{_name} выкладывает: ");
-            int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.TotalProducts());
+            int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.ReturnTotalProducts());
             _basket.RemoveProduct(indexProduct);
         }
 
@@ -315,14 +315,9 @@ namespace ijuniorPractice
 
     class Basket : Bag
     {
-        public int TotalProducts()
+        public int ReturnTotalProducts()
         {
             return Products.Count;
-        }
-
-        public void RemoveAllProduct()
-        {
-            Products = null;
         }
 
         public void RemoveProduct(int index)
@@ -334,7 +329,7 @@ namespace ijuniorPractice
 
         public float ReturnPriceProduct(int index)
         {
-            return Products[index].ShowPrice();
+            return Products[index].GetPrice();
         }
     }
 
