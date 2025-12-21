@@ -12,6 +12,11 @@ namespace ijuniorPractice
         }
     }
 
+    class Battle
+    {
+
+    }
+
     class Soldier
     {
         private float _attack;
