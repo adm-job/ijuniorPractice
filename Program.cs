@@ -19,20 +19,28 @@ namespace ijuniorPractice
 
     class Soldier
     {
-        private float _attack;
-        private float _health;
+        protected float Damage;
+        protected float Health;
 
         public float Attack()
         {
-            return _attack;
+            return Damage;
         }
 
         public float TakeDamage()
         {
-            return _health;
+            return Health;
         }
-
     }
+
+    class Sniper : Soldier
+    {
+        public float Attack() 
+        {
+            float multiplication = 3f;
+
+            return Damage * multiplication;
+        }
 
     //class Supermarket
     //{
