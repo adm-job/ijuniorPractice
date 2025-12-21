@@ -12,6 +12,23 @@ namespace ijuniorPractice
         }
     }
 
+    class Soldier
+    {
+        private float _attack;
+        private float _health;
+
+        public float Attack()
+        {
+            return _attack;
+        }
+
+        public float TakeDamage()
+        {
+            return _health;
+        }
+
+    }
+
     //class Supermarket
     //{
     //    private List<Product> _products = new();
