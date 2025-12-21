@@ -35,12 +35,19 @@ namespace ijuniorPractice
 
     class Sniper : Soldier
     {
-        public float Attack() 
+        public float Attack()
         {
             float multiplication = 3f;
 
             return Damage * multiplication;
         }
+    }
+
+    class Gunner : Soldier
+    {
+    
+    }
+
 
     //class Supermarket
     //{
