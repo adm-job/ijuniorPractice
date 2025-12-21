@@ -45,8 +45,13 @@ namespace ijuniorPractice
 
     class Gunner : Soldier
     {
-    
+
     }
+
+    class Grenadier : Soldier
+    {
+    }
+
 
 
     //class Supermarket
