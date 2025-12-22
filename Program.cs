@@ -23,6 +23,12 @@ namespace ijuniorPractice
         protected float Damage;
         protected float Health;
 
+        public Soldier(float damage = 10 , float health = 100)
+        {
+            Damage = damage;
+            Health = health;
+        }
+
         public void Attack(Soldier[] soldiers)
         {
             soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
