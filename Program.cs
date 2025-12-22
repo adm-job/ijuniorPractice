@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ijuniorPractice
 
@@ -22,24 +23,31 @@ namespace ijuniorPractice
         protected float Damage;
         protected float Health;
 
-        public void Attack(Soldier soldier)
+        public void Attack(Soldier[] soldiers)
         {
-            soldier.TakeDamage(Damage);
+            soldiers[RandomSoldierIndex(soldiers)].TakeDamage(Damage);
         }
 
         public void TakeDamage(float damage)
         {
             Health -= damage;
         }
+
+        protected int RandomSoldierIndex(Soldier[] soldiers)
+        {
+            return UserUtils.GenerateRandomNumber(0, soldiers.Length);
+        } 
     }
 
     class Sniper : Soldier
     {
-        public void Attack(Soldier soldier)
+        public void Attack(Soldier[] soldiers)
         {
-            float multiplication = 3f;
 
-            return Damage * multiplication;
+            float multiplication = 3f;
+            float finalDamage = Damage * multiplication;
+
+            soldiers[RandomSoldierIndex(soldiers)].TakeDamage(finalDamage);
         }
     }
 
@@ -51,6 +59,8 @@ namespace ijuniorPractice
     class Grenadier : Soldier
     {
     }
+
+    
 
 
 
