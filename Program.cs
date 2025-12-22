@@ -41,10 +41,17 @@ namespace ijuniorPractice
             SquadSoldiers[9] = new Grenadier();
         }
 
-
-
-
-
+        public void SetSoldiers()
+        {
+            int RandomIndexClass = -1;
+            for (int i = 0; i < CompanyMax; i++)
+            {
+                RandomIndexClass = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
+                FirstCompany[i] = SquadSoldiers[RandomIndexClass];
+                RandomIndexClass = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
+                SecondCompany[i] = SquadSoldiers[RandomIndexClass];
+            }
+        }
     }
 
     class Soldier
