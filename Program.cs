@@ -16,7 +16,10 @@ namespace ijuniorPractice
     class Battle
     {
 
+
     }
+
+    
 
     class Soldier
     {
@@ -47,6 +50,10 @@ namespace ijuniorPractice
 
     class Sniper : Soldier
     {
+        public Sniper(float damage = 10, float health = 100) : base(damage, health)
+        {
+        }
+
         public void Attack(Soldier[] soldiers)
         {
 
@@ -59,6 +66,10 @@ namespace ijuniorPractice
 
     class Gunner : Soldier
     {
+        public Gunner(float damage = 11, float health = 100) : base(damage, health)
+        {
+        }
+
         public void Attack(Soldier[] soldiers)
         {
             int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
@@ -73,10 +84,10 @@ namespace ijuniorPractice
         private int[] SelectListIndexAttack(Soldier[] soldiers)
         {
             float percentageHits = 0.25f;
-            int totalSoldier = (int)(soldiers.Length * percentageHits);
-            int[] indexSolder = new int[totalSoldier];
+            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldiersHit];
 
-            for (int i = 0; i < totalSoldier; i++)
+            for (int i = 0; i < totalSoldiersHit; i++)
             {
                 indexSolder[i] = SelectSoldierIndex(soldiers);
             }
@@ -86,6 +97,9 @@ namespace ijuniorPractice
 
     class Grenadier : Soldier
     {
+        public Grenadier(float damage = 8, float health = 100) : base(damage, health)
+        {
+        }
 
         public void Attack(Soldier[] soldiers)
         {
@@ -100,15 +114,10 @@ namespace ijuniorPractice
         private int[] SelectListIndexAttack(Soldier[] soldiers)
         {
             float percentageHits = 0.40f;
-            int totalSoldier = (int)(soldiers.Length * percentageHits);
-            int[] indexSolder = new int[totalSoldier];
+            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldiersHit];
             int countAddSoldiers = 0;
 
-
-            //for (int i = 0; i < totalSoldier; i++)
-            //{
-            //    indexSolder[i] = SelectSoldierIndex(soldiers);
-            //}
             do
             {
                 int index = SelectSoldierIndex(soldiers);
@@ -120,7 +129,7 @@ namespace ijuniorPractice
                     countAddSoldiers++;
                 }
 
-            } while (countAddSoldiers != totalSoldier);
+            } while (countAddSoldiers != totalSoldiersHit);
             
             return indexSolder;
         }
