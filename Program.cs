@@ -25,7 +25,7 @@ namespace ijuniorPractice
 
         public void Attack(Soldier[] soldiers)
         {
-            soldiers[RandomSoldierIndex(soldiers)].TakeDamage(Damage);
+            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
         }
 
         public void TakeDamage(float damage)
@@ -33,10 +33,10 @@ namespace ijuniorPractice
             Health -= damage;
         }
 
-        protected int RandomSoldierIndex(Soldier[] soldiers)
+        protected int SelectSoldierIndex(Soldier[] soldiers)
         {
             return UserUtils.GenerateRandomNumber(0, soldiers.Length);
-        } 
+        }
     }
 
     class Sniper : Soldier
@@ -47,20 +47,42 @@ namespace ijuniorPractice
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
-            soldiers[RandomSoldierIndex(soldiers)].TakeDamage(finalDamage);
+            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
         }
     }
 
     class Gunner : Soldier
     {
+        public void Attack(Soldier[] soldiers)
+        {
+            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
 
+            foreach (var index in HitSoldiersIndex)
+            {
+                soldiers[index].TakeDamage(Damage);
+            }
+
+        }
+
+        private int[] SelectListIndexAttack(Soldier[] soldiers)
+        {
+            float percentageHits = 0.25f;
+            int totalSoldier = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldier];
+
+            for (int i = 0; i < totalSoldier; i++)
+            {
+                indexSolder[i] = SelectSoldierIndex(soldiers);
+            }
+            return indexSolder;
+        }
     }
 
     class Grenadier : Soldier
     {
     }
 
-    
+
 
 
 
