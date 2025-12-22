@@ -23,7 +23,7 @@ namespace ijuniorPractice
         protected float Damage;
         protected float Health;
 
-        public Soldier(float damage = 10 , float health = 100)
+        public Soldier(float damage = 10, float health = 100)
         {
             Damage = damage;
             Health = health;
@@ -86,6 +86,44 @@ namespace ijuniorPractice
 
     class Grenadier : Soldier
     {
+
+        public void Attack(Soldier[] soldiers)
+        {
+            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
+
+            foreach (var index in HitSoldiersIndex)
+            {
+                soldiers[index].TakeDamage(Damage);
+            }
+        }
+
+        private int[] SelectListIndexAttack(Soldier[] soldiers)
+        {
+            float percentageHits = 0.40f;
+            int totalSoldier = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldier];
+            int countAddSoldiers = 0;
+
+
+            //for (int i = 0; i < totalSoldier; i++)
+            //{
+            //    indexSolder[i] = SelectSoldierIndex(soldiers);
+            //}
+            do
+            {
+                int index = SelectSoldierIndex(soldiers);
+                int duplicate = Array.IndexOf(indexSolder, index);
+                
+                if (duplicate >= 0)
+                {
+                    indexSolder[countAddSoldiers] = index;
+                    countAddSoldiers++;
+                }
+
+            } while (countAddSoldiers != totalSoldier);
+            
+            return indexSolder;
+        }
     }
 
 
