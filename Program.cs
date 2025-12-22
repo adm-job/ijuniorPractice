@@ -22,10 +22,10 @@ namespace ijuniorPractice
     class Fees
     {
         private Soldier[] SquadSoldiers = new Soldier[10];
-        private int CompanyMax = 100;
+        private static readonly int CompanyMax = 100;
 
-        Soldier[] FirstCompany = new Soldier[CompanyMax];
-        Soldier[] SecondCompany = new Soldier[CompanyMax];
+        private Soldier[] FirstCompany = new Soldier[CompanyMax];
+        private Soldier[] SecondCompany = new Soldier[CompanyMax];
         
         public Fees()
         {
@@ -40,6 +40,8 @@ namespace ijuniorPractice
             SquadSoldiers[8] = new Gunner();
             SquadSoldiers[9] = new Grenadier();
         }
+
+
 
 
 
