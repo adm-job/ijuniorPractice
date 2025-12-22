@@ -22,14 +22,14 @@ namespace ijuniorPractice
         protected float Damage;
         protected float Health;
 
-        public float Attack()
+        public void Attack(Soldier soldier)
         {
-            return Damage;
+            soldier.TakeDamage(Damage);
         }
 
-        public float TakeDamage()
+        public void TakeDamage(float damage)
         {
-            return Health;
+            Health -= damage;
         }
     }
 
