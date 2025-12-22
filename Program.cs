@@ -19,7 +19,31 @@ namespace ijuniorPractice
 
     }
 
-    
+    class Fees
+    {
+        private Soldier[] SquadSoldiers = new Soldier[10];
+        private int CompanyMax = 100;
+
+        Soldier[] FirstCompany = new Soldier[CompanyMax];
+        Soldier[] SecondCompany = new Soldier[CompanyMax];
+        
+        public Fees()
+        {
+            SquadSoldiers[0] = new Soldier();
+            SquadSoldiers[1] = new Soldier();
+            SquadSoldiers[2] = new Soldier();
+            SquadSoldiers[3] = new Soldier();
+            SquadSoldiers[4] = new Sniper();
+            SquadSoldiers[5] = new Sniper();
+            SquadSoldiers[6] = new Sniper();
+            SquadSoldiers[7] = new Gunner();
+            SquadSoldiers[8] = new Gunner();
+            SquadSoldiers[9] = new Grenadier();
+        }
+
+
+
+    }
 
     class Soldier
     {
@@ -97,7 +121,7 @@ namespace ijuniorPractice
 
     class Grenadier : Soldier
     {
-        public Grenadier(float damage = 8, float health = 100) : base(damage, health)
+        public Grenadier(float damage = 20, float health = 100) : base(damage, health)
         {
         }
 
