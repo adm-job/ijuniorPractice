@@ -35,7 +35,7 @@ namespace ijuniorPractice
 
     class Sniper : Soldier
     {
-        public float Attack()
+        public void Attack(Soldier soldier)
         {
             float multiplication = 3f;
 
