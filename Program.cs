@@ -15,21 +15,13 @@ namespace ijuniorPractice
 
     class Battle
     {
-         private Fees;
-
-
-
-    }
-
-    class Fees
-    {
         private Soldier[] SquadSoldiers = new Soldier[10];
         private static readonly int CompanyMax = 100;
 
         private Soldier[] FirstCompany = new Soldier[CompanyMax];
         private Soldier[] SecondCompany = new Soldier[CompanyMax];
 
-        public Fees()
+        public Battle()
         {
             SquadSoldiers[0] = new Soldier();
             SquadSoldiers[1] = new Soldier();
