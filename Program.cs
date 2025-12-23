@@ -89,6 +89,7 @@ class Soldier
 
     public void TakeDamage(float damage)
     {
+        Console.WriteLine($" Получен урон {damage}");
         Health -= damage;
     }
 
@@ -99,7 +100,7 @@ class Soldier
     
     public override string ToString()
     {
-        return $"{}";
+        return $"{Rank} - ({Damage}) - ({Health})";
     }
 }
 
@@ -111,19 +112,16 @@ class Sniper : Soldier
 
     public void Attack(Soldier[] soldiers)
     {
-
         float multiplication = 3f;
         float finalDamage = Damage * multiplication;
 
         soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
     }
-
-
 }
 
 class Gunner : Soldier
 {
-    public Gunner(string rank = "Пелеметчик", float damage = 11, float health = 100) : base( rank,   damage, health)
+    public Gunner(string rank = "Пулеметчик", float damage = 11, float health = 100) : base( rank,   damage, health)
     {
     }
 
