@@ -15,6 +15,8 @@ namespace ijuniorPractice
 
     class Battle
     {
+         private Fees;
+
 
 
     }
@@ -53,10 +55,10 @@ namespace ijuniorPractice
 
         private Soldier RandomSoldier()
         {
-            int RandomIndexClass = -1;
-            RandomIndexClass = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
+            int RandomIndex = -1;
+            RandomIndex = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
 
-            return SquadSoldiers[RandomIndexClass];
+            return SquadSoldiers[RandomIndex];
         }
     }
 }
