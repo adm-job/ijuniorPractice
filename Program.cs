@@ -2,7 +2,6 @@
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ijuniorPractice
-
 {
     internal class Program
     {
@@ -42,7 +41,21 @@ namespace ijuniorPractice
         {
             SetSoldiers();
 
+            do
+            {
+                for (int i = 0; i < FirstCompany?.Length; i++)
+                {
+                    FirstCompany[i].Attack(SecondCompany);
+                }
 
+                for (int i = 0; i < SecondCompany?.Length; i++)
+                {
+                    SecondCompany[i].Attack(FirstCompany);
+                }
+
+
+
+            } while (FirstCompany == null || SecondCompany == null);
 
 
         }
@@ -63,134 +76,139 @@ namespace ijuniorPractice
 
             return SquadSoldiers[RandomIndex];
         }
-
-         
-
-    }
-}
-
-class Soldier
-{
-    protected string Rank;
-    protected float Damage;
-    protected float Health;
-
-
-    public Soldier(string rank = "Солдат",float damage = 10, float health = 100)
-    {
-        Damage = damage;
-        Health = health;
     }
 
-    public void Attack(Soldier[] soldiers)
+    class Soldier
     {
-        soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
-    }
+        protected string Rank;
+        protected float Damage;
+        protected float Health;
 
-    public void TakeDamage(float damage)
-    {
-        Console.WriteLine($" Получен урон {damage}");
-        Health -= damage;
-    }
-
-    protected int SelectSoldierIndex(Soldier[] soldiers)
-    {
-        return UserUtils.GenerateRandomNumber(0, soldiers.Length);
-    }   
-    
-    public override string ToString()
-    {
-        return $"{Rank} - ({Damage}) - ({Health})";
-    }
-}
-
-class Sniper : Soldier
-{
-    public Sniper(string rank = "Снайпер", float damage = 10, float health = 100) : base(rank ,damage, health)
-    {
-    }
-
-    public void Attack(Soldier[] soldiers)
-    {
-        float multiplication = 3f;
-        float finalDamage = Damage * multiplication;
-
-        soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
-    }
-}
-
-class Gunner : Soldier
-{
-    public Gunner(string rank = "Пулеметчик", float damage = 11, float health = 100) : base( rank,   damage, health)
-    {
-    }
-
-    public void Attack(Soldier[] soldiers)
-    {
-        int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-
-        foreach (var index in HitSoldiersIndex)
+        public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
         {
-            soldiers[index].TakeDamage(Damage);
+            Damage = damage;
+            Health = health;
+        }
+
+        public void Attack(Soldier[] soldiers)
+        {
+            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
+            Console.WriteLine($"{this.Rank}");
+        }
+
+        public void TakeDamage(float damage)
+        {
+            Console.WriteLine($" Получен урон {damage}");
+            Health -= damage;
+        }
+
+        protected int SelectSoldierIndex(Soldier[] soldiers)
+        {
+            return UserUtils.GenerateRandomNumber(0, soldiers.Length);
+        }
+
+        public override string ToString()
+        {
+            return $"{Rank} - ({Damage}) - ({Health})";
         }
     }
 
-    private int[] SelectListIndexAttack(Soldier[] soldiers)
+    class Sniper : Soldier
     {
-        float percentageHits = 0.25f;
-        int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-        int[] indexSolder = new int[totalSoldiersHit];
-
-        for (int i = 0; i < totalSoldiersHit; i++)
+        public Sniper(string rank = "Снайпер", float damage = 10, float health = 100) : base(rank, damage, health)
         {
-            indexSolder[i] = SelectSoldierIndex(soldiers);
         }
 
-        return indexSolder;
-    }
-}
-
-class Grenadier : Soldier
-{
-    public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
-    {
-    }
-
-    public void Attack(Soldier[] soldiers)
-    {
-        int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-
-        foreach (var index in HitSoldiersIndex)
+        public void Attack(Soldier[] soldiers)
         {
-            soldiers[index].TakeDamage(Damage);
+            float multiplication = 3f;
+            float finalDamage = Damage * multiplication;
+
+            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
         }
     }
 
-    private int[] SelectListIndexAttack(Soldier[] soldiers)
+    class Gunner : Soldier
     {
-        float percentageHits = 0.40f;
-        int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-        int[] indexSolder = new int[totalSoldiersHit];
-        int countAddSoldiers = 0;
-
-        do
+        public Gunner(string rank = "Пулеметчик", float damage = 11, float health = 100) : base(rank, damage, health)
         {
-            int index = SelectSoldierIndex(soldiers);
-            int duplicate = Array.IndexOf(indexSolder, index);
+        }
 
-            if (duplicate >= 0)
+        public void Attack(Soldier[] soldiers)
+        {
+            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
+
+            foreach (var index in HitSoldiersIndex)
             {
-                indexSolder[countAddSoldiers] = index;
-                countAddSoldiers++;
+                soldiers[index].TakeDamage(Damage);
+            }
+        }
+
+        private int[] SelectListIndexAttack(Soldier[] soldiers)
+        {
+            float percentageHits = 0.25f;
+            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldiersHit];
+
+            for (int i = 0; i < totalSoldiersHit; i++)
+            {
+                indexSolder[i] = SelectSoldierIndex(soldiers);
             }
 
-        } while (countAddSoldiers != totalSoldiersHit);
+            return indexSolder;
+        }
+    }
 
-        return indexSolder;
+    class Grenadier : Soldier
+    {
+        public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
+        {
+        }
+
+        public void Attack(Soldier[] soldiers)
+        {
+            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
+
+            foreach (var index in HitSoldiersIndex)
+            {
+                soldiers[index].TakeDamage(Damage);
+            }
+        }
+
+        private int[] SelectListIndexAttack(Soldier[] soldiers)
+        {
+            float percentageHits = 0.40f;
+            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+            int[] indexSolder = new int[totalSoldiersHit];
+            int countAddSoldiers = 0;
+
+            do
+            {
+                int index = SelectSoldierIndex(soldiers);
+                int duplicate = Array.IndexOf(indexSolder, index);
+
+                if (duplicate >= 0)
+                {
+                    indexSolder[countAddSoldiers] = index;
+                    countAddSoldiers++;
+                }
+
+            } while (countAddSoldiers != totalSoldiersHit);
+
+            return indexSolder;
+        }
+    }
+
+    class UserUtils
+    {
+        private static Random s_random = new();
+
+        public static int GenerateRandomNumber(int min = 0, int max = 100)
+        {
+            return s_random.Next(min, max);
+        }
     }
 }
-
-
 
 
 
@@ -515,13 +533,3 @@ class Grenadier : Soldier
 //    }
 //}
 
-class UserUtils
-{
-    private static Random s_random = new();
-
-    public static int GenerateRandomNumber(int min = 0, int max = 100)
-    {
-        return s_random.Next(min, max);
-    }
-}
-}
