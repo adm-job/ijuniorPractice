@@ -10,6 +10,9 @@ namespace ijuniorPractice
         {
             //Supermarket supermarket = new Supermarket();
             //supermarket.StartStore();
+
+            Battle battle = new Battle();
+            battle.StartAttack();
         }
     }
 
@@ -35,32 +38,45 @@ namespace ijuniorPractice
             SquadSoldiers[9] = new Grenadier();
         }
 
+        public void StartAttack()
+        {
+            SetSoldiers();
+
+
+
+
+        }
+
         public void SetSoldiers()
         {
-
             for (int i = 0; i < CompanyMax; i++)
             {
-                FirstCompany[i] = RandomSoldier();
-                SecondCompany[i] = RandomSoldier();
+                FirstCompany[i] = RandomObjectSoldier();
+                SecondCompany[i] = RandomObjectSoldier();
             }
         }
 
-        private Soldier RandomSoldier()
+        private Soldier RandomObjectSoldier()
         {
             int RandomIndex = -1;
             RandomIndex = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
 
             return SquadSoldiers[RandomIndex];
         }
+
+         
+
     }
 }
 
 class Soldier
 {
+    protected string Rank;
     protected float Damage;
     protected float Health;
 
-    public Soldier(float damage = 10, float health = 100)
+
+    public Soldier(string rank = "Солдат",float damage = 10, float health = 100)
     {
         Damage = damage;
         Health = health;
@@ -79,12 +95,17 @@ class Soldier
     protected int SelectSoldierIndex(Soldier[] soldiers)
     {
         return UserUtils.GenerateRandomNumber(0, soldiers.Length);
+    }   
+    
+    public override string ToString()
+    {
+        return $"{}";
     }
 }
 
 class Sniper : Soldier
 {
-    public Sniper(float damage = 10, float health = 100) : base(damage, health)
+    public Sniper(string rank = "Снайпер", float damage = 10, float health = 100) : base(rank ,damage, health)
     {
     }
 
@@ -96,11 +117,13 @@ class Sniper : Soldier
 
         soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
     }
+
+
 }
 
 class Gunner : Soldier
 {
-    public Gunner(float damage = 11, float health = 100) : base(damage, health)
+    public Gunner(string rank = "Пелеметчик", float damage = 11, float health = 100) : base( rank,   damage, health)
     {
     }
 
@@ -112,7 +135,6 @@ class Gunner : Soldier
         {
             soldiers[index].TakeDamage(Damage);
         }
-
     }
 
     private int[] SelectListIndexAttack(Soldier[] soldiers)
@@ -125,13 +147,14 @@ class Gunner : Soldier
         {
             indexSolder[i] = SelectSoldierIndex(soldiers);
         }
+
         return indexSolder;
     }
 }
 
 class Grenadier : Soldier
 {
-    public Grenadier(float damage = 20, float health = 100) : base(damage, health)
+    public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
     {
     }
 
