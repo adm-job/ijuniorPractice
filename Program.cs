@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ijuniorPractice
@@ -52,10 +54,8 @@ namespace ijuniorPractice
                 {
                     SecondCompany[i].Attack(FirstCompany);
                 }
-
-
-
-            } while (FirstCompany == null || SecondCompany == null);
+            
+            } while (FirstCompany.Length != 0 && SecondCompany.Length != 0);
 
 
         }
@@ -86,20 +86,23 @@ namespace ijuniorPractice
 
         public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
         {
+            Rank = rank;
             Damage = damage;
             Health = health;
         }
 
-        public void Attack(Soldier[] soldiers)
+        public virtual void Attack(Soldier[] soldiers)
         {
+            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
             soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
-            Console.WriteLine($"{this.Rank}");
+
+            //Console.WriteLine($"Ранен {soldiers[SelectSoldierIndex(soldiers)].Rank} - ({soldiers[SelectSoldierIndex(soldiers)].Damage}) - ({soldiers[SelectSoldierIndex(soldiers)].Health})");
         }
 
         public void TakeDamage(float damage)
         {
-            Console.WriteLine($" Получен урон {damage}");
             Health -= damage;
+            Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
         protected int SelectSoldierIndex(Soldier[] soldiers)
@@ -111,6 +114,11 @@ namespace ijuniorPractice
         {
             return $"{Rank} - ({Damage}) - ({Health})";
         }
+
+        public Soldier Clone()
+        {
+            return new Soldier(Rank, Damage, Health);
+        }
     }
 
     class Sniper : Soldier
@@ -119,12 +127,18 @@ namespace ijuniorPractice
         {
         }
 
-        public void Attack(Soldier[] soldiers)
+        public override void Attack(Soldier[] soldiers)
         {
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
+            Console.WriteLine($"{Rank}");
             soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
+        }
+
+        public Soldier Clone()
+        {
+            return new Sniper(Rank, Damage, Health);
         }
     }
 
@@ -134,10 +148,10 @@ namespace ijuniorPractice
         {
         }
 
-        public void Attack(Soldier[] soldiers)
+        public override void Attack(Soldier[] soldiers)
         {
             int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-
+            Console.WriteLine($"{this.Rank}");
             foreach (var index in HitSoldiersIndex)
             {
                 soldiers[index].TakeDamage(Damage);
@@ -157,18 +171,26 @@ namespace ijuniorPractice
 
             return indexSolder;
         }
+
+        public Soldier Clone()
+        {
+            return new Gunner(Rank, Damage, Health);
+        }
     }
 
     class Grenadier : Soldier
     {
+        private string _rank;
         public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
         {
+            _rank = rank;
         }
 
-        public void Attack(Soldier[] soldiers)
+        public override void Attack(Soldier[] soldiers)
         {
             int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
 
+            Console.WriteLine($"{_rank}");
             foreach (var index in HitSoldiersIndex)
             {
                 soldiers[index].TakeDamage(Damage);
@@ -187,7 +209,7 @@ namespace ijuniorPractice
                 int index = SelectSoldierIndex(soldiers);
                 int duplicate = Array.IndexOf(indexSolder, index);
 
-                if (duplicate >= 0)
+                if (duplicate <= 0)
                 {
                     indexSolder[countAddSoldiers] = index;
                     countAddSoldiers++;
@@ -196,6 +218,11 @@ namespace ijuniorPractice
             } while (countAddSoldiers != totalSoldiersHit);
 
             return indexSolder;
+        }
+
+        public Soldier Clone()
+        {
+            return new Grenadier(Rank, Damage, Health);
         }
     }
 
