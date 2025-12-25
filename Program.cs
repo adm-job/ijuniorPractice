@@ -19,7 +19,6 @@ namespace ijuniorPractice
 
     class Battle
     {
-        private Soldier[] SquadSoldiers = new Soldier[10];
         private static readonly int CompanySize = 100;
 
         //private Soldier[] FirstCompany = new Soldier[CompanyMax];
@@ -28,23 +27,10 @@ namespace ijuniorPractice
         private List<Soldier> _firstCompany = new();
         private List<Soldier> _secondCompany = new();
 
-        public Battle()
-        {
-            SquadSoldiers[0] = new Soldier();
-            SquadSoldiers[1] = new Soldier();
-            SquadSoldiers[2] = new Soldier();
-            SquadSoldiers[3] = new Soldier();
-            SquadSoldiers[4] = new Sniper();
-            SquadSoldiers[5] = new Sniper();
-            SquadSoldiers[6] = new Sniper();
-            SquadSoldiers[7] = new Gunner();
-            SquadSoldiers[8] = new Gunner();
-            SquadSoldiers[9] = new Grenadier();
-        }
 
         public void StartAttack()
         {
-            SetSoldiers();
+            CreateCompany();
 
             do
             {
@@ -57,27 +43,40 @@ namespace ijuniorPractice
                 {
                     SecondCompany[i].Attack(FirstCompany);
                 }
-            
+
             } while (FirstCompany.Length != 0 && SecondCompany.Length != 0);
 
 
         }
 
-        public void SetSoldiers()
+        public void CreateCompany()
         {
             for (int i = 0; i < CompanySize; i++)
             {
-                FirstCompany[i] = RandomObjectSoldier();
-                SecondCompany[i] = RandomObjectSoldier();
+                _firstCompany.Add(CreateRandomSoldier());
+                _secondCompany.Add(CreateRandomSoldier());
             }
         }
 
-        private Soldier RandomObjectSoldier()
+        private Soldier CreateRandomSoldier()
         {
-            int RandomIndex = -1;
-            RandomIndex = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
+            int SizeList = 10;
+            int RandomNember = UserUtils.GenerateRandomNumber(0, SizeList);
 
-            return SquadSoldiers[RandomIndex].Clone();
+            return RandomNember switch
+            {
+                0 => new Soldier(),
+                1 => new Soldier(),
+                2 => new Soldier(),
+                3 => new Soldier(),
+                4 => new Sniper(),
+                5 => new Sniper(),
+                6 => new Sniper(),
+                7 => new Gunner(),
+                8 => new Gunner(),
+                9 => new Grenadier(),
+                _ => new Soldier()
+            };
         }
     }
 
