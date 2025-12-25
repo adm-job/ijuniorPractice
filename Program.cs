@@ -26,19 +26,20 @@ namespace ijuniorPractice
         {
             CreateCompany();
 
-            while (_firstCompany.Count > 0 && _secondCompany.Count >0) 
+            int round = 1;
+
+            while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
             {
-                for (int i = 0; i < CompanySize; i++)
-                {
-                    _firstCompany[i].Attack(_secondCompany);
-                }
+                    Console.WriteLine($"\n--- Раунд {round} ---");
 
-                for (int i = 0; i < CompanySize; i++)
-                {
-                    _secondCompany[i].Attack(FirstCompany);
-                }
+                    CompanyAttack(_firstCompany, _secondCompany);
+                    CompanyAttack(_secondCompany, _firstCompany);
 
+                    round++;
+                    Console.ReadLine();
             }
+
+            Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
 
         private void CompanyAttack(List<Soldier> attackers, List<Soldier> defenders)
@@ -46,23 +47,54 @@ namespace ijuniorPractice
             if (defenders.Count == 0)
                 return;
 
-            foreach (var attaker in attackers.ToList())
+            foreach (var attacker in attackers.ToList())
             {
                 if (defenders.Count == 0)
                     break;
 
-                Soldier target = defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)];
+                if (attacker is Grenadier)
+                {
+                    int takeTarget = (int)(defenders.Count * 0.40);
+                    var targets = defenders
+                        .OrderBy(_ => UserUtils.GenerateRandomNumber())
+                        .Take(takeTarget)
+                        .ToList();
 
-                attaker.Attack(target);
+                    foreach (var target in targets)
+                    {
+                        attacker.Attack(target);
+                        if (target.Health <= 0)
+                            defenders.Remove(target);
+                    }
+                }
+                else if (attacker is Gunner)
+                {
+                    int takeTarget = (int)(defenders.Count * 0.25);
 
-            if (target.Health <= 0)
-            {
-                Console.WriteLine($"☠ {target.Rank} погиб");
-                defenders.Remove(target);
+                    var targets = Enumerable.Range(0, takeTarget)
+                        .Select(_ => defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)])
+                        .ToList();
+
+                    foreach (var target in targets)
+                    {
+                        attacker.Attack(target);
+                        if (target.Health <= 0)
+                            defenders.Remove(target);
+                    }
+                }
+                else
+                {
+                    Soldier target = defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)];
+
+                    attacker.Attack(target);
+
+                    if (target.Health <= 0)
+                    {
+                        Console.WriteLine($"☠ {target.Rank} погиб");
+                        defenders.Remove(target);
+                    }
+                }
             }
-            }
-
-
         }
 
         public void CreateCompany()
@@ -118,6 +150,8 @@ namespace ijuniorPractice
         public void TakeDamage(float damage)
         {
             Health -= damage;
+            if (Health < 0)
+                Health = 0;
             Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
