@@ -143,13 +143,13 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(Soldier[] soldiers)
+        public override void Attack(Soldier soldiers)
         {
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
             Console.WriteLine($"{Rank}");
-            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(finalDamage);
+            soldiers.TakeDamage(finalDamage);
         }
 
         public Soldier Clone()
@@ -164,29 +164,29 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(Soldier[] soldiers)
-        {
-            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-            Console.WriteLine($"{this.Rank}");
-            foreach (var index in HitSoldiersIndex)
-            {
-                soldiers[index].TakeDamage(Damage);
-            }
-        }
+        //public override void Attack(Soldier[] soldiers)
+        //{
+        //    int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
+        //    Console.WriteLine($"{this.Rank}");
+        //    foreach (var index in HitSoldiersIndex)
+        //    {
+        //        soldiers[index].TakeDamage(Damage);
+        //    }
+        //}
 
-        private int[] SelectListIndexAttack(Soldier[] soldiers)
-        {
-            float percentageHits = 0.25f;
-            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-            int[] indexSolder = new int[totalSoldiersHit];
+        //private int[] SelectListIndexAttack(Soldier[] soldiers)
+        //{
+        //    float percentageHits = 0.25f;
+        //    int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+        //    int[] indexSolder = new int[totalSoldiersHit];
 
-            for (int i = 0; i < totalSoldiersHit; i++)
-            {
-                indexSolder[i] = SelectSoldierIndex(soldiers);
-            }
+        //    for (int i = 0; i < totalSoldiersHit; i++)
+        //    {
+        //        indexSolder[i] = SelectSoldierIndex(soldiers);
+        //    }
 
-            return indexSolder;
-        }
+        //    return indexSolder;
+        //}
 
         public Soldier Clone()
         {
@@ -196,45 +196,43 @@ namespace ijuniorPractice
 
     class Grenadier : Soldier
     {
-        private string _rank;
         public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
         {
-            _rank = rank;
         }
 
-        public override void Attack(Soldier[] soldiers)
-        {
-            int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
+        //public override void Attack(Soldier[] soldiers)
+        //{
+        //    int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
 
-            Console.WriteLine($"{_rank}");
-            foreach (var index in HitSoldiersIndex)
-            {
-                soldiers[index].TakeDamage(Damage);
-            }
-        }
+        //    Console.WriteLine($"{_rank}");
+        //    foreach (var index in HitSoldiersIndex)
+        //    {
+        //        soldiers[index].TakeDamage(Damage);
+        //    }
+        //}
 
-        private int[] SelectListIndexAttack(Soldier[] soldiers)
-        {
-            float percentageHits = 0.40f;
-            int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-            int[] indexSolder = new int[totalSoldiersHit];
-            int countAddSoldiers = 0;
+        //private int[] SelectListIndexAttack(Soldier[] soldiers)
+        //{
+        //    float percentageHits = 0.40f;
+        //    int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
+        //    int[] indexSolder = new int[totalSoldiersHit];
+        //    int countAddSoldiers = 0;
 
-            do
-            {
-                int index = SelectSoldierIndex(soldiers);
-                int duplicate = Array.IndexOf(indexSolder, index);
+        //    do
+        //    {
+        //        int index = SelectSoldierIndex(soldiers);
+        //        int duplicate = Array.IndexOf(indexSolder, index);
 
-                if (duplicate <= 0)
-                {
-                    indexSolder[countAddSoldiers] = index;
-                    countAddSoldiers++;
-                }
+        //        if (duplicate <= 0)
+        //        {
+        //            indexSolder[countAddSoldiers] = index;
+        //            countAddSoldiers++;
+        //        }
 
-            } while (countAddSoldiers != totalSoldiersHit);
+        //    } while (countAddSoldiers != totalSoldiersHit);
 
-            return indexSolder;
-        }
+        //    return indexSolder;
+        //}
 
         public Soldier Clone()
         {
