@@ -30,13 +30,12 @@ namespace ijuniorPractice
 
             while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
             {
-                    Console.WriteLine($"\n--- Раунд {round} ---");
+                Console.WriteLine($"\n--- Раунд {round} ---");
 
-                    CompanyAttack(_firstCompany, _secondCompany);
-                    CompanyAttack(_secondCompany, _firstCompany);
+                CompanyAttack(_firstCompany, _secondCompany);
+                CompanyAttack(_secondCompany, _firstCompany);
 
-                    round++;
-                    Console.ReadLine();
+                round++;
             }
 
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
@@ -45,12 +44,16 @@ namespace ijuniorPractice
         private void CompanyAttack(List<Soldier> attackers, List<Soldier> defenders)
         {
             if (defenders.Count == 0)
+            {
                 return;
+            }
 
             foreach (var attacker in attackers.ToList())
             {
                 if (defenders.Count == 0)
+                {
                     break;
+                }
 
                 if (attacker is Grenadier)
                 {
@@ -64,7 +67,9 @@ namespace ijuniorPractice
                     {
                         attacker.Attack(target);
                         if (target.Health <= 0)
+                        {
                             defenders.Remove(target);
+                        }
                     }
                 }
                 else if (attacker is Gunner)
@@ -78,8 +83,11 @@ namespace ijuniorPractice
                     foreach (var target in targets)
                     {
                         attacker.Attack(target);
+
                         if (target.Health <= 0)
+                        {
                             defenders.Remove(target);
+                        }
                     }
                 }
                 else
@@ -91,7 +99,9 @@ namespace ijuniorPractice
                     if (target.Health <= 0)
                     {
                         Console.WriteLine($"☠ {target.Rank} погиб");
-                        defenders.Remove(target);
+                        {
+                            defenders.Remove(target);
+                        }
                     }
                 }
             }
@@ -150,8 +160,12 @@ namespace ijuniorPractice
         public void TakeDamage(float damage)
         {
             Health -= damage;
+            
             if (Health < 0)
+            {
                 Health = 0;
+            }
+            
             Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
@@ -198,30 +212,6 @@ namespace ijuniorPractice
         {
         }
 
-        //public override void Attack(Soldier[] soldiers)
-        //{
-        //    int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-        //    Console.WriteLine($"{this.Rank}");
-        //    foreach (var index in HitSoldiersIndex)
-        //    {
-        //        soldiers[index].TakeDamage(Damage);
-        //    }
-        //}
-
-        //private int[] SelectListIndexAttack(Soldier[] soldiers)
-        //{
-        //    float percentageHits = 0.25f;
-        //    int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-        //    int[] indexSolder = new int[totalSoldiersHit];
-
-        //    for (int i = 0; i < totalSoldiersHit; i++)
-        //    {
-        //        indexSolder[i] = SelectSoldierIndex(soldiers);
-        //    }
-
-        //    return indexSolder;
-        //}
-
         public Soldier Clone()
         {
             return new Gunner(Rank, Damage, Health);
@@ -233,40 +223,6 @@ namespace ijuniorPractice
         public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
         {
         }
-
-        //public override void Attack(Soldier[] soldiers)
-        //{
-        //    int[] HitSoldiersIndex = SelectListIndexAttack(soldiers);
-
-        //    Console.WriteLine($"{_rank}");
-        //    foreach (var index in HitSoldiersIndex)
-        //    {
-        //        soldiers[index].TakeDamage(Damage);
-        //    }
-        //}
-
-        //private int[] SelectListIndexAttack(Soldier[] soldiers)
-        //{
-        //    float percentageHits = 0.40f;
-        //    int totalSoldiersHit = (int)(soldiers.Length * percentageHits);
-        //    int[] indexSolder = new int[totalSoldiersHit];
-        //    int countAddSoldiers = 0;
-
-        //    do
-        //    {
-        //        int index = SelectSoldierIndex(soldiers);
-        //        int duplicate = Array.IndexOf(indexSolder, index);
-
-        //        if (duplicate <= 0)
-        //        {
-        //            indexSolder[countAddSoldiers] = index;
-        //            countAddSoldiers++;
-        //        }
-
-        //    } while (countAddSoldiers != totalSoldiersHit);
-
-        //    return indexSolder;
-        //}
 
         public Soldier Clone()
         {
@@ -284,327 +240,3 @@ namespace ijuniorPractice
         }
     }
 }
-
-
-
-//class Supermarket
-//{
-//    private List<Product> _products = new();
-//    private Queue<Buyer> _bayers = new();
-//    private Cashier _cashier = new();
-//    private float _moneyCashDesk = 0;
-//    private bool _isWork = true;
-
-//    public Supermarket()
-//    {
-//        _products.Add(new("Банан", 75.5f, "Желтый"));
-//        _products.Add(new("Тушенка", 245f, "Вкусная"));
-//        _products.Add(new("Колбаса", 345.8f, "Из мяса"));
-//        _products.Add(new("Молоко", 90f, "Свежее"));
-//        _products.Add(new("Пельмени", 419.2f, "Свинина-Говядина"));
-//        _products.Add(new("Вода", 39.9f, "Не газированная"));
-//        _products.Add(new("Чипсы", 189.9f, "Сметана с зеленью"));
-//        _products.Add(new("Хлеб", 55f, "Бородинский"));
-//        _products.Add(new("Соль", 25.4f, "Экстра мелкая"));
-//        _products.Add(new("Сахар", 65.7f, "Рафинад"));
-//        _products.Add(new("Сыр", 465.7f, "Твердый"));
-//        _products.Add(new("Кефир", 115.7f, "Обезжиренный 1%"));
-//        _products.Add(new("Йогурт", 55.3f, "Клубника-банан"));
-//        _products.Add(new("Булочка", 35.7f, "С наполнителем вишня"));
-//        _products.Add(new("Шоколадка", 150.5f, " Наполнитель орехи"));
-//        _products.Add(new("Икра", 1599.9f, "Банка 250г"));
-//    }
-
-//    public void ShowProducts()
-//    {
-//        foreach (var product in _products)
-//        {
-//            Console.WriteLine(product);
-//        }
-//    }
-
-//    public void StartStore()
-//    {
-//        const string LaunchBuyers = "1";
-//        const string Seller = "2";
-//        const string ShowAllProducts = "3";
-//        const string Exit = "4";
-
-//        string input;
-
-//        while (_isWork)
-//        {
-//            Console.WriteLine("Супермаркет");
-//            Console.WriteLine($"{LaunchBuyers} Запустить случайное количество покупателей");
-//            Console.WriteLine($"{Seller} Обработать заказы текущей очереди покупателей");
-//            Console.WriteLine($"{ShowAllProducts} Показать товары");
-//            Console.WriteLine($"{Exit} Выход");
-
-//            input = Console.ReadLine();
-
-//            switch (input)
-//            {
-//                case LaunchBuyers:
-//                    AddRandomBuyer();
-//                    break;
-
-//                case Seller:
-//                    ServeBuyer();
-//                    break;
-
-//                case ShowAllProducts:
-//                    ShowProducts();
-//                    break;
-
-//                case Exit:
-//                    _isWork = false;
-//                    break;
-
-//                default:
-//                    Console.WriteLine("Выбранного пункта нет в меню управления магазином");
-//                    break;
-//            }
-//        }
-//    }
-
-//    public void AddRandomBuyer()
-//    {
-//        int minBuyer = 3;
-//        int maxBuyer = 15;
-//        int minWalletMoney = 1000;
-//        int maxWalletMoney = 5000;
-//        int totalBuyer = UserUtils.GenerateRandomNumber(minBuyer, maxBuyer);
-
-//        for (int i = 0; i < totalBuyer; i++)
-//        {
-//            Buyer buyer = new("Покупатель" + (i + 1), UserUtils.GenerateRandomNumber(minWalletMoney, maxWalletMoney));
-
-//            Console.WriteLine(buyer);
-
-//            buyer.AddRandomProduct(_products);
-
-//            _bayers.Enqueue(buyer);
-//        }
-//    }
-
-//    public void ServeBuyer()
-//    {
-//        if (_bayers.Count == 0)
-//        {
-//            Console.WriteLine($"\nПокупателей нет впустите их\n");
-//        }
-
-//        while (_bayers.Count > 0)
-//        {
-//            Buyer buyer = _bayers.Dequeue();
-
-//            _cashier.PurchaseProcessing(buyer);
-
-//            _moneyCashDesk += _cashier.RemoveCashDesk();
-//        }
-
-//        Console.WriteLine($"\nСумма в кассе = {_moneyCashDesk}\n");
-//    }
-//}
-
-//class Cashier
-//{
-//    private Buyer _buyer;
-//    private List<Product> _sellProducts;
-//    private float _sumPriceProduct;
-//    private float _money;
-
-//    public void PurchaseProcessing(Buyer buyer)
-//    {
-//        bool isNoMoney = true;
-//        int totalProductBasket = 0;
-
-//        _buyer = buyer;
-
-//        do
-//        {
-//            totalProductBasket = _buyer.TotalProduct();
-
-//            SumProduct(totalProductBasket);
-
-//            if (EnoughMoney())
-//            {
-//                isNoMoney = false;
-
-//                _money = _buyer.GiveMoney(_sumPriceProduct);
-
-//                _buyer.BuyProduct();
-
-//                Console.WriteLine($"{_buyer} купил товары на сумму {_money}\n");
-//            }
-//            else
-//            {
-//                _buyer.RemoveRandomProduct();
-//            }
-//        }
-//        while (isNoMoney);
-//    }
-
-//    private void SumProduct(int totalProduct)
-//    {
-//        _sumPriceProduct = 0;
-
-//        for (int i = 0; i < totalProduct; i++)
-//        {
-//            _sumPriceProduct += _buyer.ReturnPrice(i);
-//        }
-//    }
-
-//    private bool EnoughMoney()
-//    {
-//        return _sumPriceProduct < _buyer.ReturnMoney();
-//    }
-
-//    public float RemoveCashDesk()
-//    {
-//        float cash = _money;
-//        _money = 0;
-//        return cash;
-//    }
-//}
-
-//class Product
-//{
-//    private string _title;
-//    private float _price;
-//    private string _description;
-
-//    public Product(string title, float price, string description = "")
-//    {
-//        _title = title;
-//        _price = price;
-//        _description = description;
-//    }
-
-//    public Product Take()
-//    {
-//        return new Product(_title, _price, _description);
-//    }
-
-//    public override string ToString()
-//    {
-//        return $"Продукт {_title}, цена {_price}, ({_description})";
-//    }
-
-//    public float GetPrice()
-//    {
-//        return _price;
-//    }
-//}
-
-//class Buyer
-//{
-//    private string _name;
-//    private float _wallet;
-//    private Basket _basket = new();
-//    private Bag _bag = new();
-
-//    public Buyer(string name, float wallet)
-//    {
-//        _name = name;
-//        _wallet = wallet;
-//    }
-
-//    public void AddRandomProduct(List<Product> products)
-//    {
-//        int minQuantityProducts = 1;
-//        int maxQuantityProducts = products.Count();
-//        int randomNumber = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
-
-//        for (int i = 0; i < randomNumber; i++)
-//        {
-//            int randomIndex = UserUtils.GenerateRandomNumber(minQuantityProducts, maxQuantityProducts);
-
-//            Product product = products[randomIndex - 1].Take();
-
-//            Console.WriteLine($"В корзине - {product}");
-
-//            _basket.AddProduct(products[randomIndex - 1].Take());
-//        }
-
-//        Console.WriteLine();
-//    }
-
-//    public int TotalProduct()
-//    {
-//        return _basket.ReturnTotalProducts();
-//    }
-
-//    public void BuyProduct()
-//    {
-//        _bag = _basket;
-//        _basket = null;
-//    }
-
-//    public float ReturnMoney()
-//    {
-//        return _wallet;
-//    }
-
-//    public float ReturnPrice(int index)
-//    {
-//        return _basket.ReturnPriceProduct(index);
-//    }
-
-//    public void RemoveRandomProduct()
-//    {
-//        Console.Write($"{_name} выкладывает: ");
-//        int indexProduct = UserUtils.GenerateRandomNumber(0, _basket.ReturnTotalProducts());
-//        _basket.RemoveProduct(indexProduct);
-//    }
-
-//    public float GiveMoney(float needMoney)
-//    {
-//        _wallet -= needMoney;
-//        return needMoney;
-//    }
-
-//    public override string ToString()
-//    {
-//        return $"{_name} денег {_wallet}";
-//    }
-//}
-
-//class Bag
-//{
-//    protected List<Product> Products = new();
-
-//    public void AddProduct(Product product)
-//    {
-//        Products.Add(product);
-//    }
-
-//    public void Show()
-//    {
-//        foreach (var product in Products)
-//        {
-//            Console.WriteLine(product);
-//        }
-//    }
-//}
-
-//class Basket : Bag
-//{
-//    public int ReturnTotalProducts()
-//    {
-//        return Products.Count;
-//    }
-
-//    public void RemoveProduct(int index)
-//    {
-//        Console.WriteLine($"Товар {Products[index]} ----- УБРАН ИЗ КОРЗИРНЫ");
-
-//        Products.RemoveAt(index);
-//    }
-
-//    public float ReturnPriceProduct(int index)
-//    {
-//        return Products[index].GetPrice();
-//    }
-//}
-
