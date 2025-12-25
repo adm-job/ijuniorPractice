@@ -74,7 +74,7 @@ namespace ijuniorPractice
             int RandomIndex = -1;
             RandomIndex = UserUtils.GenerateRandomNumber(0, SquadSoldiers.Length);
 
-            return SquadSoldiers[RandomIndex];
+            return SquadSoldiers[RandomIndex].Clone();
         }
     }
 
@@ -95,8 +95,6 @@ namespace ijuniorPractice
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
             soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
-
-            //Console.WriteLine($"Ранен {soldiers[SelectSoldierIndex(soldiers)].Rank} - ({soldiers[SelectSoldierIndex(soldiers)].Damage}) - ({soldiers[SelectSoldierIndex(soldiers)].Health})");
         }
 
         public void TakeDamage(float damage)
