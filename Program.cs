@@ -20,10 +20,13 @@ namespace ijuniorPractice
     class Battle
     {
         private Soldier[] SquadSoldiers = new Soldier[10];
-        private static readonly int CompanyMax = 100;
+        private static readonly int CompanySize = 100;
 
-        private Soldier[] FirstCompany = new Soldier[CompanyMax];
-        private Soldier[] SecondCompany = new Soldier[CompanyMax];
+        //private Soldier[] FirstCompany = new Soldier[CompanyMax];
+        //private Soldier[] SecondCompany = new Soldier[CompanyMax];
+
+        private List<Soldier> _firstCompany = new();
+        private List<Soldier> _secondCompany = new();
 
         public Battle()
         {
@@ -62,7 +65,7 @@ namespace ijuniorPractice
 
         public void SetSoldiers()
         {
-            for (int i = 0; i < CompanyMax; i++)
+            for (int i = 0; i < CompanySize; i++)
             {
                 FirstCompany[i] = RandomObjectSoldier();
                 SecondCompany[i] = RandomObjectSoldier();
