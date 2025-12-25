@@ -9,9 +9,6 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            //Supermarket supermarket = new Supermarket();
-            //supermarket.StartStore();
-
             Battle battle = new Battle();
             battle.StartAttack();
         }
@@ -21,9 +18,6 @@ namespace ijuniorPractice
     {
         private static readonly int CompanySize = 100;
 
-        //private Soldier[] FirstCompany = new Soldier[CompanyMax];
-        //private Soldier[] SecondCompany = new Soldier[CompanyMax];
-
         private List<Soldier> _firstCompany = new();
         private List<Soldier> _secondCompany = new();
 
@@ -32,19 +26,41 @@ namespace ijuniorPractice
         {
             CreateCompany();
 
-            do
+            while (_firstCompany.Count > 0 && _secondCompany.Count >0) 
             {
-                for (int i = 0; i < FirstCompany?.Length; i++)
+                for (int i = 0; i < CompanySize; i++)
                 {
-                    FirstCompany[i].Attack(SecondCompany);
+                    _firstCompany[i].Attack(_secondCompany);
                 }
 
-                for (int i = 0; i < SecondCompany?.Length; i++)
+                for (int i = 0; i < CompanySize; i++)
                 {
-                    SecondCompany[i].Attack(FirstCompany);
+                    _secondCompany[i].Attack(FirstCompany);
                 }
 
-            } while (FirstCompany.Length != 0 && SecondCompany.Length != 0);
+            }
+        }
+
+        private void CompanyAttack(List<Soldier> attackers, List<Soldier> defenders)
+        {
+            if (defenders.Count == 0)
+                return;
+
+            foreach (var attaker in attackers.ToList())
+            {
+                if (defenders.Count == 0)
+                    break;
+
+                Soldier target = defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)];
+
+                attaker.Attack(target);
+
+            if (target.Health <= 0)
+            {
+                Console.WriteLine($"☠ {target.Rank} погиб");
+                defenders.Remove(target);
+            }
+            }
 
 
         }
@@ -61,9 +77,9 @@ namespace ijuniorPractice
         private Soldier CreateRandomSoldier()
         {
             int SizeList = 10;
-            int RandomNember = UserUtils.GenerateRandomNumber(0, SizeList);
+            int RandomNumber = UserUtils.GenerateRandomNumber(0, SizeList);
 
-            return RandomNember switch
+            return RandomNumber switch
             {
                 0 => new Soldier(),
                 1 => new Soldier(),
@@ -82,10 +98,6 @@ namespace ijuniorPractice
 
     class Soldier
     {
-        protected string Rank;
-        protected float Damage;
-        protected float Health;
-
         public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
         {
             Rank = rank;
@@ -93,10 +105,14 @@ namespace ijuniorPractice
             Health = health;
         }
 
-        public virtual void Attack(Soldier[] soldiers)
+        public string Rank { get; private set; }
+        public float Damage { get; private set; }
+        public float Health { get; private set; }
+
+        public virtual void Attack(Soldier target)
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            soldiers[SelectSoldierIndex(soldiers)].TakeDamage(Damage);
+            target.TakeDamage(Damage);
         }
 
         public void TakeDamage(float damage)
