@@ -21,7 +21,6 @@ namespace ijuniorPractice
         private List<Soldier> _firstCompany = new();
         private List<Soldier> _secondCompany = new();
 
-
         public void StartAttack()
         {
             CreateCompany();
