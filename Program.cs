@@ -31,8 +31,8 @@ namespace ijuniorPractice
             {
                 Console.WriteLine($"\n--- Раунд {round} ---");
 
-                CompanyAttack(_firstCompany, _secondCompany);
-                CompanyAttack(_secondCompany, _firstCompany);
+                AttackCompany(_firstCompany, _secondCompany);
+                AttackCompany(_secondCompany, _firstCompany);
 
                 round++;
             }
@@ -40,7 +40,7 @@ namespace ijuniorPractice
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
 
-        private void CompanyAttack(List<Soldier> attackers, List<Soldier> defenders)
+        private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
         {
             if (defenders.Count == 0)
             {
