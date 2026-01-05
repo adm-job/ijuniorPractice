@@ -56,7 +56,8 @@ namespace ijuniorPractice
 
                 if (attacker is Grenadier)
                 {
-                    int takeTarget = (int)(defenders.Count * 0.40);
+                    float hitProbability = 0.40f;
+                    int takeTarget = (int)(defenders.Count * hitProbability);
                     var targets = defenders
                         .OrderBy(_ => UserUtils.GenerateRandomNumber())
                         .Take(takeTarget)
