@@ -29,7 +29,7 @@ namespace ijuniorPractice
 
             while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
             {
-                Console.WriteLine($"\n--- Раунд {round} ---");
+                Console.WriteLine($"\n---- Раунд {round} ----");
 
                 AttackCompany(_firstCompany, _secondCompany);
                 AttackCompany(_secondCompany, _firstCompany);
