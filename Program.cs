@@ -212,6 +212,26 @@ namespace ijuniorPractice
         {
         }
 
+        public override void Attack(Soldier target)
+        {
+            int takeTarget = (int)(target.Damage * 0.25);
+
+            var targets = Enumerable.Range(0, takeTarget)
+                .Select(_ => target[UserUtils.GenerateRandomNumber(0, target.Count)])
+                .ToList();
+
+            foreach (var target in targets)
+            {
+                target.Attack(target);
+
+                if (target.Health <= 0)
+                {
+                    target.Remove(target);
+                }
+            }
+        }
+
+
         public Soldier Clone()
         {
             return new Gunner(Rank, Damage, Health);
