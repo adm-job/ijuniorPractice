@@ -48,6 +48,7 @@ namespace ijuniorPractice
                 return;
             }
 
+
         }
 
         public void CreateCompany()
@@ -94,10 +95,13 @@ namespace ijuniorPractice
         public float Damage { get; private set; }
         public float Health { get; private set; }
 
-        public virtual void Attack(Soldier target)
+        public virtual void Attack(List<Soldier> soldiers)
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            target.TakeDamage(Damage);
+            
+            int target = UserUtils.GenerateRandomNumber(0, soldiers.Count);
+
+            soldiers[target].TakeDamage(Damage);
         }
 
         public void TakeDamage(float damage)
@@ -134,13 +138,21 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(Soldier soldiers)
+        public override void Attack(List<Soldier> soldiers)
         {
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
             Console.WriteLine($"{Rank}");
-            soldiers.TakeDamage(finalDamage);
+            int index = UserUtils.GenerateRandomNumber(0,soldiers.Count);
+            Soldier target = soldiers[index];
+
+            target.TakeDamage(finalDamage);
+
+            if (target.Health <= 0)
+            {
+                soldiers.Remove(target);
+            }
         }
 
         public Soldier Clone()
@@ -155,22 +167,22 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(Soldier target)
+        public override void Attack(List<Soldier> soldiers)
         {
             float hitProbability = 0.25f;
-            int takeTarget = (int)(target.Damage * hitProbability);
+            int takeTarget = (int)(soldiers.Count * hitProbability);
 
             var targets = Enumerable.Range(0, takeTarget)
-                .Select(_ => target[UserUtils.GenerateRandomNumber(0, target.Count)])
+                .Select(_ => soldiers[UserUtils.GenerateRandomNumber(0, soldiers.Count)])
                 .ToList();
 
-            foreach (var target in targets)
+            foreach (var target in soldiers)
             {
-                target.Attack(target);
+                target.TakeDamage(Damage);
 
                 if (target.Health <= 0)
                 {
-                    target.Remove(target);
+                    soldiers.Remove(target);
                 }
             }
         }
@@ -188,21 +200,21 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(Soldier target)
+        public override void Attack(List<Soldier> soldiers)
         {
             float hitProbability = 0.40f;
-            int takeTarget = (int)(defenders.Count * hitProbability);
-            var targets = defenders
+            int takeTarget = (int)(soldiers.Count * hitProbability);
+            var targets = soldiers
                 .OrderBy(_ => UserUtils.GenerateRandomNumber())
                 .Take(takeTarget)
                 .ToList();
 
-            foreach (var target in targets)
+            foreach (var target in soldiers)
             {
-                attacker.Attack(target);
+                target.TakeDamage(Damage);
                 if (target.Health <= 0)
                 {
-                    defenders.Remove(target);
+                    soldiers.Remove(target);
                 }
             }
         }
