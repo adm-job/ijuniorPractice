@@ -40,58 +40,14 @@ namespace ijuniorPractice
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
 
-/*        private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
+        private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
         {
             if (defenders.Count == 0)
             {
                 return;
             }
 
-            foreach (var attacker in attackers.ToList())
-            {
-                if (defenders.Count == 0)
-                {
-                    break;
-                }
-
-                if (attacker is Grenadier)
-                {
-
-                }
-                else if (attacker is Gunner)
-                {
-                    int takeTarget = (int)(defenders.Count * 0.25);
-
-                    var targets = Enumerable.Range(0, takeTarget)
-                        .Select(_ => defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)])
-                        .ToList();
-
-                    foreach (var target in targets)
-                    {
-                        attacker.Attack(target);
-
-                        if (target.Health <= 0)
-                        {
-                            defenders.Remove(target);
-                        }
-                    }
-                }
-                else
-                {
-                    Soldier target = defenders[UserUtils.GenerateRandomNumber(0, defenders.Count)];
-
-                    attacker.Attack(target);
-
-                    if (target.Health <= 0)
-                    {
-                        Console.WriteLine($"☠ {target.Rank} погиб");
-                        {
-                            defenders.Remove(target);
-                        }
-                    }
-                }
-            }
-        }*/
+        }
 
         public void CreateCompany()
         {
