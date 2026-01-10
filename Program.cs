@@ -56,21 +56,7 @@ namespace ijuniorPractice
 
                 if (attacker is Grenadier)
                 {
-                    float hitProbability = 0.40f;
-                    int takeTarget = (int)(defenders.Count * hitProbability);
-                    var targets = defenders
-                        .OrderBy(_ => UserUtils.GenerateRandomNumber())
-                        .Take(takeTarget)
-                        .ToList();
 
-                    foreach (var target in targets)
-                    {
-                        attacker.Attack(target);
-                        if (target.Health <= 0)
-                        {
-                            defenders.Remove(target);
-                        }
-                    }
                 }
                 else if (attacker is Gunner)
                 {
@@ -242,6 +228,25 @@ namespace ijuniorPractice
     {
         public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
         {
+        }
+
+        public override void Attack(Soldier target)
+        {
+            float hitProbability = 0.40f;
+            int takeTarget = (int)(defenders.Count * hitProbability);
+            var targets = defenders
+                .OrderBy(_ => UserUtils.GenerateRandomNumber())
+                .Take(takeTarget)
+                .ToList();
+
+            foreach (var target in targets)
+            {
+                attacker.Attack(target);
+                if (target.Health <= 0)
+                {
+                    defenders.Remove(target);
+                }
+            }
         }
 
         public Soldier Clone()
