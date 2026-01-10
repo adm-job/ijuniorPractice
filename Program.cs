@@ -3,12 +3,13 @@ using System.Threading;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
+
 namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
-        {
+        { 
             Battle battle = new Battle();
             battle.StartAttack();
         }
@@ -102,12 +103,12 @@ namespace ijuniorPractice
         public void TakeDamage(float damage)
         {
             Health -= damage;
-            
+
             if (Health < 0)
             {
                 Health = 0;
             }
-            
+
             Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
@@ -156,7 +157,8 @@ namespace ijuniorPractice
 
         public override void Attack(Soldier target)
         {
-            int takeTarget = (int)(target.Damage * 0.25);
+            float hitProbability = 0.25f;
+            int takeTarget = (int)(target.Damage * hitProbability);
 
             var targets = Enumerable.Range(0, takeTarget)
                 .Select(_ => target[UserUtils.GenerateRandomNumber(0, target.Count)])
