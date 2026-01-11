@@ -31,40 +31,36 @@ namespace ijuniorPractice
             {
                 Console.WriteLine(round);
 
-                foreach (var soldier in _firstCompany)
-                {
-                    soldier.Attack(_secondCompany);
+                team1.AttackTeam(team2);
 
-                    if (_secondCompany.Count == 0)
-                    {
-                        isAttack = false;
-                        break;
-                    }
+                if (team2.TeamSize() > 0)
+                {
+                    round++;
+                    Console.ReadLine();
+                    Console.WriteLine(round);
+                }
+                else
+                {
+                    return;
                 }
 
-                round++;
-                Console.ReadLine();
-                Console.WriteLine(round);
+                team2.AttackTeam(team1);
 
-                foreach (var soldier in _secondCompany)
+                if (team1.TeamSize() > 0)
                 {
-                    soldier.Attack(_firstCompany);
-
-                    if (_firstCompany.Count == 0)
-                    {
-                        isAttack = false;
-                        break;
-                    }
+                    round++;
+                    Console.ReadLine();
+                    Console.WriteLine(round);
+                }
+                else
+                {
+                    return;
                 }
 
-                round++;
-                Console.ReadLine();
             }
 
-            Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
+            Console.WriteLine(team1.TeamSize() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
-
-
     }
 
     class Team
@@ -77,6 +73,24 @@ namespace ijuniorPractice
             _teamSize = totalSize;
             _soldiers = new List<Soldier>();
             CreateCompany();
+        }
+
+        public void AttackTeam(Team team)
+        {
+            foreach (var soldier in _soldiers)
+            {
+                soldier.Attack(team.ReturnTeam());
+            }
+        }
+
+        public List<Soldier> ReturnTeam()
+        {
+            return _soldiers.ToList();
+        }
+
+        public int TeamSize()
+        {
+            return _soldiers.Count;
         }
 
         private void CreateCompany()
