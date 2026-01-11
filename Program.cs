@@ -18,6 +18,7 @@ namespace ijuniorPractice
     class Battle
     {
         private static readonly int CompanySize = 100;
+        private bool isAttack = true;
 
         private List<Soldier> _firstCompany = new();
         private List<Soldier> _secondCompany = new();
@@ -28,28 +29,57 @@ namespace ijuniorPractice
 
             int round = 1;
 
-            while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
+            //while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
+            //{
+            //    Console.WriteLine($"\n---- Раунд {round} ----");
+
+            //    //AttackCompany(_firstCompany, _secondCompany);
+            //    //AttackCompany(_secondCompany, _firstCompany);
+
+            //    round++;
+            //}
+
+            while (isAttack)
             {
-                Console.WriteLine($"\n---- Раунд {round} ----");
+                foreach (var soldier in _firstCompany)
+                {
+                    soldier.Attack(_secondCompany);
+                    
+                    if(_secondCompany.Count == 0)
+                    {
+                        isAttack=false;
+                        break;
+                    }
+                }
+                foreach (var soldier in _secondCompany)
+                {
+                    soldier.Attack(_firstCompany);
 
-                AttackCompany(_firstCompany, _secondCompany);
-                AttackCompany(_secondCompany, _firstCompany);
+                    if (_firstCompany.Count == 0)
+                    {
+                        isAttack = false;
+                        break;
+                    }
+                }
 
-                round++;
+
+
+
             }
+
 
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
 
-        private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
-        {
-            if (defenders.Count == 0)
-            {
-                return;
-            }
+        //private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
+        //{
+        //    if (defenders.Count == 0)
+        //    {
+        //        return;
+        //    }
 
 
-        }
+        //}
 
         public void CreateCompany()
         {
@@ -180,6 +210,10 @@ namespace ijuniorPractice
             {
                 target.TakeDamage(Damage);
 
+            }
+
+            foreach (var target in soldiers)
+            {
                 if (target.Health <= 0)
                 {
                     soldiers.Remove(target);
@@ -212,6 +246,11 @@ namespace ijuniorPractice
             foreach (var target in soldiers)
             {
                 target.TakeDamage(Damage);
+
+            }
+
+            foreach (var target in soldiers)
+            {
                 if (target.Health <= 0)
                 {
                     soldiers.Remove(target);
