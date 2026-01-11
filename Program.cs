@@ -9,7 +9,7 @@ namespace ijuniorPractice
     internal class Program
     {
         static void Main(string[] args)
-        { 
+        {
             Battle battle = new Battle();
             battle.StartAttack();
         }
@@ -37,10 +37,10 @@ namespace ijuniorPractice
                 foreach (var soldier in _firstCompany)
                 {
                     soldier.Attack(_secondCompany);
-                    
-                    if(_secondCompany.Count == 0)
+
+                    if (_secondCompany.Count == 0)
                     {
-                        isAttack=false;
+                        isAttack = false;
                         break;
                     }
                 }
@@ -48,7 +48,7 @@ namespace ijuniorPractice
                 round++;
                 Console.ReadLine();
                 Console.WriteLine(round);
-                
+
                 foreach (var soldier in _secondCompany)
                 {
                     soldier.Attack(_firstCompany);
@@ -63,7 +63,6 @@ namespace ijuniorPractice
                 round++;
                 Console.ReadLine();
             }
-
 
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
@@ -115,7 +114,7 @@ namespace ijuniorPractice
         public virtual void Attack(List<Soldier> soldiers)
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            
+
             int target = UserUtils.GenerateRandomNumber(0, soldiers.Count);
 
             soldiers[target].TakeDamage(Damage);
@@ -161,9 +160,9 @@ namespace ijuniorPractice
             float finalDamage = Damage * multiplication;
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            int index = UserUtils.GenerateRandomNumber(0,soldiers.Count);
+            
+            int index = UserUtils.GenerateRandomNumber(0, soldiers.Count);
             Soldier target = soldiers[index];
-
             target.TakeDamage(finalDamage);
 
             if (target.Health <= 0)
@@ -190,6 +189,7 @@ namespace ijuniorPractice
             int takeTarget = (int)(soldiers.Count * hitProbability);
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+            
             var targets = Enumerable.Range(0, takeTarget)
                 .Select(_ => soldiers[UserUtils.GenerateRandomNumber(0, soldiers.Count)])
                 .ToList();
@@ -198,14 +198,12 @@ namespace ijuniorPractice
             {
                 target.TakeDamage(Damage);
 
-
                 if (target.Health <= 0)
                 {
                     soldiers.Remove(target);
                 }
             }
         }
-
 
         public Soldier Clone()
         {
@@ -225,6 +223,7 @@ namespace ijuniorPractice
             int takeTarget = (int)(soldiers.Count * hitProbability);
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+        
             var targets = soldiers
                 .OrderBy(_ => UserUtils.GenerateRandomNumber())
                 .Take(takeTarget)
