@@ -29,18 +29,11 @@ namespace ijuniorPractice
 
             int round = 1;
 
-            //while (_firstCompany.Count > 0 && _secondCompany.Count > 0)
-            //{
-            //    Console.WriteLine($"\n---- Раунд {round} ----");
-
-            //    //AttackCompany(_firstCompany, _secondCompany);
-            //    //AttackCompany(_secondCompany, _firstCompany);
-
-            //    round++;
-            //}
 
             while (isAttack)
             {
+                Console.WriteLine(round);
+
                 foreach (var soldier in _firstCompany)
                 {
                     soldier.Attack(_secondCompany);
@@ -52,7 +45,10 @@ namespace ijuniorPractice
                     }
                 }
 
-
+                round++;
+                Console.ReadLine();
+                Console.WriteLine(round);
+                
                 foreach (var soldier in _secondCompany)
                 {
                     soldier.Attack(_firstCompany);
@@ -64,9 +60,8 @@ namespace ijuniorPractice
                     }
                 }
 
-
-
-
+                round++;
+                Console.ReadLine();
             }
 
 
@@ -89,17 +84,17 @@ namespace ijuniorPractice
 
             return RandomNumber switch
             {
-                0 => new Soldier(),
-                1 => new Soldier(),
-                2 => new Soldier(),
-                3 => new Soldier(),
-                4 => new Sniper(),
-                5 => new Sniper(),
-                6 => new Sniper(),
-                7 => new Gunner(),
-                8 => new Gunner(),
-                9 => new Grenadier(),
-                _ => new Soldier()
+                0 => new Soldier().Clone(),
+                1 => new Soldier().Clone(),
+                2 => new Soldier().Clone(),
+                3 => new Soldier().Clone(),
+                4 => new Sniper().Clone(),
+                5 => new Sniper().Clone(),
+                6 => new Sniper().Clone(),
+                7 => new Gunner().Clone(),
+                8 => new Gunner().Clone(),
+                9 => new Grenadier().Clone(),
+                _ => new Soldier().Clone()
             };
         }
     }
@@ -191,7 +186,7 @@ namespace ijuniorPractice
 
         public override void Attack(List<Soldier> soldiers)
         {
-            float hitProbability = 0.25f;
+            float hitProbability = 0.05f;
             int takeTarget = (int)(soldiers.Count * hitProbability);
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
@@ -199,7 +194,7 @@ namespace ijuniorPractice
                 .Select(_ => soldiers[UserUtils.GenerateRandomNumber(0, soldiers.Count)])
                 .ToList();
 
-            foreach (var target in soldiers.ToList())
+            foreach (var target in targets)
             {
                 target.TakeDamage(Damage);
 
@@ -226,7 +221,7 @@ namespace ijuniorPractice
 
         public override void Attack(List<Soldier> soldiers)
         {
-            float hitProbability = 0.40f;
+            float hitProbability = 0.15f;
             int takeTarget = (int)(soldiers.Count * hitProbability);
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
@@ -235,7 +230,7 @@ namespace ijuniorPractice
                 .Take(takeTarget)
                 .ToList();
 
-            foreach (var target in soldiers.ToList())
+            foreach (var target in targets)
             {
                 target.TakeDamage(Damage);
 
