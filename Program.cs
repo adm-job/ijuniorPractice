@@ -56,7 +56,6 @@ namespace ijuniorPractice
                 {
                     return;
                 }
-
             }
 
             Console.WriteLine(team1.TeamSize() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
