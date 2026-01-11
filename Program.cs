@@ -98,6 +98,14 @@ namespace ijuniorPractice
         }
     }
 
+    class Team
+    {
+        public Team()
+        {
+
+        }
+    }
+
     class Soldier
     {
         public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
