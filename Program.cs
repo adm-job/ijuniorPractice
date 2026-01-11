@@ -51,6 +51,8 @@ namespace ijuniorPractice
                         break;
                     }
                 }
+
+
                 foreach (var soldier in _secondCompany)
                 {
                     soldier.Attack(_firstCompany);
@@ -70,16 +72,6 @@ namespace ijuniorPractice
 
             Console.WriteLine(_firstCompany.Count > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
-
-        //private void AttackCompany(List<Soldier> attackers, List<Soldier> defenders)
-        //{
-        //    if (defenders.Count == 0)
-        //    {
-        //        return;
-        //    }
-
-
-        //}
 
         public void CreateCompany()
         {
@@ -173,7 +165,7 @@ namespace ijuniorPractice
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
-            Console.WriteLine($"{Rank}");
+            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
             int index = UserUtils.GenerateRandomNumber(0,soldiers.Count);
             Soldier target = soldiers[index];
 
@@ -202,18 +194,16 @@ namespace ijuniorPractice
             float hitProbability = 0.25f;
             int takeTarget = (int)(soldiers.Count * hitProbability);
 
+            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
             var targets = Enumerable.Range(0, takeTarget)
                 .Select(_ => soldiers[UserUtils.GenerateRandomNumber(0, soldiers.Count)])
                 .ToList();
 
-            foreach (var target in soldiers)
+            foreach (var target in soldiers.ToList())
             {
                 target.TakeDamage(Damage);
 
-            }
 
-            foreach (var target in soldiers)
-            {
                 if (target.Health <= 0)
                 {
                     soldiers.Remove(target);
@@ -238,19 +228,17 @@ namespace ijuniorPractice
         {
             float hitProbability = 0.40f;
             int takeTarget = (int)(soldiers.Count * hitProbability);
+
+            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
             var targets = soldiers
                 .OrderBy(_ => UserUtils.GenerateRandomNumber())
                 .Take(takeTarget)
                 .ToList();
 
-            foreach (var target in soldiers)
+            foreach (var target in soldiers.ToList())
             {
                 target.TakeDamage(Damage);
 
-            }
-
-            foreach (var target in soldiers)
-            {
                 if (target.Health <= 0)
                 {
                     soldiers.Remove(target);
