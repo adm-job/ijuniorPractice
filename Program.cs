@@ -57,7 +57,8 @@ namespace ijuniorPractice
                     return;
                 }
             }
-
+            team1.RemoveDead();
+            team2.RemoveDead();
             Console.WriteLine(team1.Size() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
     }
@@ -78,11 +79,11 @@ namespace ijuniorPractice
         {
             foreach (var soldier in _soldiers)
             {
-                soldier.Attack(team.ReturnTeam());
+                soldier.Attack(team.ReturnSize());
             }
         }
 
-        public List<Soldier> ReturnTeam()
+        public List<Soldier> ReturnSize()
         {
             return _soldiers.ToList();
         }
