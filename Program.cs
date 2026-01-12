@@ -31,9 +31,9 @@ namespace ijuniorPractice
             {
                 Console.WriteLine(round);
 
-                team1.AttackTeam(team2);
+                team1.Attack(team2);
 
-                if (team2.TeamSize() > 0)
+                if (team2.Size() > 0)
                 {
                     round++;
                     Console.ReadLine();
@@ -44,9 +44,9 @@ namespace ijuniorPractice
                     return;
                 }
 
-                team2.AttackTeam(team1);
+                team2.Attack(team1);
 
-                if (team1.TeamSize() > 0)
+                if (team1.Size() > 0)
                 {
                     round++;
                     Console.ReadLine();
@@ -58,23 +58,23 @@ namespace ijuniorPractice
                 }
             }
 
-            Console.WriteLine(team1.TeamSize() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
+            Console.WriteLine(team1.Size() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
     }
 
     class Team
     {
         private List<Soldier> _soldiers;
-        private int _teamSize;
+        private int _size;
 
         public Team(int totalSize)
         {
-            _teamSize = totalSize;
+            _size = totalSize;
             _soldiers = new List<Soldier>();
             CreateCompany();
         }
 
-        public void AttackTeam(Team team)
+        public void Attack(Team team)
         {
             foreach (var soldier in _soldiers)
             {
@@ -87,14 +87,24 @@ namespace ijuniorPractice
             return _soldiers.ToList();
         }
 
-        public int TeamSize()
+        public int Size()
         {
             return _soldiers.Count;
         }
 
+        public void RemoveDead()
+        {
+            foreach (var soldier in _soldiers.ToList())
+            {
+                if (soldier.Health <= 0)
+                {
+                    _soldiers.Remove(soldier);
+                }
+            }
+        }
         private void CreateCompany()
         {
-            for (int i = 0; i < _teamSize; i++)
+            for (int i = 0; i < _size; i++)
             {
                 _soldiers.Add(CreateRandomSoldier());
             }
@@ -102,8 +112,8 @@ namespace ijuniorPractice
 
         private Soldier CreateRandomSoldier()
         {
-            int SizeList = 10;
-            int RandomNumber = UserUtils.GenerateRandomNumber(0, SizeList);
+            int sizeList = 10;
+            int RandomNumber = UserUtils.GenerateRandomNumber(0, sizeList);
 
             return RandomNumber switch
             {
