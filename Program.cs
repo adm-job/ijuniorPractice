@@ -79,11 +79,11 @@ namespace ijuniorPractice
         {
             foreach (var soldier in _soldiers)
             {
-                soldier.Attack(team.ReturnSize());
+                soldier.Attack(team.ReturnSoldiers());
             }
         }
 
-        public List<Soldier> ReturnSize()
+        public List<Soldier> ReturnSoldiers()
         {
             return _soldiers.ToList();
         }
