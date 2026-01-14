@@ -65,14 +65,13 @@ namespace ijuniorPractice
 
     class Team
     {
-        private List<Soldier> _soldiers;
+        private SoldierFactory _soldiers;
         private int _size;
 
         public Team(int totalSize)
         {
             _size = totalSize;
-            _soldiers = new List<Soldier>();
-            CreateCompany();
+            _soldiers = new SoldierFactory();
         }
 
         public void Attack(Team team)
@@ -103,6 +102,19 @@ namespace ijuniorPractice
                 }
             }
         }
+    }
+
+    class SoldierFactory
+    {
+        private int _size;
+        private List<Soldier> _soldiers;
+
+        public SoldierFactory()
+        {
+            _size = 100;
+            CreateCompany();
+        }
+
         private void CreateCompany()
         {
             for (int i = 0; i < _size; i++)
@@ -131,11 +143,6 @@ namespace ijuniorPractice
                 _ => new Soldier().Clone()
             };
         }
-    }
-
-    class SoldierFactory
-    {
-    
     }
 
 
