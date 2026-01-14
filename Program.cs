@@ -133,7 +133,7 @@ namespace ijuniorPractice
         }
     }
 
-    class TeameCreate
+    class SoldierFactory
     {
     
     }
