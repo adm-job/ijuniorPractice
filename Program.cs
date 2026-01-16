@@ -87,10 +87,7 @@ namespace ijuniorPractice
             return _soldiers.ToList();
         }
 
-        public int Size()
-        {
-            return _soldiers.Count;
-        }
+
 
         public void RemoveDead()
         {
@@ -108,6 +105,12 @@ namespace ijuniorPractice
     {
         private int _size;
         private List<Soldier> _soldiers;
+
+        public int Size()
+        {
+
+            return _soldiers.Count;
+        }
 
         public SoldierFactory()
         {
