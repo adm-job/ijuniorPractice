@@ -99,6 +99,11 @@ namespace ijuniorPractice
                 }
             }
         }
+
+        public int SizeTeam()
+        {
+            return _size;
+        }
     }
 
     class SoldierFactory
