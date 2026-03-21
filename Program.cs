@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.Xml.Linq;
 
 
 namespace ijuniorPractice
@@ -57,6 +54,7 @@ namespace ijuniorPractice
                     return;
                 }
             }
+
             team1.RemoveDead();
             team2.RemoveDead();
             Console.WriteLine(team1.Size() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
@@ -71,7 +69,7 @@ namespace ijuniorPractice
         public Team(int totalSize)
         {
             _size = totalSize;
-            _soldiers = new SoldierFactory();
+            _soldiers = ;
         }
 
         public void Attack(Team team)
@@ -100,7 +98,7 @@ namespace ijuniorPractice
             }
         }
 
-        public int SizeTeam()
+        public int Size()
         {
             return _size;
         }
