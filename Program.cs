@@ -107,7 +107,7 @@ namespace ijuniorPractice
     class SoldierFactory
     {
         private int _size;
-        private List<Soldier> _soldiers;
+        private List<Soldier> _soldiers = new List<Soldier>();
 
         public int Size()
         {
@@ -196,7 +196,7 @@ namespace ijuniorPractice
             return $"{Rank} - ({Damage}) - ({Health})";
         }
 
-        public Soldier Clone()
+        public virtual Soldier Clone()
         {
             return new Soldier(Rank, Damage, Health);
         }
@@ -225,7 +225,7 @@ namespace ijuniorPractice
             }
         }
 
-        public Soldier Clone()
+        public override Soldier Clone()
         {
             return new Sniper(Rank, Damage, Health);
         }
@@ -259,7 +259,7 @@ namespace ijuniorPractice
             }
         }
 
-        public Soldier Clone()
+        public override Soldier Clone()
         {
             return new Gunner(Rank, Damage, Health);
         }
@@ -294,7 +294,7 @@ namespace ijuniorPractice
             }
         }
 
-        public Soldier Clone()
+        public override Soldier Clone()
         {
             return new Grenadier(Rank, Damage, Health);
         }
