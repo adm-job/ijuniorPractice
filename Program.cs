@@ -30,7 +30,7 @@ namespace ijuniorPractice
 
                 team1.Attack(team2);
 
-                if (team2.Size() > 0)
+                if (team2.Size > 0)
                 {
                     round++;
                     Console.ReadLine();
@@ -43,7 +43,7 @@ namespace ijuniorPractice
 
                 team2.Attack(team1);
 
-                if (team1.Size() > 0)
+                if (team1.Size > 0)
                 {
                     round++;
                     Console.ReadLine();
@@ -57,24 +57,27 @@ namespace ijuniorPractice
 
             team1.RemoveDead();
             team2.RemoveDead();
-            Console.WriteLine(team1.Size() > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
+            Console.WriteLine(team1.Size > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
     }
 
     class Team
     {
-        private SoldierFactory _soldiers;
+        private SoldierFactory _factory;
+        private List<Soldier> _band;
         private int _size;
+
+        public int Size { get; private set; }
 
         public Team(int totalSize)
         {
             _size = totalSize;
-            _soldiers = new SoldierFactory(totalSize);
+            _band = _factory.Conscription(totalSize);
         }
 
         public void Attack(Team team)
         {
-            foreach (var soldier in _soldiers)
+            foreach (var soldier in _band)
             {
                 soldier.Attack(team.ReturnSoldiers());
             }
@@ -82,25 +85,20 @@ namespace ijuniorPractice
 
         public List<Soldier> ReturnSoldiers()
         {
-            return _soldiers.ToList();
+            return _band.ToList();
         }
 
 
 
         public void RemoveDead()
         {
-            foreach (var soldier in _soldiers.ToList())
+            foreach (var soldier in _band.ToList())
             {
                 if (soldier.Health <= 0)
                 {
-                    _soldiers.Remove(soldier);
+                    _band.Remove(soldier);
                 }
             }
-        }
-
-        public int Size()
-        {
-            return _size;
         }
     }
 
