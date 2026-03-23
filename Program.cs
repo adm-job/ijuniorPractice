@@ -69,7 +69,7 @@ namespace ijuniorPractice
         public Team(int totalSize)
         {
             _size = totalSize;
-            _soldiers = ;
+            _soldiers = new SoldierFactory(totalSize);
         }
 
         public void Attack(Team team)
@@ -109,27 +109,25 @@ namespace ijuniorPractice
         private int _size;
         private List<Soldier> _soldiers = new List<Soldier>();
 
-        public int Size()
-        {
+        public int Size { get; private set; }
 
-            return _soldiers.Count;
-        }
-
-        public SoldierFactory()
+        public List<Soldier> Factory(int size)
         {
-            _size = 100;
+            _size = size;
             CreateCompany();
+
+            return _soldiers;
         }
 
         private void CreateCompany()
         {
             for (int i = 0; i < _size; i++)
             {
-                _soldiers.Add(CreateRandomSoldier());
+                _soldiers.Add(CreateRandom());
             }
         }
 
-        private Soldier CreateRandomSoldier()
+        private Soldier CreateRandom()
         {
             int sizeList = 10;
             int RandomNumber = UserUtils.GenerateRandomNumber(0, sizeList);
