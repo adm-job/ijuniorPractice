@@ -111,9 +111,10 @@ namespace ijuniorPractice
 
         public int Size { get; private set; }
 
-        public List<Soldier> Factory(int size)
+        public List<Soldier> Conscription(int size)
         {
             _size = size;
+
             CreateCompany();
 
             return _soldiers;
