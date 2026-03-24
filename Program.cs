@@ -63,7 +63,7 @@ namespace ijuniorPractice
 
     class Team
     {
-        private SoldierFactory _factory;
+        private SoldierFactory _factory = new SoldierFactory();
         private List<Soldier> _band;
         private int _size;
 
@@ -71,7 +71,7 @@ namespace ijuniorPractice
 
         public Team(int totalSize)
         {
-            _size = totalSize;
+            Size = totalSize;
             _band = _factory.Conscription(totalSize);
         }
 
