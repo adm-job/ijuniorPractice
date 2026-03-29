@@ -184,10 +184,6 @@ namespace ijuniorPractice
             Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
-        //protected int SelectSoldierIndex(Soldier[] soldiers)
-        //{
-        //    return UserUtils.GenerateRandomNumber(0, soldiers.Length);
-        //}
 
         public override string ToString()
         {
