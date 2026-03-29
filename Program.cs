@@ -26,7 +26,7 @@ namespace ijuniorPractice
 
             while (isAttack)
             {
-                Console.WriteLine(round);
+                Console.WriteLine("---------------------------" + round + "---------------------------");
 
                 team1.Attack(team2);
 
@@ -71,8 +71,8 @@ namespace ijuniorPractice
 
         public Team(int totalSize)
         {
-            Size = totalSize;
-            _band = _factory.Conscription(totalSize);
+            _band = _factory.Conscription(totalSize).ToList();
+            Size = _band.Count;
         }
 
         public void Attack(Team team)
@@ -83,22 +83,14 @@ namespace ijuniorPractice
             }
         }
 
-        public List<Soldier> ReturnSoldiers()
+        public IEnumerable<Soldier> ReturnSoldiers()
         {
-            return _band.ToList();
+            return _band;
         }
-
-
 
         public void RemoveDead()
         {
-            foreach (var soldier in _band.ToList())
-            {
-                if (soldier.Health <= 0)
-                {
-                    _band.Remove(soldier);
-                }
-            }
+            _band.RemoveAll(value => value.Health <= 0);
         }
     }
 
@@ -162,13 +154,22 @@ namespace ijuniorPractice
         public float Damage { get; private set; }
         public float Health { get; private set; }
 
-        public virtual void Attack(List<Soldier> soldiers)
+        public virtual void Attack(IEnumerable<Soldier> enemies)
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            int target = UserUtils.GenerateRandomNumber(0, soldiers.Count);
+            Soldier target = GetRandomTarget(enemies);
 
-            soldiers[target].TakeDamage(Damage);
+            target.TakeDamage(Damage);
+        }
+
+        protected Soldier GetRandomTarget(IEnumerable<Soldier> enemies)
+        {
+            var soldier = enemies.Where(enemy => enemy.Health > 0).ToList();
+
+            int index = UserUtils.GenerateRandomNumber(0, soldier.Count());
+
+            return soldier[index];
         }
 
         public void TakeDamage(float damage)
@@ -183,10 +184,10 @@ namespace ijuniorPractice
             Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
         }
 
-        protected int SelectSoldierIndex(Soldier[] soldiers)
-        {
-            return UserUtils.GenerateRandomNumber(0, soldiers.Length);
-        }
+        //protected int SelectSoldierIndex(Soldier[] soldiers)
+        //{
+        //    return UserUtils.GenerateRandomNumber(0, soldiers.Length);
+        //}
 
         public override string ToString()
         {
@@ -205,21 +206,15 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(List<Soldier> soldiers)
+        public override void Attack(IEnumerable<Soldier> enemies)
         {
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            int index = UserUtils.GenerateRandomNumber(0, soldiers.Count);
-            Soldier target = soldiers[index];
+            Soldier target = GetRandomTarget(enemies);
             target.TakeDamage(finalDamage);
-
-            if (target.Health <= 0)
-            {
-                soldiers.Remove(target);
-            }
         }
 
         public override Soldier Clone()
