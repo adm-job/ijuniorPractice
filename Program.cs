@@ -154,18 +154,18 @@ namespace ijuniorPractice
         public float Damage { get; private set; }
         public float Health { get; private set; }
 
-        public virtual void Attack(IEnumerable<Soldier> enemies)
+        public virtual void Attack(IEnumerable<Soldier> enemys)
         {
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            Soldier target = GetRandomTarget(enemies);
+            Soldier target = GetRandomTarget(enemys);
 
             target.TakeDamage(Damage);
         }
 
-        protected Soldier GetRandomTarget(IEnumerable<Soldier> enemies)
+        protected Soldier GetRandomTarget(IEnumerable<Soldier> enemys)
         {
-            var soldier = enemies.Where(enemy => enemy.Health > 0).ToList();
+            var soldier = enemys.Where(enemy => enemy.Health > 0).ToList();
 
             int index = UserUtils.GenerateRandomNumber(0, soldier.Count());
 
@@ -202,14 +202,14 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(IEnumerable<Soldier> enemies)
+        public override void Attack(IEnumerable<Soldier> enemys)
         {
             float multiplication = 3f;
             float finalDamage = Damage * multiplication;
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            Soldier target = GetRandomTarget(enemies);
+            Soldier target = GetRandomTarget(enemys);
             target.TakeDamage(finalDamage);
         }
 
@@ -225,26 +225,19 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(List<Soldier> soldiers)
+        public override void Attack(IEnumerable<Soldier> enemys)
         {
             float hitProbability = 0.05f;
-            int takeTarget = (int)(soldiers.Count * hitProbability);
+            int maxEnemys = enemys.Count();
+            int minEnemys = 0;
+            int takeTarget = Math.Max(1,(int)(enemys.Count() * hitProbability));
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+            var enemysList = enemys.ToList();
 
             var targets = Enumerable.Range(0, takeTarget)
-                .Select(_ => soldiers[UserUtils.GenerateRandomNumber(0, soldiers.Count)])
+                .Select(_ => enemysList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
                 .ToList();
-
-            foreach (var target in targets)
-            {
-                target.TakeDamage(Damage);
-
-                if (target.Health <= 0)
-                {
-                    soldiers.Remove(target);
-                }
-            }
         }
 
         public override Soldier Clone()
@@ -259,27 +252,17 @@ namespace ijuniorPractice
         {
         }
 
-        public override void Attack(List<Soldier> soldiers)
+        public override void Attack(IEnumerable<Soldier> enemys)
         {
             float hitProbability = 0.15f;
-            int takeTarget = (int)(soldiers.Count * hitProbability);
+            int takeTarget = Math.Max(1, (int)(enemys.Count() * hitProbability));
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            var targets = soldiers
+            var targets = enemys
                 .OrderBy(_ => UserUtils.GenerateRandomNumber())
                 .Take(takeTarget)
                 .ToList();
-
-            foreach (var target in targets)
-            {
-                target.TakeDamage(Damage);
-
-                if (target.Health <= 0)
-                {
-                    soldiers.Remove(target);
-                }
-            }
         }
 
         public override Soldier Clone()
