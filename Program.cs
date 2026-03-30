@@ -181,7 +181,7 @@ namespace ijuniorPractice
                 Health = 0;
             }
 
-            Console.WriteLine($"-Нанесен урон {damage} ранен {Rank} - ({Damage}) - ({Health})");
+            Console.WriteLine($"-Нанесен урон {damage} \nранен {Rank} - ({Damage}) - ({Health})");
         }
 
 
