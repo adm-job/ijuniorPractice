@@ -62,7 +62,6 @@
     {
         private SoldierFactory _factory = new SoldierFactory();
         private List<Soldier> _band;
-        private int _size;
 
         public int Size { get; private set; }
 
@@ -87,7 +86,7 @@
 
         public void RemoveDead()
         {
-            _band.RemoveAll(value => value.Health <= 0);
+            _band.RemoveAll(soldier => soldier.Health <= 0);
         }
     }
 
