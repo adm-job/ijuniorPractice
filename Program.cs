@@ -23,37 +23,31 @@
 
             while (isAttack)
             {
-                Console.WriteLine("---------------------------" + round + "---------------------------");
-                round++;
-
-                if (team2.Size > 0)
+                if (team1.Size > 0 && team2.Size > 0)
                 {
+                    Console.WriteLine("---------------------------" + round + "---------------------------");
+                    round++;
+
                     Console.WriteLine("Атакует 1 отряд");
                     team1.Attack(team2);
-                }
-                else
-                {
-                    isAttack = false;
-                }
 
-                if (team1.Size > 0)
-                {
                     Console.WriteLine("Атакует 2 отряд");
                     team2.Attack(team1);
+
+
+                    team1.RemoveDead();
+                    Console.WriteLine("\n" + team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
+                    team2.RemoveDead();
+                    Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН\n");
+                    Console.ReadLine();
                 }
                 else
                 {
                     isAttack = false;
                 }
-
-                team1.RemoveDead();
-                Console.WriteLine(team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
-                team2.RemoveDead();
-                Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН");
-                Console.ReadLine();
             }
 
-            Console.WriteLine(team1.Size >= 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
+            Console.WriteLine(team1.Size > 0 ? "Победила первая рота" : "Победила вторая рота");
         }
     }
 
@@ -136,7 +130,6 @@
         }
     }
 
-
     class Soldier
     {
         public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
@@ -156,12 +149,21 @@
 
             Soldier target = GetRandomTarget(enemies);
 
+            if (target == null)
+            {
+                return;
+            }
+
             target.TakeDamage(Damage);
         }
 
         protected Soldier GetRandomTarget(IEnumerable<Soldier> enemies)
         {
             var soldier = enemies.Where(enemy => enemy.Health > 0).ToList();
+            if (soldier.Count == 0)
+            {
+                return null;
+            }
 
             int index = UserUtils.GenerateRandomNumber(0, soldier.Count());
 
@@ -206,6 +208,12 @@
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
             Soldier target = GetRandomTarget(enemies);
+
+            if (target == null)
+            {
+                return;
+            }
+
             target.TakeDamage(finalDamage);
         }
 
@@ -235,12 +243,16 @@
                 .Select(_ => enemiesList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
                 .ToList();
 
+            if (targets == null)
+            {
+                return;
+            }
+
             foreach (Soldier target in targets)
             {
                 target.TakeDamage(Damage);
             }
         }
-
 
         public override Soldier Clone()
         {
@@ -265,6 +277,11 @@
                 .OrderBy(_ => UserUtils.GenerateRandomNumber())
                 .Take(takeTarget)
                 .ToList();
+
+            if (targets == null)
+            {
+                return;
+            }
 
             foreach (Soldier target in targets)
             {
