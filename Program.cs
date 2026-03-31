@@ -25,35 +25,36 @@
             {
                 Console.WriteLine("---------------------------" + round + "---------------------------");
 
-                team1.Attack(team2);
-
                 if (team2.Size > 0)
                 {
+                    team1.Attack(team2);
                     round++;
                     Console.ReadLine();
                     Console.WriteLine(round);
                 }
                 else
                 {
-                    return;
+                    isAttack = false;
                 }
-
-                team2.Attack(team1);
 
                 if (team1.Size > 0)
                 {
+                    team2.Attack(team1);
                     round++;
                     Console.ReadLine();
                     Console.WriteLine(round);
                 }
                 else
                 {
-                    return;
+                    isAttack = false;
                 }
+
+                team1.RemoveDead();
+                Console.WriteLine(team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
+                team2.RemoveDead();
+                Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН");
             }
 
-            team1.RemoveDead();
-            team2.RemoveDead();
             Console.WriteLine(team1.Size > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
     }
