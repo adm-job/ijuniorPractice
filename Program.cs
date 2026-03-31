@@ -24,13 +24,12 @@
             while (isAttack)
             {
                 Console.WriteLine("---------------------------" + round + "---------------------------");
+                round++;
 
                 if (team2.Size > 0)
                 {
+                    Console.WriteLine("Атакует 1 отряд");
                     team1.Attack(team2);
-                    round++;
-                    Console.ReadLine();
-                    Console.WriteLine(round);
                 }
                 else
                 {
@@ -39,10 +38,8 @@
 
                 if (team1.Size > 0)
                 {
+                    Console.WriteLine("Атакует 2 отряд");
                     team2.Attack(team1);
-                    round++;
-                    Console.ReadLine();
-                    Console.WriteLine(round);
                 }
                 else
                 {
@@ -53,9 +50,10 @@
                 Console.WriteLine(team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
                 team2.RemoveDead();
                 Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН");
+                Console.ReadLine();
             }
 
-            Console.WriteLine(team1.Size > 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
+            Console.WriteLine(team1.Size >= 0 ? "\nПобедила первая рота" : "\nПобедила вторая рота");
         }
     }
 
@@ -88,6 +86,7 @@
         public void RemoveDead()
         {
             _band.RemoveAll(soldier => soldier.Health <= 0);
+            Size = _band.Count();
         }
     }
 
