@@ -230,10 +230,10 @@
             int takeTarget = Math.Max(1, (int)(enemies.Count() * hitProbability));
 
             Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            var enemysList = enemies.ToList();
+            var enemiesList = enemies.ToList();
 
             var targets = Enumerable.Range(0, takeTarget)
-                .Select(_ => enemysList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
+                .Select(_ => enemiesList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
                 .ToList();
 
             foreach (Soldier target in targets)
