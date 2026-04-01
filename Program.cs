@@ -4,296 +4,313 @@
     {
         static void Main(string[] args)
         {
-            Battle battle = new Battle();
-            battle.StartAttack();
+            Tank tank = new Tank();
         }
     }
 
-    class Battle
+    class MenuAquarist
     {
-        private static readonly int TeamSize = 100;
-        private bool isAttack = true;
 
-        private Team team1 = new Team(TeamSize);
-        private Team team2 = new Team(TeamSize);
+    }
 
-        public void StartAttack()
+    class Fish
+    {
+        private string Name;
+        private float TimeLife = 300;
+    }
+
+    class Tank
+    {
+
+    }
+
+
+
+    /*    class Battle
         {
-            int round = 1;
+            private static readonly int TeamSize = 100;
+            private bool isAttack = true;
 
-            while (isAttack)
+            private Team team1 = new Team(TeamSize);
+            private Team team2 = new Team(TeamSize);
+
+            public void StartAttack()
             {
-                if (team1.Size > 0 && team2.Size > 0)
+                int round = 1;
+
+                while (isAttack)
                 {
-                    Console.WriteLine("---------------------------" + round + "---------------------------");
-                    round++;
+                    if (team1.Size > 0 && team2.Size > 0)
+                    {
+                        Console.WriteLine("---------------------------" + round + "---------------------------");
+                        round++;
 
-                    Console.WriteLine("Атакует 1 отряд");
-                    team1.Attack(team2);
+                        Console.WriteLine("Атакует 1 отряд");
+                        team1.Attack(team2);
 
-                    Console.WriteLine("Атакует 2 отряд");
-                    team2.Attack(team1);
+                        Console.WriteLine("Атакует 2 отряд");
+                        team2.Attack(team1);
 
 
-                    team1.RemoveDead();
-                    Console.WriteLine("\n" + team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
-                    team2.RemoveDead();
-                    Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН\n");
-                    Console.ReadLine();
+                        team1.RemoveDead();
+                        Console.WriteLine("\n" + team1.Size + "РАЗМЕР ГРУППУ РАВЕН");
+                        team2.RemoveDead();
+                        Console.WriteLine(team2.Size + "РАЗМЕР ГРУППУ РАВЕН\n");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        isAttack = false;
+                    }
                 }
-                else
+
+                Console.WriteLine(team1.Size > 0 ? "Победила первая рота" : "Победила вторая рота");
+            }
+        }
+
+        class Team
+        {
+            private SoldierFactory _factory = new SoldierFactory();
+            private List<Soldier> _band;
+
+            public int Size { get; private set; }
+
+            public Team(int totalSize)
+            {
+                _band = _factory.Conscription(totalSize).ToList();
+                Size = _band.Count;
+            }
+
+            public void Attack(Team team)
+            {
+                foreach (var soldier in _band)
                 {
-                    isAttack = false;
+                    soldier.Attack(team.ReturnSoldiers());
                 }
             }
 
-            Console.WriteLine(team1.Size > 0 ? "Победила первая рота" : "Победила вторая рота");
-        }
-    }
-
-    class Team
-    {
-        private SoldierFactory _factory = new SoldierFactory();
-        private List<Soldier> _band;
-
-        public int Size { get; private set; }
-
-        public Team(int totalSize)
-        {
-            _band = _factory.Conscription(totalSize).ToList();
-            Size = _band.Count;
-        }
-
-        public void Attack(Team team)
-        {
-            foreach (var soldier in _band)
+            public IEnumerable<Soldier> ReturnSoldiers()
             {
-                soldier.Attack(team.ReturnSoldiers());
+                return _band;
+            }
+
+            public void RemoveDead()
+            {
+                _band.RemoveAll(soldier => soldier.Health <= 0);
+                Size = _band.Count();
             }
         }
 
-        public IEnumerable<Soldier> ReturnSoldiers()
+        class SoldierFactory
         {
-            return _band;
-        }
+            private int _size;
+            private List<Soldier> _soldiers = new List<Soldier>();
 
-        public void RemoveDead()
-        {
-            _band.RemoveAll(soldier => soldier.Health <= 0);
-            Size = _band.Count();
-        }
-    }
+            public int Size { get; private set; }
 
-    class SoldierFactory
-    {
-        private int _size;
-        private List<Soldier> _soldiers = new List<Soldier>();
-
-        public int Size { get; private set; }
-
-        public List<Soldier> Conscription(int size)
-        {
-            _size = size;
-
-            CreateCompany();
-
-            return _soldiers;
-        }
-
-        private void CreateCompany()
-        {
-            for (int i = 0; i < _size; i++)
+            public List<Soldier> Conscription(int size)
             {
-                _soldiers.Add(CreateRandom());
+                _size = size;
+
+                CreateCompany();
+
+                return _soldiers;
+            }
+
+            private void CreateCompany()
+            {
+                for (int i = 0; i < _size; i++)
+                {
+                    _soldiers.Add(CreateRandom());
+                }
+            }
+
+            private Soldier CreateRandom()
+            {
+                int sizeList = 10;
+                int RandomNumber = UserUtils.GenerateRandomNumber(0, sizeList);
+
+                return RandomNumber switch
+                {
+                    0 => new Soldier().Clone(),
+                    1 => new Soldier().Clone(),
+                    2 => new Soldier().Clone(),
+                    3 => new Soldier().Clone(),
+                    4 => new Sniper().Clone(),
+                    5 => new Sniper().Clone(),
+                    6 => new Sniper().Clone(),
+                    7 => new Gunner().Clone(),
+                    8 => new Gunner().Clone(),
+                    9 => new Grenadier().Clone(),
+                    _ => new Soldier().Clone()
+                };
             }
         }
 
-        private Soldier CreateRandom()
+        class Soldier
         {
-            int sizeList = 10;
-            int RandomNumber = UserUtils.GenerateRandomNumber(0, sizeList);
-
-            return RandomNumber switch
+            public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
             {
-                0 => new Soldier().Clone(),
-                1 => new Soldier().Clone(),
-                2 => new Soldier().Clone(),
-                3 => new Soldier().Clone(),
-                4 => new Sniper().Clone(),
-                5 => new Sniper().Clone(),
-                6 => new Sniper().Clone(),
-                7 => new Gunner().Clone(),
-                8 => new Gunner().Clone(),
-                9 => new Grenadier().Clone(),
-                _ => new Soldier().Clone()
-            };
-        }
-    }
-
-    class Soldier
-    {
-        public Soldier(string rank = "Солдат", float damage = 10, float health = 100)
-        {
-            Rank = rank;
-            Damage = damage;
-            Health = health;
-        }
-
-        public string Rank { get; private set; }
-        public float Damage { get; private set; }
-        public float Health { get; private set; }
-
-        public virtual void Attack(IEnumerable<Soldier> enemies)
-        {
-            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-
-            Soldier target = GetRandomTarget(enemies);
-
-            if (target == null)
-            {
-                return;
+                Rank = rank;
+                Damage = damage;
+                Health = health;
             }
 
-            target.TakeDamage(Damage);
-        }
+            public string Rank { get; private set; }
+            public float Damage { get; private set; }
+            public float Health { get; private set; }
 
-        protected Soldier GetRandomTarget(IEnumerable<Soldier> enemies)
-        {
-            var soldier = enemies.Where(enemy => enemy.Health > 0).ToList();
-            if (soldier.Count == 0)
+            public virtual void Attack(IEnumerable<Soldier> enemies)
             {
-                return null;
-            }
+                Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
 
-            int index = UserUtils.GenerateRandomNumber(0, soldier.Count());
+                Soldier target = GetRandomTarget(enemies);
 
-            return soldier[index];
-        }
+                if (target == null)
+                {
+                    return;
+                }
 
-        public void TakeDamage(float damage)
-        {
-            Health -= damage;
-
-            if (Health < 0)
-            {
-                Health = 0;
-            }
-
-            Console.WriteLine($"-Нанесен урон {damage} \nранен {Rank} - ({Damage}) - ({Health})");
-        }
-
-
-        public override string ToString()
-        {
-            return $"{Rank} - ({Damage}) - ({Health})";
-        }
-
-        public virtual Soldier Clone()
-        {
-            return new Soldier(Rank, Damage, Health);
-        }
-    }
-
-    class Sniper : Soldier
-    {
-        public Sniper(string rank = "Снайпер", float damage = 10, float health = 100) : base(rank, damage, health)
-        {
-        }
-
-        public override void Attack(IEnumerable<Soldier> enemies)
-        {
-            float multiplication = 3f;
-            float finalDamage = Damage * multiplication;
-
-            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-
-            Soldier target = GetRandomTarget(enemies);
-
-            if (target == null)
-            {
-                return;
-            }
-
-            target.TakeDamage(finalDamage);
-        }
-
-        public override Soldier Clone()
-        {
-            return new Sniper(Rank, Damage, Health);
-        }
-    }
-
-    class Gunner : Soldier
-    {
-        public Gunner(string rank = "Пулеметчик", float damage = 11, float health = 100) : base(rank, damage, health)
-        {
-        }
-
-        public override void Attack(IEnumerable<Soldier> enemies)
-        {
-            float hitProbability = 0.05f;
-            int maxEnemys = enemies.Count();
-            int minEnemys = 0;
-            int takeTarget = Math.Max(1, (int)(enemies.Count() * hitProbability));
-
-            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-            var enemiesList = enemies.ToList();
-
-            var targets = Enumerable.Range(0, takeTarget)
-                .Select(_ => enemiesList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
-                .ToList();
-
-            if (targets == null)
-            {
-                return;
-            }
-
-            foreach (Soldier target in targets)
-            {
                 target.TakeDamage(Damage);
             }
-        }
 
-        public override Soldier Clone()
-        {
-            return new Gunner(Rank, Damage, Health);
-        }
-    }
-
-    class Grenadier : Soldier
-    {
-        public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
-        {
-        }
-
-        public override void Attack(IEnumerable<Soldier> enemys)
-        {
-            float hitProbability = 0.15f;
-            int takeTarget = Math.Max(1, (int)(enemys.Count() * hitProbability));
-
-            Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
-
-            var targets = enemys
-                .OrderBy(_ => UserUtils.GenerateRandomNumber())
-                .Take(takeTarget)
-                .ToList();
-
-            if (targets == null)
+            protected Soldier GetRandomTarget(IEnumerable<Soldier> enemies)
             {
-                return;
+                var soldier = enemies.Where(enemy => enemy.Health > 0).ToList();
+                if (soldier.Count == 0)
+                {
+                    return null;
+                }
+
+                int index = UserUtils.GenerateRandomNumber(0, soldier.Count());
+
+                return soldier[index];
             }
 
-            foreach (Soldier target in targets)
+            public void TakeDamage(float damage)
             {
-                target.TakeDamage(Damage);
+                Health -= damage;
+
+                if (Health < 0)
+                {
+                    Health = 0;
+                }
+
+                Console.WriteLine($"-Нанесен урон {damage} \nранен {Rank} - ({Damage}) - ({Health})");
+            }
+
+
+            public override string ToString()
+            {
+                return $"{Rank} - ({Damage}) - ({Health})";
+            }
+
+            public virtual Soldier Clone()
+            {
+                return new Soldier(Rank, Damage, Health);
             }
         }
 
-        public override Soldier Clone()
+        class Sniper : Soldier
         {
-            return new Grenadier(Rank, Damage, Health);
+            public Sniper(string rank = "Снайпер", float damage = 10, float health = 100) : base(rank, damage, health)
+            {
+            }
+
+            public override void Attack(IEnumerable<Soldier> enemies)
+            {
+                float multiplication = 3f;
+                float finalDamage = Damage * multiplication;
+
+                Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+
+                Soldier target = GetRandomTarget(enemies);
+
+                if (target == null)
+                {
+                    return;
+                }
+
+                target.TakeDamage(finalDamage);
+            }
+
+            public override Soldier Clone()
+            {
+                return new Sniper(Rank, Damage, Health);
+            }
         }
-    }
+
+        class Gunner : Soldier
+        {
+            public Gunner(string rank = "Пулеметчик", float damage = 11, float health = 100) : base(rank, damage, health)
+            {
+            }
+
+            public override void Attack(IEnumerable<Soldier> enemies)
+            {
+                float hitProbability = 0.05f;
+                int maxEnemys = enemies.Count();
+                int minEnemys = 0;
+                int takeTarget = Math.Max(1, (int)(enemies.Count() * hitProbability));
+
+                Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+                var enemiesList = enemies.ToList();
+
+                var targets = Enumerable.Range(0, takeTarget)
+                    .Select(_ => enemiesList[UserUtils.GenerateRandomNumber(0, maxEnemys)])
+                    .ToList();
+
+                if (targets == null)
+                {
+                    return;
+                }
+
+                foreach (Soldier target in targets)
+                {
+                    target.TakeDamage(Damage);
+                }
+            }
+
+            public override Soldier Clone()
+            {
+                return new Gunner(Rank, Damage, Health);
+            }
+        }
+
+        class Grenadier : Soldier
+        {
+            public Grenadier(string rank = "Гранатометчик", float damage = 20, float health = 100) : base(rank, damage, health)
+            {
+            }
+
+            public override void Attack(IEnumerable<Soldier> enemys)
+            {
+                float hitProbability = 0.15f;
+                int takeTarget = Math.Max(1, (int)(enemys.Count() * hitProbability));
+
+                Console.WriteLine($"Атакует {Rank} - ({Damage}) - ({Health})");
+
+                var targets = enemys
+                    .OrderBy(_ => UserUtils.GenerateRandomNumber())
+                    .Take(takeTarget)
+                    .ToList();
+
+                if (targets == null)
+                {
+                    return;
+                }
+
+                foreach (Soldier target in targets)
+                {
+                    target.TakeDamage(Damage);
+                }
+            }
+
+            public override Soldier Clone()
+            {
+                return new Grenadier(Rank, Damage, Health);
+            }
+        }*/
 
     class UserUtils
     {
