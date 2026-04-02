@@ -22,12 +22,18 @@
 
             while (_isRunMenu)
             {
+                Console.Clear();
                 Console.WriteLine("Меню аквариума");
 
                 Console.WriteLine(AddFish + " Добавить рыбки");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
                 Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
                 Console.WriteLine(Exit + " Уйти от аквариума");
+
+                Console.WriteLine("\nВведите номер пункта меню");
+
+                string input = Console.ReadLine();
+                Console.WriteLine();
             }
         }
     }
