@@ -28,6 +28,16 @@
         {
             return $"Житель аквариума {_name} время жизни {_timeLife}";
         }
+
+        public void live()
+        {
+            _timeLife--;
+        }
+
+        private void Die()
+        {
+            _timeLife = 0;
+        }
     }
 
     class Tank
