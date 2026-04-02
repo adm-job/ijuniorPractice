@@ -18,7 +18,7 @@
         private string _name;
         private float _timeLife;
 
-        public Fish(string name = "Рыбка",int life = 300)
+        public Fish(string name = "Рыбка", int life = 300)
         {
             _name = name;
             _timeLife = life;
@@ -45,7 +45,10 @@
         private List<Fish> _pisces;
         private int maxFish = 10;
 
-
+        public Tank()
+        {
+            _pisces = new List<Fish>();
+        }
     }
 
 
