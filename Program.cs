@@ -42,6 +42,9 @@
 
     class Tank
     {
+        private List<Fish> _pisces;
+        private int maxFish = 10;
+
 
     }
 
