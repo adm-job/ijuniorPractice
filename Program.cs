@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Tank tank = new Tank();
+            MenuAquarist MenuAquarist = new MenuAquarist();
         }
     }
 
@@ -58,9 +58,17 @@
             }
         }
 
+        public void AddMaxFish()
+        {
+            for (int i = _pisces.Count; i < maxFish; i++)
+            {
+                _pisces.Add(new Fish());
+            }
+        }
+
         public void ShowAllFish()
         {
-            foreach(Fish fish in _pisces)
+            foreach (Fish fish in _pisces)
             {
                 Console.WriteLine(fish);
             }
