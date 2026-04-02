@@ -49,6 +49,23 @@
         {
             _pisces = new List<Fish>();
         }
+
+        public void AddFish()
+        {
+            if (_pisces.Count < maxFish)
+            {
+                _pisces.Add(new Fish());
+            }
+        }
+
+        public void ShowAllFish()
+        {
+            foreach(Fish fish in _pisces)
+            {
+                Console.WriteLine(fish);
+            }
+        }
+
     }
 
 
