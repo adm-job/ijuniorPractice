@@ -15,8 +15,19 @@
 
     class Fish
     {
-        private string Name;
-        private float TimeLife = 300;
+        private string _name;
+        private float _timeLife;
+
+        public Fish(string name = "Рыбка",int life = 300)
+        {
+            _name = name;
+            _timeLife = life;
+        }
+
+        public override string ToString()
+        {
+            return $"Житель аквариума {_name} время жизни {_timeLife}";
+        }
     }
 
     class Tank
