@@ -5,12 +5,31 @@
         static void Main(string[] args)
         {
             MenuAquarist MenuAquarist = new MenuAquarist();
+            MenuAquarist.Run();
         }
     }
 
     class MenuAquarist
     {
+        private bool _isRunMenu = true;
 
+        public void Run()
+        {
+            const string AddFish = "1";
+            const string AddAllFish = "2";
+            const string ShowAllFhsh = "3";
+            const string Exit = "4";
+
+            while (_isRunMenu)
+            {
+                Console.WriteLine("Меню аквариума");
+
+                Console.WriteLine(AddFish + " Добавить рыбки");
+                Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
+                Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
+                Console.WriteLine(Exit + " Уйти от аквариума");
+            }
+        }
     }
 
     class Fish
@@ -48,6 +67,7 @@
         public Tank()
         {
             _pisces = new List<Fish>();
+            AddMaxFish();
         }
 
         public void AddFish()
