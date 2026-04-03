@@ -11,6 +11,7 @@
 
     class MenuAquarist
     {
+        private Tank _tank;
         private bool _isRunMenu = true;
 
         public void Run()
@@ -19,6 +20,8 @@
             const string AddAllFish = "2";
             const string ShowAllFhsh = "3";
             const string Exit = "4";
+
+            _tank = new Tank();
 
             while (_isRunMenu)
             {
@@ -34,6 +37,10 @@
 
                 string input = Console.ReadLine();
                 Console.WriteLine();
+
+                _tank.ShowAllFish();
+
+                Console.Read();
             }
         }
     }
