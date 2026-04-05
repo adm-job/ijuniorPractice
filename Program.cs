@@ -17,9 +17,11 @@
         public void Run()
         {
             const string AddFish = "1";
-            const string AddAllFish = "2";
-            const string ShowAllFhsh = "3";
-            const string Exit = "4";
+            const string DelFish = "2";
+            const string AddAllFish = "3";
+            const string ClearAllFish = "4";
+            const string ShowAllFhsh = "5";
+            const string Exit = "6";
 
             _tank = new Tank();
 
@@ -29,7 +31,9 @@
                 Console.WriteLine("Меню аквариума");
 
                 Console.WriteLine(AddFish + " Добавить рыбку");
+                Console.WriteLine(DelFish+ " Убрать рыбку");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
+                Console.WriteLine(ClearAllFish+ " Очистить аквариум от жителей");
                 Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
                 Console.WriteLine(Exit + " Уйти от аквариума");
 
@@ -92,6 +96,18 @@
             else
             {
                 Console.WriteLine("Аквариум заполнен");
+            }
+        }
+
+        public void DelFish()
+        {
+            if (_pisces.Count < maxFish)
+            {
+                _pisces.RemoveAt(0);
+            }
+            else
+            {
+                Console.WriteLine("Аквариум пуст, больше некого убирать");
             }
         }
 
