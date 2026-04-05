@@ -112,7 +112,7 @@
         {
             if (_pisces.Count > 0)
             {
-                foreach (Fish fish in _psces)
+                foreach (Fish fish in _pisces)
                 {
                     Console.WriteLine(fish);
                 }
