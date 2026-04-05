@@ -28,7 +28,7 @@
                 Console.Clear();
                 Console.WriteLine("Меню аквариума");
 
-                Console.WriteLine(AddFish + " Добавить рыбки");
+                Console.WriteLine(AddFish + " Добавить рыбку");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
                 Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
                 Console.WriteLine(Exit + " Уйти от аквариума");
@@ -89,6 +89,10 @@
             {
                 _pisces.Add(new Fish());
             }
+            else
+            {
+                Console.WriteLine("Аквариум заполнен");
+            }
         }
 
         public void AddMaxFish()
@@ -99,11 +103,23 @@
             }
         }
 
+        public void ClearAllFish()
+        {
+            _pisces.Clear();
+        }
+
         public void ShowAllFish()
         {
-            foreach (Fish fish in _pisces)
+            if (_pisces.Count > 0)
             {
-                Console.WriteLine(fish);
+                foreach (Fish fish in _psces)
+                {
+                    Console.WriteLine(fish);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Аквариум пуст");
             }
         }
 
