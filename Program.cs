@@ -15,7 +15,6 @@ namespace ijuniorPractice
     {
         private Tank _tank;
         private bool _isRunMenu = true;
-        private LifeTimer _lifeTimer;
 
         public void Run()
         {
@@ -37,9 +36,9 @@ namespace ijuniorPractice
                 Console.WriteLine("Меню аквариума");
 
                 Console.WriteLine(AddFish + " Добавить рыбку");
-                Console.WriteLine(DelFish+ " Убрать рыбку");
+                Console.WriteLine(DelFish + " Убрать рыбку");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
-                Console.WriteLine(ClearAllFish+ " Очистить аквариум от жителей");
+                Console.WriteLine(ClearAllFish + " Очистить аквариум от жителей");
                 Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
                 Console.WriteLine(Exit + " Уйти от аквариума");
 
@@ -49,7 +48,8 @@ namespace ijuniorPractice
                 Console.WriteLine();
 
                 _tank.ShowAllFish();
-
+                _tank.Update(1f);
+                Thread.Sleep(1000);
                 Console.Read();
             }
         }
@@ -61,7 +61,7 @@ namespace ijuniorPractice
         private float _maxLifeTime;
         private float _lifeTime;
         private bool isStartTimer = true;
-  
+
 
         public Fish(string name = "Рыбка", int life = 300)
         {
@@ -131,6 +131,18 @@ namespace ijuniorPractice
             _pisces.Clear();
         }
 
+        public void Update(float deltaTime)
+        {
+            foreach (var fish in _pisces.ToList())
+            {
+                if (fish.LifeUpdate(deltaTime))
+                {
+                    Console.WriteLine($"{fish} умерла ☠");
+                    _pisces.Remove(fish);
+                }
+            }
+        }
+
         public void ShowAllFish()
         {
             if (_pisces.Count > 0)
@@ -146,7 +158,7 @@ namespace ijuniorPractice
             }
         }
 
-    }
+    }h
 
 
 
@@ -445,44 +457,4 @@ namespace ijuniorPractice
             return s_random.Next(min, max);
         }
     }
-
-    public class LifeTimer
-    {
-        private System.Timers.Timer _timer;
-        private int _counter;
-
-        public LifeTimer()
-        {
-            _timer = new System.Timers.Timer(1000);
-
-            _timer.Elapsed += OnTimerElapsed;
-
-            _timer.AutoReset = true;
-        }
-
-        public void StartTimer()
-        {
-            _timer.Start();
-        }
-
-        public void StopTimer()
-        {
-            _timer.Stop();
-        }
-
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            _counter++;
-
-            // Здесь можно добавить любую логику для объекта
-            //DoSomething();
-        }
-
-        //private void DoSomething()
-        //{
-        //    // Логика, выполняемая по таймеру
-        //    Console.WriteLine("Выполняется действие...");
-        //}
-    }
-
 }
