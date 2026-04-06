@@ -22,7 +22,7 @@ namespace ijuniorPractice
             const string DelFish = "2";
             const string AddAllFish = "3";
             const string ClearAllFish = "4";
-            const string ShowAllFhsh = "5";
+            const string ShowAllFish = "5";
             const string Exit = "6";
 
             _tank = new Tank();
@@ -36,7 +36,7 @@ namespace ijuniorPractice
                 Console.WriteLine(DelFish + " Убрать рыбку");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
                 Console.WriteLine(ClearAllFish + " Очистить аквариум от жителей");
-                Console.WriteLine(ShowAllFhsh + " Посмотреть в аквариум");
+                Console.WriteLine(ShowAllFish + " Посмотреть в аквариум");
                 Console.WriteLine(Exit + " Уйти от аквариума");
 
                 Console.WriteLine("\nВведите номер пункта меню");
