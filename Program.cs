@@ -58,34 +58,29 @@ namespace ijuniorPractice
     class Fish
     {
         private string _name;
-        private float _timeLife;
+        private float _maxLifeTime;
+        private float _lifeTime;
         private bool isStartTimer = true;
-        private LifeTimer _lifeTimer;
   
 
         public Fish(string name = "Рыбка", int life = 300)
         {
             _name = name;
-            _timeLife = life;
-            _lifeTimer = new LifeTimer();
-            _lifeTimer.Elapsed += live;
+            _lifeTime = life;
+            _maxLifeTime = life;
         }
 
         public override string ToString()
         {
-            return $"Житель аквариума {_name} время жизни {_timeLife}";
+            return $"Житель аквариума {_name} время жизни {_lifeTime}";
         }
 
-        public void live()
+        public bool LifeUpdate(float deltaTime)
         {
-            _timeLife--;
-        }
+            _lifeTime -= deltaTime;
 
-        private void Die()
-        {
-            _timeLife = 0;
+            return _lifeTime <= 0;
         }
-
     }
 
     class Tank
