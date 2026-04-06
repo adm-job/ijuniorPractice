@@ -1,4 +1,6 @@
-﻿namespace ijuniorPractice
+﻿using System.Timers;
+
+namespace ijuniorPractice
 {
     internal class Program
     {
@@ -13,9 +15,13 @@
     {
         private Tank _tank;
         private bool _isRunMenu = true;
+        private LifeTimer _lifeTimer;
 
         public void Run()
         {
+            _lifeTimer = new LifeTimer();
+            _lifeTimer.StartTimer();
+
             const string AddFish = "1";
             const string DelFish = "2";
             const string AddAllFish = "3";
@@ -53,11 +59,16 @@
     {
         private string _name;
         private float _timeLife;
+        private bool isStartTimer = true;
+        private LifeTimer _lifeTimer;
+  
 
         public Fish(string name = "Рыбка", int life = 300)
         {
             _name = name;
             _timeLife = life;
+            _lifeTimer = new LifeTimer();
+            _lifeTimer.Elapsed += live;
         }
 
         public override string ToString()
@@ -74,6 +85,7 @@
         {
             _timeLife = 0;
         }
+
     }
 
     class Tank
@@ -439,5 +451,43 @@
         }
     }
 
+    public class LifeTimer
+    {
+        private System.Timers.Timer _timer;
+        private int _counter;
+
+        public LifeTimer()
+        {
+            _timer = new System.Timers.Timer(1000);
+
+            _timer.Elapsed += OnTimerElapsed;
+
+            _timer.AutoReset = true;
+        }
+
+        public void StartTimer()
+        {
+            _timer.Start();
+        }
+
+        public void StopTimer()
+        {
+            _timer.Stop();
+        }
+
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            _counter++;
+
+            // Здесь можно добавить любую логику для объекта
+            //DoSomething();
+        }
+
+        //private void DoSomething()
+        //{
+        //    // Логика, выполняемая по таймеру
+        //    Console.WriteLine("Выполняется действие...");
+        //}
+    }
 
 }
