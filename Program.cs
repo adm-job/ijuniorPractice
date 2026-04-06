@@ -18,9 +18,6 @@ namespace ijuniorPractice
 
         public void Run()
         {
-            _lifeTimer = new LifeTimer();
-            _lifeTimer.StartTimer();
-
             const string AddFish = "1";
             const string DelFish = "2";
             const string AddAllFish = "3";
