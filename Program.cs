@@ -13,7 +13,7 @@ namespace ijuniorPractice
 
     class MenuAquarist
     {
-        private Tank _tank;
+        private Aquarium _tank;
         private bool _isRunMenu = true;
 
         public void Run()
@@ -25,7 +25,7 @@ namespace ijuniorPractice
             const string ShowAllFish = "5";
             const string Exit = "6";
 
-            _tank = new Tank();
+            _tank = new Aquarium();
 
             while (_isRunMenu)
             {
@@ -78,12 +78,12 @@ namespace ijuniorPractice
         }
     }
 
-    class Tank
+    class Aquarium
     {
         private List<Fish> _pisces;
         private int maxFish = 10;
 
-        public Tank()
+        public Aquarium()
         {
             _pisces = new List<Fish>();
             AddMaxFish();
@@ -152,7 +152,6 @@ namespace ijuniorPractice
                 Console.WriteLine("Аквариум пуст");
             }
         }
-
     }
 
     class UserUtils
