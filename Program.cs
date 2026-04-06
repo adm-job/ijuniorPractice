@@ -13,7 +13,7 @@ namespace ijuniorPractice
 
     class MenuAquarist
     {
-        private Aquarium _tank;
+        private Aquarium _aquarium;
         private bool _isRunMenu = true;
 
         public void Run()
@@ -25,7 +25,7 @@ namespace ijuniorPractice
             const string ShowAllFish = "5";
             const string Exit = "6";
 
-            _tank = new Aquarium();
+            _aquarium = new Aquarium();
 
             while (_isRunMenu)
             {
@@ -44,8 +44,8 @@ namespace ijuniorPractice
                 string input = Console.ReadLine();
                 Console.WriteLine();
 
-                _tank.ShowAllFish();
-                _tank.Update(1f);
+                _aquarium.ShowAllFish();
+                _aquarium.Update(1f);
                 Thread.Sleep(1000);
                 Console.Read();
             }
