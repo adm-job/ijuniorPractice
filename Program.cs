@@ -13,7 +13,6 @@ namespace ijuniorPractice
 
     class MenuAquarist
     {
-        private Aquarium _aquarium;
         private bool _isRunMenu = true;
 
         public void Run()
@@ -25,7 +24,6 @@ namespace ijuniorPractice
             const string ShowAllFish = "5";
             const string Exit = "6";
 
-            _aquarium = new Aquarium();
 
             while (_isRunMenu)
             {
@@ -41,27 +39,22 @@ namespace ijuniorPractice
 
                 Console.WriteLine("\nВведите номер пункта меню");
 
-                string input = Console.ReadLine();
+                string input = Console.ReadLine().ToString();
                 switch (input)
                 {
                     case AddFish:
-                        _aquarium.AddFish();
                         break;
 
                     case DeleteFish:
-                        _aquarium.DeleteFish(); 
                         break;
 
                     case AddAllFish:
-                        _aquarium.AddMaxFish(); 
                         break;
 
                     case ClearAllFish:
-                        _aquarium.ClearAllFish(); 
                         break;
 
                     case ShowAllFish:
-                        _aquarium.ShowAllFish();
                         break;
 
                     case Exit:
@@ -75,119 +68,37 @@ namespace ijuniorPractice
                 }
 
                 Console.WriteLine();
-
-                _aquarium.ShowAllFish();
-                _aquarium.Update(1f);
-                Thread.Sleep(1000);
-                Console.Read();
             }
         }
     }
 
-    class Fish
+    public abstract class Animal
     {
-        private string _name;
-        private float _lifeTime;
+        public abstract string Title { get; }
+        
+        public abstract  string Sex {  get; }
 
-        public Fish(int life = 300, string name = "Рыбка")
-        {
-            _name = name;
-            _lifeTime = life;
-        }
-
-        public override string ToString()
-        {
-            return $"Житель аквариума {_name} время жизни {_lifeTime}";
-        }
-
-        public bool TryLifeUpdate(float deltaTime)
-        {
-            _lifeTime -= deltaTime;
-
-            return _lifeTime <= 0;
-        }
+        public abstract void MakeSound();
     }
 
-    class Aquarium
+
+    public class Bear : Animal
     {
-        private List<Fish> _pisces;
-        private int _maxFish = 10;
+        private string _title;
+        private string _sex;
 
-        public Aquarium()
+        public Bear(string title = "Bear", string sex = "Men")
         {
-            _pisces = new List<Fish>();
-            AddMaxFish();
         }
 
-        public void AddFish()
-        {
-            if (_pisces.Count < _maxFish)
-            {
-                _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100, 300)));
-            }
-            else
-            {
-                Console.WriteLine("Аквариум заполнен");
-            }
-        }
+        public override string Title => _title;
 
-        public void DeleteFish()
-        {
-            if (_pisces.Count < _maxFish)
-            {
-                _pisces.RemoveAt(0);
-            }
-            else
-            {
-                Console.WriteLine("Аквариум пуст, больше некого убирать");
-            }
-        }
+        public override string Sex => _sex;
 
-        public void AddMaxFish()
+        public override void MakeSound()
         {
-            for (int i = _pisces.Count; i < _maxFish; i++)
-            {
-                _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100, 300)));
-            }
+            Console.WriteLine("Arrrrrrr");
         }
-
-        public void ClearAllFish()
-        {
-            _pisces.Clear();
-        }
-
-        public void Update(float deltaTime)
-        {
-            foreach (var fish in _pisces.ToList())
-            {
-                if (fish.TryLifeUpdate(deltaTime))
-                {
-                    Console.WriteLine($"{fish} умерла ☠");
-                    Remove(fish);
-                }
-            }
-        }
-
-        public void Remove(Fish fish)
-        {
-            _pisces.Remove(fish);
-        }
-
-        public void ShowAllFish()
-        {
-            if (_pisces.Count > 0)
-            {
-                foreach (Fish fish in _pisces)
-                {
-                    Console.WriteLine(fish);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Аквариум пуст");
-            }
-        }
-    }
 
     class UserUtils
     {
