@@ -75,8 +75,8 @@ namespace ijuniorPractice
     public abstract class Animal
     {
         public abstract string Title { get; }
-        
-        public abstract  string Sex {  get; }
+
+        public abstract string Sex { get; }
 
         public abstract void MakeSound();
     }
@@ -89,6 +89,8 @@ namespace ijuniorPractice
 
         public Bear(string title = "Bear", string sex = "Men")
         {
+            _title = title;
+            _sex = sex;
         }
 
         public override string Title => _title;
@@ -99,7 +101,7 @@ namespace ijuniorPractice
         {
             Console.WriteLine("Arrrrrrr");
         }
-
+    }
     class UserUtils
     {
         private static Random s_random = new();
