@@ -19,7 +19,7 @@ namespace ijuniorPractice
         public void Run()
         {
             const string AddFish = "1";
-            const string DelFish = "2";
+            const string DeleteFish = "2";
             const string AddAllFish = "3";
             const string ClearAllFish = "4";
             const string ShowAllFish = "5";
@@ -33,7 +33,7 @@ namespace ijuniorPractice
                 Console.WriteLine("Меню аквариума");
 
                 Console.WriteLine(AddFish + " Добавить рыбку");
-                Console.WriteLine(DelFish + " Убрать рыбку");
+                Console.WriteLine(DeleteFish + " Убрать рыбку");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
                 Console.WriteLine(ClearAllFish + " Очистить аквариум от жителей");
                 Console.WriteLine(ShowAllFish + " Посмотреть в аквариум");
@@ -42,6 +42,38 @@ namespace ijuniorPractice
                 Console.WriteLine("\nВведите номер пункта меню");
 
                 string input = Console.ReadLine();
+                switch (input)
+                {
+                    case AddFish:
+                        _aquarium.AddFish();
+                        break;
+
+                    case DeleteFish:
+                        _aquarium.DeleteFish(); 
+                        break;
+
+                    case AddAllFish:
+                        _aquarium.AddMaxFish(); 
+                        break;
+
+                    case ClearAllFish:
+                        _aquarium.ClearAllFish(); 
+                        break;
+
+                    case ShowAllFish:
+                        _aquarium.ShowAllFish();
+                        break;
+
+                    case Exit:
+                        _isRunMenu = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Выбранного пункта нет в меню управления магазином");
+                        break;
+
+                }
+
                 Console.WriteLine();
 
                 _aquarium.ShowAllFish();
@@ -55,14 +87,12 @@ namespace ijuniorPractice
     class Fish
     {
         private string _name;
-        private float _maxLifeTime;
         private float _lifeTime;
 
         public Fish(int life = 300, string name = "Рыбка")
         {
             _name = name;
             _lifeTime = life;
-            _maxLifeTime = life;
         }
 
         public override string ToString()
@@ -93,7 +123,7 @@ namespace ijuniorPractice
         {
             if (_pisces.Count < _maxFish)
             {
-                _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100,300)));
+                _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100, 300)));
             }
             else
             {
@@ -101,7 +131,7 @@ namespace ijuniorPractice
             }
         }
 
-        public void DelFish()
+        public void DeleteFish()
         {
             if (_pisces.Count < _maxFish)
             {
