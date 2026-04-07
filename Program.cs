@@ -70,7 +70,7 @@ namespace ijuniorPractice
             return $"Житель аквариума {_name} время жизни {_lifeTime}";
         }
 
-        public bool LifeUpdate(float deltaTime)
+        public bool TryLifeUpdate(float deltaTime)
         {
             _lifeTime -= deltaTime;
 
@@ -81,7 +81,7 @@ namespace ijuniorPractice
     class Aquarium
     {
         private List<Fish> _pisces;
-        private int maxFish = 10;
+        private int _maxFish = 10;
 
         public Aquarium()
         {
@@ -91,7 +91,7 @@ namespace ijuniorPractice
 
         public void AddFish()
         {
-            if (_pisces.Count < maxFish)
+            if (_pisces.Count < _maxFish)
             {
                 _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100,300)));
             }
@@ -103,7 +103,7 @@ namespace ijuniorPractice
 
         public void DelFish()
         {
-            if (_pisces.Count < maxFish)
+            if (_pisces.Count < _maxFish)
             {
                 _pisces.RemoveAt(0);
             }
@@ -115,7 +115,7 @@ namespace ijuniorPractice
 
         public void AddMaxFish()
         {
-            for (int i = _pisces.Count; i < maxFish; i++)
+            for (int i = _pisces.Count; i < _maxFish; i++)
             {
                 _pisces.Add(new Fish(UserUtils.GenerateRandomNumber(100, 300)));
             }
@@ -130,12 +130,17 @@ namespace ijuniorPractice
         {
             foreach (var fish in _pisces.ToList())
             {
-                if (fish.LifeUpdate(deltaTime))
+                if (fish.TryLifeUpdate(deltaTime))
                 {
                     Console.WriteLine($"{fish} умерла ☠");
-                    _pisces.Remove(fish);
+                    Remove(fish);
                 }
             }
+        }
+
+        public void Remove(Fish fish)
+        {
+            _pisces.Remove(fish);
         }
 
         public void ShowAllFish()
