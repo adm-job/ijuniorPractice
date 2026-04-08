@@ -102,6 +102,7 @@ namespace ijuniorPractice
             Console.WriteLine("Arrrrrrr");
         }
     }
+
     class UserUtils
     {
         private static Random s_random = new();
