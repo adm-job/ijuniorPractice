@@ -103,6 +103,50 @@ namespace ijuniorPractice
         }
     }
 
+    public class Lion : Animal
+    {
+        private string _title;
+        private string _sex;
+
+        public Lion(string title = "Lion", string sex = "Men")
+        {
+            _title = title;
+            _sex = sex;
+        }
+        public override string Title => _title;
+
+        public override string Sex => _sex;
+
+        public override void MakeSound()
+        {
+            Console.WriteLine("Rrrrrrr");
+        }
+    }
+
+    public class Monkey : Animal
+    {
+        private string _title;
+        private string _sex;
+
+        public Monkey(string title = "Monkey", string sex = "Men")
+        {
+            _title = title;
+            _sex = sex;
+        }
+
+        public override string Title => _title;
+
+        public override string Sex => _sex;
+
+        public override void MakeSound()
+        {
+            Console.WriteLine("Uhaha");
+        }
+
+
+    }
+
+
     class UserUtils
     {
         private static Random s_random = new();
