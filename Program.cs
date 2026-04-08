@@ -72,8 +72,19 @@ namespace ijuniorPractice
         }
     }
 
+    public class Zoo
+    {
+        private List<Animal> animals;
+
+
+
+    }
+
     public abstract class Animal
     {
+        private string _title;
+        private string _sex;
+
         public abstract string Title { get; }
 
         public abstract string Sex { get; }
@@ -119,7 +130,7 @@ namespace ijuniorPractice
 
         public override void MakeSound()
         {
-            Console.WriteLine("Rrrrrrr");
+            Console.WriteLine("Rrarr");
         }
     }
 
@@ -142,18 +153,53 @@ namespace ijuniorPractice
         {
             Console.WriteLine("Uhaha");
         }
-
-
     }
 
-
-    class UserUtils
+    public class Horse : Animal
     {
-        private static Random s_random = new();
+        private string _title;
+        private string _sex;
 
-        public static int GenerateRandomNumber(int min = 0, int max = 100)
+        public Horse(string title = "Horse", string sex = "Men")
         {
-            return s_random.Next(min, max);
+            _title = title;
+            _sex = sex;
+        }
+
+        public override string Title => _title;
+        public override string Sex => _sex;
+
+        public override void MakeSound()
+        {
+            Console.WriteLine("Neigh");
         }
     }
-}
+
+    public class Duck : Animal
+    {
+        private string _title;
+        private string _sex;
+
+        public Duck(string title = "Duck", string sex = "Men")
+        {
+            _title = title;
+            _sex = sex;
+        }
+        public override string Title => _title;
+        public override string Sex => _sex;
+        public override void MakeSound()
+        {
+            Console.WriteLine("Quack-quack");
+        }
+
+
+        class UserUtils
+        {
+            private static Random s_random = new();
+
+            public static int GenerateRandomNumber(int min = 0, int max = 100)
+            {
+                return s_random.Next(min, max);
+            }
+        }
+    }
