@@ -82,12 +82,14 @@ namespace ijuniorPractice
 
     public abstract class Animal
     {
-        private string _title;
-        private string _sex;
+        public string Title { get; }
+        public string Sex { get; }
 
-        public abstract string Title { get; }
-
-        public abstract string Sex { get; }
+        protected Animal(string title = "", string sex = "")
+        {
+            Title = title;
+            Sex = sex;
+        }
 
         public abstract void MakeSound();
     }
@@ -95,18 +97,9 @@ namespace ijuniorPractice
 
     public class Bear : Animal
     {
-        private string _title;
-        private string _sex;
-
-        public Bear(string title = "Bear", string sex = "Men")
+        public Bear(string sex = "Men") : base("Bear", sex) 
         {
-            _title = title;
-            _sex = sex;
         }
-
-        public override string Title => _title;
-
-        public override string Sex => _sex;
 
         public override void MakeSound()
         {
@@ -116,17 +109,9 @@ namespace ijuniorPractice
 
     public class Lion : Animal
     {
-        private string _title;
-        private string _sex;
-
-        public Lion(string title = "Lion", string sex = "Men")
+        public Lion(string sex = "Men") : base("Lion", sex)
         {
-            _title = title;
-            _sex = sex;
         }
-        public override string Title => _title;
-
-        public override string Sex => _sex;
 
         public override void MakeSound()
         {
@@ -136,18 +121,9 @@ namespace ijuniorPractice
 
     public class Monkey : Animal
     {
-        private string _title;
-        private string _sex;
-
-        public Monkey(string title = "Monkey", string sex = "Men")
+        public Monkey(string sex = "Men") : base ("Monkey", sex)
         {
-            _title = title;
-            _sex = sex;
         }
-
-        public override string Title => _title;
-
-        public override string Sex => _sex;
 
         public override void MakeSound()
         {
@@ -157,18 +133,10 @@ namespace ijuniorPractice
 
     public class Horse : Animal
     {
-        private string _title;
-        private string _sex;
-
-        public Horse(string title = "Horse", string sex = "Men")
+        public Horse(string sex = "Men"): base ("Horse", sex)
         {
-            _title = title;
-            _sex = sex;
         }
-
-        public override string Title => _title;
-        public override string Sex => _sex;
-
+        
         public override void MakeSound()
         {
             Console.WriteLine("Neigh");
@@ -177,16 +145,10 @@ namespace ijuniorPractice
 
     public class Duck : Animal
     {
-        private string _title;
-        private string _sex;
-
-        public Duck(string title = "Duck", string sex = "Men")
+        public Duck(string sex = "Men"):base("Duck", sex)
         {
-            _title = title;
-            _sex = sex;
         }
-        public override string Title => _title;
-        public override string Sex => _sex;
+       
         public override void MakeSound()
         {
             Console.WriteLine("Quack-quack");
