@@ -18,11 +18,11 @@ namespace ijuniorPractice
 
         public void Run()
         {
-            const string ShowAllAnimals = "1";
-            const string DeleteFish = "2";
-            const string AddAllFish = "3";
-            const string ClearAllFish = "4";
-            const string ShowAllFish = "5";
+            const string ShowRoom = "1";
+            const string AddAllFish = "2";
+            const string ClearAllFish = "3";
+            const string ShowAllFish = "4";
+            const string ShowAllAnimals = "5";
             const string Exit = "6";
 
 
@@ -33,11 +33,10 @@ namespace ijuniorPractice
                 Console.Clear();
                 Console.WriteLine("Меню зоопарка");
 
-                Console.WriteLine(ShowAllAnimals + " Показать всех животных");
-                Console.WriteLine(DeleteFish + " Убрать рыбку");
+                Console.WriteLine(ShowRoom + " Показать клетки");
                 Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
                 Console.WriteLine(ClearAllFish + " Очистить аквариум от жителей");
-                Console.WriteLine(ShowAllFish + " Посмотреть в аквариум");
+                Console.WriteLine(ShowAllAnimals + " Показать всех животных");
                 Console.WriteLine(Exit + " Уйти от аквариума");
 
                 Console.WriteLine("\nВведите номер пункта меню");
@@ -45,11 +44,8 @@ namespace ijuniorPractice
                 string input = Console.ReadLine().ToString();
                 switch (input)
                 {
-                    case ShowAllAnimals:
-                        _zoo.Show();
-                        break;
-
-                    case DeleteFish:
+                    case ShowRoom:
+                        _zoo.ShowRoom();
                         break;
 
                     case AddAllFish:
@@ -58,7 +54,8 @@ namespace ijuniorPractice
                     case ClearAllFish:
                         break;
 
-                    case ShowAllFish:
+                    case ShowAllAnimals:
+                        _zoo.Show();
                         break;
 
                     case Exit:
@@ -79,27 +76,39 @@ namespace ijuniorPractice
 
     public class Zoo
     {
-        private List<Animal> _enclosures = new();
+        private Dictionary<String, List<Animal>> _cage = new ();
 
         public Zoo()
         {
-            _enclosures.Add(new Bear());
-            _enclosures.Add(new Lion());
-            _enclosures.Add(new Monkey());
-            _enclosures.Add(new Horse());
-            _enclosures.Add(new Duck());
+            _cage["Вольер 1"] = new List<Animal>();
+            _cage["Вольер 2"] = new List<Animal>();
+            _cage["Вольер 3"] = new List<Animal>();
+            _cage["Вольер 4"] = new List<Animal>();
+            _cage["Вольер 5"] = new List<Animal>();
+
+            _cage["Вольер 1"].Add(new Bear());
+            _cage["Вольер 1"].Add(new Bear("Woman"));
+            _cage["Вольер 2"].Add(new Lion());
+            _cage["Вольер 2"].Add(new Lion("Woman"));
+            _cage["Вольер 3"].Add(new Monkey("Woman"));
+            _cage["Вольер 3"].Add(new Monkey("Woman"));
+            _cage["Вольер 4"].Add(new Horse());
+            _cage["Вольер 4"].Add(new Horse("Woman"));
+            _cage["Вольер 5"].Add(new Duck());
+            _cage["Вольер 5"].Add(new Duck());
+
         }
 
-        public void Show()
+        public void ShowRoom()
         {
-            if (_enclosures.Count > 0)
+            foreach (var cage in _cage.Keys)
             {
-                for (int i = 0; i < _enclosures.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1} вольер c " + _enclosures[i]);
-                }
+                Console.WriteLine(cage);
             }
         }
+
+
+
     }
 
         public abstract class Animal
