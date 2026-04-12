@@ -55,7 +55,6 @@ namespace ijuniorPractice
                         break;
 
                     case ShowAllAnimals:
-                        _zoo.Show();
                         break;
 
                     case Exit:
@@ -76,27 +75,15 @@ namespace ijuniorPractice
 
     public class Zoo
     {
-        private Dictionary<String, List<Animal>> _cage = new ();
+        private Dictionary<String, List<Animal>> _cage = new();
 
         public Zoo()
         {
-            _cage["Вольер 1"] = new List<Animal>();
-            _cage["Вольер 2"] = new List<Animal>();
-            _cage["Вольер 3"] = new List<Animal>();
-            _cage["Вольер 4"] = new List<Animal>();
-            _cage["Вольер 5"] = new List<Animal>();
-
-            _cage["Вольер 1"].Add(new Bear());
-            _cage["Вольер 1"].Add(new Bear("Woman"));
-            _cage["Вольер 2"].Add(new Lion());
-            _cage["Вольер 2"].Add(new Lion("Woman"));
-            _cage["Вольер 3"].Add(new Monkey("Woman"));
-            _cage["Вольер 3"].Add(new Monkey("Woman"));
-            _cage["Вольер 4"].Add(new Horse());
-            _cage["Вольер 4"].Add(new Horse("Woman"));
-            _cage["Вольер 5"].Add(new Duck());
-            _cage["Вольер 5"].Add(new Duck());
-
+            _cage["Вольер 1"] = new() { new Bear(), new Bear("Woman") };
+            _cage["Вольер 2"] = new() { new Lion(), new Lion("Woman") };
+            _cage["Вольер 3"] = new() { new Monkey("Woman"), new Monkey("Woman") };
+            _cage["Вольер 4"] = new() { new Horse(), new Horse("Woman") };
+            _cage["Вольер 5"] = new() { new Duck(), new Duck() };
         }
 
         public void ShowRoom()
@@ -105,99 +92,99 @@ namespace ijuniorPractice
             {
                 Console.WriteLine(cage);
             }
-        }
+}
 
 
 
     }
 
-        public abstract class Animal
-        {
-            public string Title { get; }
-            public string Sex { get; }
+    public abstract class Animal
+{
+    public string Title { get; }
+    public string Sex { get; }
 
-            protected Animal(string title = "", string sex = "")
-            {
-                Title = title;
-                Sex = sex;
-            }
-
-            public abstract void MakeSound();
-
-            public override string ToString()
-            {
-                return $"{Title}, пол {Sex}";
-            }
-        }
-
-
-        public class Bear : Animal
-        {
-            public Bear(string sex = "Men") : base("Bear", sex)
-            {
-            }
-
-            public override void MakeSound()
-            {
-                Console.WriteLine("Arrrrrrr");
-            }
-        }
-
-        public class Lion : Animal
-        {
-            public Lion(string sex = "Men") : base("Lion", sex)
-            {
-            }
-
-            public override void MakeSound()
-            {
-                Console.WriteLine("Rrarr");
-            }
-        }
-
-        public class Monkey : Animal
-        {
-            public Monkey(string sex = "Men") : base("Monkey", sex)
-            {
-            }
-
-            public override void MakeSound()
-            {
-                Console.WriteLine("Uhaha");
-            }
-        }
-
-        public class Horse : Animal
-        {
-            public Horse(string sex = "Men") : base("Horse", sex)
-            {
-            }
-
-            public override void MakeSound()
-            {
-                Console.WriteLine("Neigh");
-            }
-        }
-
-        public class Duck : Animal
-        {
-            public Duck(string sex = "Men") : base("Duck", sex)
-            {
-            }
-
-            public override void MakeSound()
-            {
-                Console.WriteLine("Quack-quack");
-            }
-
-        }
-        class UserUtils
-        {
-            private static Random s_random = new();
-
-            public static int GenerateRandomNumber(int min = 0, int max = 100)
-            {
-                return s_random.Next(min, max);
-            }
-        }
+    protected Animal(string title = "", string sex = "")
+    {
+        Title = title;
+        Sex = sex;
     }
+
+    public abstract void MakeSound();
+
+    public override string ToString()
+    {
+        return $"{Title}, пол {Sex}";
+    }
+}
+
+
+public class Bear : Animal
+{
+    public Bear(string sex = "Men") : base("Bear", sex)
+    {
+    }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Arrrrrrr");
+    }
+}
+
+public class Lion : Animal
+{
+    public Lion(string sex = "Men") : base("Lion", sex)
+    {
+    }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Rrarr");
+    }
+}
+
+public class Monkey : Animal
+{
+    public Monkey(string sex = "Men") : base("Monkey", sex)
+    {
+    }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Uhaha");
+    }
+}
+
+public class Horse : Animal
+{
+    public Horse(string sex = "Men") : base("Horse", sex)
+    {
+    }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Neigh");
+    }
+}
+
+public class Duck : Animal
+{
+    public Duck(string sex = "Men") : base("Duck", sex)
+    {
+    }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Quack-quack");
+    }
+
+}
+class UserUtils
+{
+    private static Random s_random = new();
+
+    public static int GenerateRandomNumber(int min = 0, int max = 100)
+    {
+        return s_random.Next(min, max);
+    }
+}
+}
