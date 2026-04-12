@@ -15,176 +15,158 @@ namespace ijuniorPractice
     {
         private bool _isRunMenu = true;
         private Zoo _zoo;
+        int input = 0;
 
         public void Run()
         {
-            const string ShowRoom = "1";
-            const string AddAllFish = "2";
-            const string ClearAllFish = "3";
-            const string ShowAllFish = "4";
-            const string ShowAllAnimals = "5";
-            const string Exit = "6";
-
-
+            _zoo = new Zoo();
+            
             while (_isRunMenu)
             {
-                _zoo = new Zoo();
-
                 Console.Clear();
-                Console.WriteLine("Меню зоопарка");
+                Console.WriteLine("Меню зоопарка\n");
+                Console.WriteLine("К какому вольеру вы хотите подойти\n");
+                Console.WriteLine("Вольер номера");
+                
+                _zoo.ShowRoom();
 
-                Console.WriteLine(ShowRoom + " Показать клетки");
-                Console.WriteLine(AddAllFish + " Заполнить аквариум полностью");
-                Console.WriteLine(ClearAllFish + " Очистить аквариум от жителей");
-                Console.WriteLine(ShowAllAnimals + " Показать всех животных");
-                Console.WriteLine(Exit + " Уйти от аквариума");
+                input = ReadInt(_zoo.MaxIndex());
 
-                Console.WriteLine("\nВведите номер пункта меню");
-
-                string input = Console.ReadLine().ToString();
-                switch (input)
-                {
-                    case ShowRoom:
-                        _zoo.ShowRoom();
-                        break;
-
-                    case AddAllFish:
-                        break;
-
-                    case ClearAllFish:
-                        break;
-
-                    case ShowAllAnimals:
-                        break;
-
-                    case Exit:
-                        _isRunMenu = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Выбранного пункта нет в меню управления магазином");
-                        break;
-
-                }
+                _zoo.ShowAnimals(input);
 
                 Console.WriteLine();
                 Console.ReadLine();
             }
         }
+
+        private int ReadInt(int maxIndex)
+        {
+            int inputNumber;
+
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
+            {
+                Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
+            }
+
+            return inputNumber;
+        }
     }
 
     public class Zoo
     {
-        private Dictionary<String, List<Animal>> _cage = new();
+        private Dictionary<int, List<Animal>> _cage = new();
 
         public Zoo()
         {
-            _cage["Вольер 1"] = new() { new Bear(), new Bear("Woman") };
-            _cage["Вольер 2"] = new() { new Lion(), new Lion("Woman") };
-            _cage["Вольер 3"] = new() { new Monkey("Woman"), new Monkey("Woman") };
-            _cage["Вольер 4"] = new() { new Horse(), new Horse("Woman") };
-            _cage["Вольер 5"] = new() { new Duck(), new Duck() };
+            _cage[1] = new() { new Bear(), new Bear("Woman") };
+            _cage[2] = new() { new Lion(), new Lion("Woman") };
+            _cage[3] = new() { new Monkey("Woman"), new Monkey("Woman") };
+            _cage[4] = new() { new Horse(), new Horse("Woman") };
+            _cage[5] = new() { new Duck(), new Duck() };
         }
 
         public void ShowRoom()
         {
             foreach (var cage in _cage.Keys)
             {
-                Console.WriteLine(cage);
+                Console.Write(cage + "\t");
             }
-}
+            Console.WriteLine("\n");
+        }
 
+        public void ShowAnimals(int number)
+        {
+            foreach (var animal in _cage[number])
+            {
+                Console.WriteLine(animal);
+                animal.MakeSound();
+                Console.WriteLine();
+            }
+        }
 
-
+        public int MaxIndex()
+        {
+            return _cage.Count;
+        }
     }
 
     public abstract class Animal
-{
-    public string Title { get; }
-    public string Sex { get; }
-
-    protected Animal(string title = "", string sex = "")
     {
-        Title = title;
-        Sex = sex;
+        public string Title { get; }
+        public string Sex { get; }
+
+        protected Animal(string title = "", string sex = "")
+        {
+            Title = title;
+            Sex = sex;
+        }
+
+        public abstract void MakeSound();
+
+        public override string ToString()
+        {
+            return $"{Title}, пол {Sex}";
+        }
     }
 
-    public abstract void MakeSound();
-
-    public override string ToString()
+    public class Bear : Animal
     {
-        return $"{Title}, пол {Sex}";
-    }
-}
+        public Bear(string sex = "Men") : base("Bear", sex)
+        {
+        }
 
-
-public class Bear : Animal
-{
-    public Bear(string sex = "Men") : base("Bear", sex)
-    {
+        public override void MakeSound()
+        {
+            Console.WriteLine("Arrrrrrr");
+        }
     }
 
-    public override void MakeSound()
+    public class Lion : Animal
     {
-        Console.WriteLine("Arrrrrrr");
-    }
-}
+        public Lion(string sex = "Men") : base("Lion", sex)
+        {
+        }
 
-public class Lion : Animal
-{
-    public Lion(string sex = "Men") : base("Lion", sex)
-    {
-    }
-
-    public override void MakeSound()
-    {
-        Console.WriteLine("Rrarr");
-    }
-}
-
-public class Monkey : Animal
-{
-    public Monkey(string sex = "Men") : base("Monkey", sex)
-    {
+        public override void MakeSound()
+        {
+            Console.WriteLine("Rrarr");
+        }
     }
 
-    public override void MakeSound()
+    public class Monkey : Animal
     {
-        Console.WriteLine("Uhaha");
-    }
-}
+        public Monkey(string sex = "Men") : base("Monkey", sex)
+        {
+        }
 
-public class Horse : Animal
-{
-    public Horse(string sex = "Men") : base("Horse", sex)
-    {
-    }
-
-    public override void MakeSound()
-    {
-        Console.WriteLine("Neigh");
-    }
-}
-
-public class Duck : Animal
-{
-    public Duck(string sex = "Men") : base("Duck", sex)
-    {
+        public override void MakeSound()
+        {
+            Console.WriteLine("Uhaha");
+        }
     }
 
-    public override void MakeSound()
+    public class Horse : Animal
     {
-        Console.WriteLine("Quack-quack");
+        public Horse(string sex = "Men") : base("Horse", sex)
+        {
+        }
+
+        public override void MakeSound()
+        {
+            Console.WriteLine("Neigh");
+        }
     }
 
-}
-class UserUtils
-{
-    private static Random s_random = new();
-
-    public static int GenerateRandomNumber(int min = 0, int max = 100)
+    public class Duck : Animal
     {
-        return s_random.Next(min, max);
+        public Duck(string sex = "Men") : base("Duck", sex)
+        {
+        }
+
+        public override void MakeSound()
+        {
+            Console.WriteLine("Quack-quack");
+        }
+
     }
-}
 }
