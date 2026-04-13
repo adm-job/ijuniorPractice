@@ -92,14 +92,14 @@ namespace ijuniorPractice
 
     public abstract class Animal
     {
-        public string Title { get; }
-        public string Sex { get; }
-
         protected Animal(string title = "", string sex = "")
         {
             Title = title;
             Sex = sex;
         }
+
+        public string Title { get; }
+        public string Sex { get; }
 
         public abstract void MakeSound();
 
