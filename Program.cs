@@ -90,6 +90,11 @@ namespace ijuniorPractice
         }
     }
 
+    public class Aviary
+    {
+        public string Name { get; set; }
+    }
+
     public class Animal
     {
         public Animal(string title = "", string sex = "", string sound = "")
