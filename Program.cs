@@ -92,7 +92,10 @@ namespace ijuniorPractice
 
     public class Aviary
     {
-        public string Name { get; set; }
+        private List<Animal> _animals;
+
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 
     public class Animal
