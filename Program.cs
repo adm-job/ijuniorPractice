@@ -15,7 +15,7 @@ namespace ijuniorPractice
     {
         private bool _isRunMenu = true;
         private Zoo _zoo;
-        int input = 0;
+        private int input = 0;
 
         public void Run()
         {
