@@ -63,28 +63,28 @@ namespace ijuniorPractice
             _aviarys[0].AddAnimal("Bear", "Men", "Arrrrr");
             _aviarys[0].AddAnimal("Bear", "Woman", "Arrrrr");
 
-            _aviarys.Add(new Aviary("Вольер 2", "Медведи"));
+            _aviarys.Add(new Aviary("Вольер 2", "Львы"));
             _aviarys[1].AddAnimal("Lion", "Men", "Rrarr");
             _aviarys[1].AddAnimal("Lion", "Woman", "Rrarr");
 
-            _aviarys.Add(new Aviary("Вольер 3", "Медведи"));
+            _aviarys.Add(new Aviary("Вольер 3", "Обезьяны"));
             _aviarys[2].AddAnimal("Monkey", "Men", "Uhaha");
             _aviarys[2].AddAnimal("Monkey", "Woman", "Uhaha");
 
-            _aviarys.Add(new Aviary("Вольер 4", "Медведи"));
+            _aviarys.Add(new Aviary("Вольер 4", "Лошади"));
             _aviarys[3].AddAnimal("Horse", "Men", "Neigh");
             _aviarys[3].AddAnimal("Horse", "Woman", "Neigh");
 
-            _aviarys.Add(new Aviary("Вольер 5", "Медведи"));
+            _aviarys.Add(new Aviary("Вольер 5", "Утки"));
             _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
             _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
         }
 
         public void ShowRoom()
         {
-            foreach (var cage in _cage.Keys)
+            foreach (var aviary in _aviarys)
             {
-                Console.Write(cage + "\t");
+                Console.Write(aviary + "  \t  ");
             }
             Console.WriteLine("\n");
         }
@@ -121,6 +121,11 @@ namespace ijuniorPractice
         public void AddAnimal(string title, string sex, string sound)
         {
             _animals.Add(new(title, sex, sound));
+        }
+
+        public override string ToString()
+        {
+            return $"{Title} {Description}";
         }
     }
 
