@@ -54,14 +54,25 @@ namespace ijuniorPractice
 
     public class Zoo
     {
+        private int _maxAviarys = 5;
         private List<Aviary> _aviarys = new();
         private UserUtils _userUtils;
-        private List<string> _animalOptions= new()
-        { "Bear",
+        private List<string> _animalOptions = new()
+        { 
+          "Bear",
           "Lion",
           "Monkey",
           "Horse",
           "Duck"
+        };
+
+        private List<string> _soundOptions = new()
+        {
+          "Arrrrr",
+          "Rrarr",
+          "Uhaha",
+          "Neigh",
+          "Quack-quack"
         };
 
         private enum Sex
@@ -72,25 +83,36 @@ namespace ijuniorPractice
 
         public Zoo()
         {
-            _aviarys.Add(new Aviary("Вольер 1", "Медведи"));
-            _aviarys[0].AddAnimal("Bear", "Men", "Arrrrr");
-            _aviarys[0].AddAnimal("Bear", "Woman", "Arrrrr");
+            int randomNumber;
+            
+            for (int i = 0; i < _maxAviarys; i++)
+            {
+                randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
 
-            _aviarys.Add(new Aviary("Вольер 2", "Львы"));
-            _aviarys[1].AddAnimal("Lion", "Men", "Rrarr");
-            _aviarys[1].AddAnimal("Lion", "Woman", "Rrarr");
+                _aviarys.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
+                _aviarys[i].AddAnimal(_animalOptions[randomNumber], "Men", _soundOptions[randomNumber]);
+            }
 
-            _aviarys.Add(new Aviary("Вольер 3", "Обезьяны"));
-            _aviarys[2].AddAnimal("Monkey", "Men", "Uhaha");
-            _aviarys[2].AddAnimal("Monkey", "Woman", "Uhaha");
 
-            _aviarys.Add(new Aviary("Вольер 4", "Лошади"));
-            _aviarys[3].AddAnimal("Horse", "Men", "Neigh");
-            _aviarys[3].AddAnimal("Horse", "Woman", "Neigh");
+            //_aviarys.Add(new Aviary("Вольер 1", "Медведи"));
+            //_aviarys[0].AddAnimal("Bear", "Men", "Arrrrr");
+            //_aviarys[0].AddAnimal("Bear", "Woman", "Arrrrr");
 
-            _aviarys.Add(new Aviary("Вольер 5", "Утки"));
-            _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
-            _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
+            //_aviarys.Add(new Aviary("Вольер 2", "Львы"));
+            //_aviarys[1].AddAnimal("Lion", "Men", "Rrarr");
+            //_aviarys[1].AddAnimal("Lion", "Woman", "Rrarr");
+
+            //_aviarys.Add(new Aviary("Вольер 3", "Обезьяны"));
+            //_aviarys[2].AddAnimal("Monkey", "Men", "Uhaha");
+            //_aviarys[2].AddAnimal("Monkey", "Woman", "Uhaha");
+
+            //_aviarys.Add(new Aviary("Вольер 4", "Лошади"));
+            //_aviarys[3].AddAnimal("Horse", "Men", "Neigh");
+            //_aviarys[3].AddAnimal("Horse", "Woman", "Neigh");
+
+            //_aviarys.Add(new Aviary("Вольер 5", "Утки"));
+            //_aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
+            //_aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
         }
 
         public int MaxIndex
@@ -146,7 +168,7 @@ namespace ijuniorPractice
 
         public void ShowAnimals()
         {
-            foreach(var animal in _animals)
+            foreach (var animal in _animals)
             {
                 Console.WriteLine(animal);
             }
