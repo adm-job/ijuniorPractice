@@ -55,6 +55,20 @@ namespace ijuniorPractice
     public class Zoo
     {
         private List<Aviary> _aviarys = new();
+        private UserUtils _userUtils;
+        private List<string> _animalOptions= new()
+        { "Bear",
+          "Lion",
+          "Monkey",
+          "Horse",
+          "Duck"
+        };
+
+        private enum Sex
+        {
+            Men = 1,
+            Woman = 2
+        }
 
         public Zoo()
         {
@@ -100,6 +114,16 @@ namespace ijuniorPractice
         {
             _aviarys[number].ShowAnimals();
         }
+
+        class UserUtils
+        {
+            private static Random s_random = new();
+
+            public static int GenerateRandomNumber(int min = 0, int max = 100)
+            {
+                return s_random.Next(min, max);
+            }
+        }
     }
 
     public class Aviary
@@ -136,6 +160,7 @@ namespace ijuniorPractice
 
     public class Animal
     {
+
         public Animal(string title = "", string sex = "", string sound = "")
         {
             Title = title;
