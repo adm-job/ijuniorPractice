@@ -90,12 +90,6 @@ namespace ijuniorPractice
 
         public void ShowAnimals(int number)
         {
-            //foreach (var animal in _aviarys[number].)
-            //{
-            //    Console.WriteLine(animal);
-            //    animal.MakeSound();
-            //    Console.WriteLine();
-            //}
             _aviarys[number].ShowAnimals();
         }
 
