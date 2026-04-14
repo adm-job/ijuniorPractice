@@ -92,10 +92,34 @@ namespace ijuniorPractice
 
     public class Aviary
     {
-        private List<Animal> _animals;
+        private List<Animal> _animals = new List<Animal>();
 
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public Aviary(string title, string description)
+        {
+            Title = title;
+            Description = description;
+        }
+
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+
+        public void AddAnimal()
+        {
+            string title = "";
+            string sex = "";
+            string sound = "";
+
+            Console.WriteLine("Введите название животного");
+            title = Console.ReadLine();
+
+            Console.WriteLine("Введите пол");
+            sex = Console.ReadLine();
+
+            Console.WriteLine("Введите звук животного");
+            sound = Console.ReadLine();
+
+            _animals.Add(new(title, sex, sound));
+        }
     }
 
     public class Animal
