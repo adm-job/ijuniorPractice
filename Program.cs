@@ -30,11 +30,11 @@ namespace ijuniorPractice
 
                 _zoo.ShowRoom();
 
-                input = ReadInt(_zoo.MaxIndex());
+                input = ReadInt(_zoo.MaxIndex()) - 1;
 
                 _zoo.ShowAnimals(input);
 
-                Console.WriteLine();
+                Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
                 Console.ReadLine();
             }
         }
@@ -54,7 +54,6 @@ namespace ijuniorPractice
 
     public class Zoo
     {
-        private Dictionary<int, List<Animal>> _cage = new();
         private List<Aviary> _aviarys = new();
 
         public Zoo()
@@ -86,22 +85,23 @@ namespace ijuniorPractice
             {
                 Console.Write(aviary + "  \t  ");
             }
-            Console.WriteLine("\n");
+            Console.WriteLine();
         }
 
         public void ShowAnimals(int number)
         {
-            foreach (var animal in _cage[number])
-            {
-                Console.WriteLine(animal);
-                animal.MakeSound();
-                Console.WriteLine();
-            }
+            //foreach (var animal in _aviarys[number].)
+            //{
+            //    Console.WriteLine(animal);
+            //    animal.MakeSound();
+            //    Console.WriteLine();
+            //}
+            _aviarys[number].ShowAnimals();
         }
 
         public int MaxIndex()
         {
-            return _cage.Count;
+            return _aviarys.Count;
         }
     }
 
@@ -121,6 +121,14 @@ namespace ijuniorPractice
         public void AddAnimal(string title, string sex, string sound)
         {
             _animals.Add(new(title, sex, sound));
+        }
+
+        public void ShowAnimals()
+        {
+            foreach(var animal in _animals)
+            {
+                Console.WriteLine(animal);
+            }
         }
 
         public override string ToString()
@@ -152,65 +160,4 @@ namespace ijuniorPractice
             return $"{Title}, пол {Sex}";
         }
     }
-
-    //public class Bear : Animal
-    //{
-    //    public Bear(string sex = "Men") : base("Bear", sex)
-    //    {
-    //    }
-
-    //    public override void MakeSound()
-    //    {
-    //        Console.WriteLine("Arrrrrrr");
-    //    }
-    //}
-
-    //public class Lion : Animal
-    //{
-    //    public Lion(string sex = "Men") : base("Lion", sex)
-    //    {
-    //    }
-
-    //    public override void MakeSound()
-    //    {
-    //        Console.WriteLine("Rrarr");
-    //    }
-    //}
-
-    //public class Monkey : Animal
-    //{
-    //    public Monkey(string sex = "Men") : base("Monkey", sex)
-    //    {
-    //    }
-
-    //    public override void MakeSound()
-    //    {
-    //        Console.WriteLine("Uhaha");
-    //    }
-    //}
-
-    //public class Horse : Animal
-    //{
-    //    public Horse(string sex = "Men") : base("Horse", sex)
-    //    {
-    //    }
-
-    //    public override void MakeSound()
-    //    {
-    //        Console.WriteLine("Neigh");
-    //    }
-    //}
-
-    //public class Duck : Animal
-    //{
-    //    public Duck(string sex = "Men") : base("Duck", sex)
-    //    {
-    //    }
-
-    //    public override void MakeSound()
-    //    {
-    //        Console.WriteLine("Quack-quack");
-    //    }
-
-    //}
 }
