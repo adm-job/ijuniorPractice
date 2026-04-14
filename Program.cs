@@ -55,14 +55,29 @@ namespace ijuniorPractice
     public class Zoo
     {
         private Dictionary<int, List<Animal>> _cage = new();
+        private List<Aviary> _aviarys = new();
 
         public Zoo()
         {
-            _cage[1] = new() { new("Bear", "Men", "Arrrrr"), new("Bear", "Woman", "Arrrrr") };
-            _cage[2] = new() { new("Lion", "Men", "Rrarr"), new("Lion", "Woman", "Rrarr") };
-            _cage[3] = new() { new("Monkey", "Men", "Uhaha"), new("Monkey", "Woman", "Uhaha") };
-            _cage[4] = new() { new("Horse", "Men", "Neigh"), new("Horse", "Woman", "Neigh") };
-            _cage[5] = new() { new("Duck", "Men", "Quack-quack"), new("Duck", "Men", "Quack-quack") };
+            _aviarys.Add(new Aviary("Вольер 1", "Медведи"));
+            _aviarys[0].AddAnimal("Bear", "Men", "Arrrrr");
+            _aviarys[0].AddAnimal("Bear", "Woman", "Arrrrr");
+
+            _aviarys.Add(new Aviary("Вольер 2", "Медведи"));
+            _aviarys[1].AddAnimal("Lion", "Men", "Rrarr");
+            _aviarys[1].AddAnimal("Lion", "Woman", "Rrarr");
+
+            _aviarys.Add(new Aviary("Вольер 3", "Медведи"));
+            _aviarys[2].AddAnimal("Monkey", "Men", "Uhaha");
+            _aviarys[2].AddAnimal("Monkey", "Woman", "Uhaha");
+
+            _aviarys.Add(new Aviary("Вольер 4", "Медведи"));
+            _aviarys[3].AddAnimal("Horse", "Men", "Neigh");
+            _aviarys[3].AddAnimal("Horse", "Woman", "Neigh");
+
+            _aviarys.Add(new Aviary("Вольер 5", "Медведи"));
+            _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
+            _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
         }
 
         public void ShowRoom()
@@ -103,21 +118,8 @@ namespace ijuniorPractice
         public string Title { get; private set; }
         public string Description { get; private set; }
 
-        public void AddAnimal()
+        public void AddAnimal(string title, string sex, string sound)
         {
-            string title = "";
-            string sex = "";
-            string sound = "";
-
-            Console.WriteLine("Введите название животного");
-            title = Console.ReadLine();
-
-            Console.WriteLine("Введите пол");
-            sex = Console.ReadLine();
-
-            Console.WriteLine("Введите звук животного");
-            sound = Console.ReadLine();
-
             _animals.Add(new(title, sex, sound));
         }
     }
