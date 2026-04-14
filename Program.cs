@@ -75,11 +75,6 @@ namespace ijuniorPractice
           "Quack-quack"
         };
 
-        private enum Sex
-        {
-            Men = 1,
-            Woman = 2
-        }
 
         public Zoo()
         {
@@ -182,8 +177,13 @@ namespace ijuniorPractice
 
     public class Animal
     {
+        private enum Sex1
+        {
+            Men = 1,
+            Woman = 2
+        }
 
-        public Animal(string title = "", string sex = "", string sound = "")
+        public Animal(string title = "", int sex = 1, string sound = "")
         {
             Title = title;
             Sex = sex;
@@ -191,7 +191,7 @@ namespace ijuniorPractice
         }
 
         public string Title { get; }
-        public string Sex { get; }
+        public int Sex { get; }
         public string Sound { get; }
 
         public void MakeSound()
@@ -201,7 +201,7 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"{Title}, пол {Sex}";
+            return $"{Title}, пол {Sex1}";
         }
     }
 }
