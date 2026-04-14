@@ -56,9 +56,8 @@ namespace ijuniorPractice
     {
         private int _maxAviarys = 5;
         private List<Aviary> _aviarys = new();
-        private UserUtils _userUtils;
         private List<string> _animalOptions = new()
-        { 
+        {
           "Bear",
           "Lion",
           "Monkey",
@@ -79,35 +78,14 @@ namespace ijuniorPractice
         public Zoo()
         {
             int randomNumber;
-            
+
             for (int i = 0; i < _maxAviarys; i++)
             {
                 randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
 
                 _aviarys.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
-                _aviarys[i].AddAnimal(_animalOptions[randomNumber], "Men", _soundOptions[randomNumber]);
+                _aviarys[i].AddAnimal(_animalOptions[randomNumber], UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
             }
-
-
-            //_aviarys.Add(new Aviary("Вольер 1", "Медведи"));
-            //_aviarys[0].AddAnimal("Bear", "Men", "Arrrrr");
-            //_aviarys[0].AddAnimal("Bear", "Woman", "Arrrrr");
-
-            //_aviarys.Add(new Aviary("Вольер 2", "Львы"));
-            //_aviarys[1].AddAnimal("Lion", "Men", "Rrarr");
-            //_aviarys[1].AddAnimal("Lion", "Woman", "Rrarr");
-
-            //_aviarys.Add(new Aviary("Вольер 3", "Обезьяны"));
-            //_aviarys[2].AddAnimal("Monkey", "Men", "Uhaha");
-            //_aviarys[2].AddAnimal("Monkey", "Woman", "Uhaha");
-
-            //_aviarys.Add(new Aviary("Вольер 4", "Лошади"));
-            //_aviarys[3].AddAnimal("Horse", "Men", "Neigh");
-            //_aviarys[3].AddAnimal("Horse", "Woman", "Neigh");
-
-            //_aviarys.Add(new Aviary("Вольер 5", "Утки"));
-            //_aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
-            //_aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
         }
 
         public int MaxIndex
@@ -140,6 +118,11 @@ namespace ijuniorPractice
             {
                 return s_random.Next(min, max);
             }
+            
+            public static int GenerateRandomBool(int max = 2)
+            {
+                return s_random.Next(max);
+            }
         }
     }
 
@@ -156,7 +139,7 @@ namespace ijuniorPractice
         public string Title { get; private set; }
         public string Description { get; private set; }
 
-        public void AddAnimal(string title, string sex, string sound)
+        public void AddAnimal(string title, int sex, string sound)
         {
             _animals.Add(new(title, sex, sound));
         }
@@ -177,10 +160,10 @@ namespace ijuniorPractice
 
     public class Animal
     {
-        private enum Sex1
+        private enum SexAnimal
         {
-            Men = 1,
-            Woman = 2
+            Men = 0,
+            Woman = 1
         }
 
         public Animal(string title = "", int sex = 1, string sound = "")
@@ -201,7 +184,7 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"{Title}, пол {Sex1}";
+            return $"{Title}, пол {(SexAnimal)Sex}";
         }
     }
 }
