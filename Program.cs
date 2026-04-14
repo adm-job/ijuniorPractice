@@ -15,7 +15,7 @@ namespace ijuniorPractice
     {
         private bool _isRunMenu = true;
         private Zoo _zoo;
-        private int input = 0;
+        private int _input = 0;
 
         public void Run()
         {
@@ -30,9 +30,9 @@ namespace ijuniorPractice
 
                 _zoo.ShowRoom();
 
-                input = ReadInt(_zoo.GetMaxIndex()) - 1;
+                _input = ReadInt(_zoo.GetMaxIndex()) - 1;
 
-                _zoo.ShowAnimals(input);
+                _zoo.ShowAnimals(_input);
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
                 Console.ReadLine();
