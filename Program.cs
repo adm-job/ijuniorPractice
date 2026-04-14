@@ -30,7 +30,7 @@ namespace ijuniorPractice
 
                 _zoo.ShowRoom();
 
-                _input = ReadInt(_zoo.GetMaxIndex()) - 1;
+                _input = ReadInt(_zoo.MaxIndex) - 1;
 
                 _zoo.ShowAnimals(_input);
 
@@ -79,6 +79,14 @@ namespace ijuniorPractice
             _aviarys[4].AddAnimal("Duck", "Men", "Quack-quack");
         }
 
+        public int MaxIndex
+        {
+            get
+            {
+                return _aviarys.Count;
+            }
+        }
+
         public void ShowRoom()
         {
             foreach (var aviary in _aviarys)
@@ -91,11 +99,6 @@ namespace ijuniorPractice
         public void ShowAnimals(int number)
         {
             _aviarys[number].ShowAnimals();
-        }
-
-        public int GetMaxIndex()
-        {
-            return _aviarys.Count;
         }
     }
 
