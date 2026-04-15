@@ -184,7 +184,7 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"{Title}, пол {(SexAnimal)Sex}";
+            return $"{Title}, пол {(SexAnimal)Sex}, звук {Sound}";
         }
     }
 }
