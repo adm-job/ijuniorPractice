@@ -6,12 +6,12 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            MenuZoo MenuZoo = new MenuZoo();
+            ZooView MenuZoo = new ZooView();
             MenuZoo.Run();
         }
     }
 
-    class MenuZoo
+    class ZooView
     {
         private bool _isRunMenu = true;
         private Zoo _zoo;
