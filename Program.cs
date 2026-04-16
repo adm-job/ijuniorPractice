@@ -84,7 +84,7 @@ namespace ijuniorPractice
                 randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
 
                 _aviarys.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
-                _aviarys[i].AddAnimal(_animalOptions[randomNumber], UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
+                _aviarys[i].AddAnimal(_animalOptions[randomNumber], (SexAnimal)UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
             }
         }
 
@@ -110,19 +110,21 @@ namespace ijuniorPractice
             _aviarys[number].ShowAnimals();
         }
 
-        class UserUtils
-        {
-            private static Random s_random = new();
 
-            public static int GenerateRandomNumber(int min = 0, int max = 100)
-            {
-                return s_random.Next(min, max);
-            }
-            
-            public static int GenerateRandomBool(int max = 2)
-            {
-                return s_random.Next(max);
-            }
+    }
+
+    class UserUtils
+    {
+        private static Random s_random = new();
+
+        public static int GenerateRandomNumber(int min = 0, int max = 100)
+        {
+            return s_random.Next(min, max);
+        }
+
+        public static int GenerateRandomBool(int max = 2)
+        {
+            return s_random.Next(max);
         }
     }
 
@@ -139,7 +141,7 @@ namespace ijuniorPractice
         public string Title { get; private set; }
         public string Description { get; private set; }
 
-        public void AddAnimal(string title, int sex, string sound)
+        public void AddAnimal(string title, SexAnimal sex, string sound)
         {
             _animals.Add(new(title, sex, sound));
         }
@@ -160,13 +162,7 @@ namespace ijuniorPractice
 
     public class Animal
     {
-        private enum SexAnimal
-        {
-            Men = 0,
-            Woman = 1
-        }
-
-        public Animal(string title = "", int sex = 1, string sound = "")
+        public Animal(string title = "", SexAnimal sex = SexAnimal.Men, string sound = "")
         {
             Title = title;
             Sex = sex;
@@ -174,7 +170,7 @@ namespace ijuniorPractice
         }
 
         public string Title { get; }
-        public int Sex { get; }
+        public SexAnimal Sex { get; }
         public string Sound { get; }
 
         public void MakeSound()
@@ -184,7 +180,15 @@ namespace ijuniorPractice
 
         public override string ToString()
         {
-            return $"{Title}, пол {(SexAnimal)Sex}, звук {Sound}";
+            return $"{Title}, пол {Sex}, звук {Sound}";
         }
     }
+
+    public enum SexAnimal
+    {
+
+        Men = 0,
+        Woman = 1
+    }
 }
+
