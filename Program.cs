@@ -6,22 +6,22 @@ namespace ijuniorPractice
     {
         static void Main(string[] args)
         {
-            ZooView MenuZoo = new ZooView();
-            MenuZoo.Run();
+            ZooView ViewZoo = new ZooView();
+            ViewZoo.Run();
         }
     }
 
     class ZooView
     {
-        private bool _isRunMenu = true;
+        private bool _isViewMenu = true;
         private Zoo _zoo;
-        private int _input = 0;
+        private int _inputUser = 0;
 
         public void Run()
         {
             _zoo = new Zoo();
 
-            while (_isRunMenu)
+            while (_isViewMenu)
             {
                 Console.Clear();
                 Console.WriteLine("Меню зоопарка\n");
@@ -30,9 +30,9 @@ namespace ijuniorPractice
 
                 _zoo.ShowRoom();
 
-                _input = ReadInt(_zoo.MaxIndex) - 1;
+                _inputUser = ReadInt(_zoo.MaxSize) - 1;
 
-                _zoo.ShowAnimals(_input);
+                _zoo.ShowAnimals(_inputUser);
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
                 Console.ReadLine();
@@ -55,6 +55,7 @@ namespace ijuniorPractice
     public class Zoo
     {
         private int _maxAviarys = 5;
+        private Animal _animal;
         private List<Aviary> _aviarys = new();
         private List<string> _animalOptions = new()
         {
@@ -84,17 +85,12 @@ namespace ijuniorPractice
                 randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
 
                 _aviarys.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
-                _aviarys[i].AddAnimal(_animalOptions[randomNumber], (SexAnimal)UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
+                _animal = new Animal(_animalOptions[randomNumber], (SexAnimal)UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
+                _aviarys[i].AddAnimal(_animal);
             }
         }
 
-        public int MaxIndex
-        {
-            get
-            {
-                return _aviarys.Count;
-            }
-        }
+        public int MaxSize => _aviarys.Count;
 
         public void ShowRoom()
         {
@@ -141,9 +137,9 @@ namespace ijuniorPractice
         public string Title { get; private set; }
         public string Description { get; private set; }
 
-        public void AddAnimal(string title, SexAnimal sex, string sound)
+        public void AddAnimal(Animal animal)
         {
-            _animals.Add(new(title, sex, sound));
+            _animals.Add(animal);
         }
 
         public void ShowAnimals()
