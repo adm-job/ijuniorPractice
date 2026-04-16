@@ -55,39 +55,12 @@ namespace ijuniorPractice
     public class Zoo
     {
         private int _maxAviarys = 5;
-        private Animal _animal;
         private List<Aviary> _aviarys = new();
-        private List<string> _animalOptions = new()
-        {
-          "Bear",
-          "Lion",
-          "Monkey",
-          "Horse",
-          "Duck"
-        };
-
-        private List<string> _soundOptions = new()
-        {
-          "Arrrrr",
-          "Rrarr",
-          "Uhaha",
-          "Neigh",
-          "Quack-quack"
-        };
-
+        private Aviary _aviary = new();
 
         public Zoo()
         {
-            int randomNumber;
-
-            for (int i = 0; i < _maxAviarys; i++)
-            {
-                randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
-
-                _aviarys.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
-                _animal = new Animal(_animalOptions[randomNumber], (SexAnimal)UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
-                _aviarys[i].AddAnimal(_animal);
-            }
+            _aviarys = _aviary.Create(_maxAviarys);
         }
 
         public int MaxSize => _aviarys.Count;
@@ -105,8 +78,6 @@ namespace ijuniorPractice
         {
             _aviarys[number].ShowAnimals();
         }
-
-
     }
 
     class UserUtils
@@ -128,6 +99,28 @@ namespace ijuniorPractice
     {
         private List<Animal> _animals = new List<Animal>();
 
+        private List<string> _animalOptions = new()
+        {
+          "Bear",
+          "Lion",
+          "Monkey",
+          "Horse",
+          "Duck"
+        };
+
+        private List<string> _soundOptions = new()
+        {
+          "Arrrrr",
+          "Rrarr",
+          "Uhaha",
+          "Neigh",
+          "Quack-quack"
+        };
+
+        public Aviary()
+        {
+        }
+
         public Aviary(string title, string description)
         {
             Title = title;
@@ -136,6 +129,24 @@ namespace ijuniorPractice
 
         public string Title { get; private set; }
         public string Description { get; private set; }
+
+        public List<Aviary> Create(int size)
+        {
+            int randomNumber;
+            List<Aviary> aviary = new();
+            Animal animal = new Animal();
+
+            for (int i = 0; i < size; i++)
+            {
+                randomNumber = UserUtils.GenerateRandomNumber(0, _animalOptions.Count);
+
+                aviary.Add(new Aviary($"Вольер {i + 1}", _animalOptions[randomNumber]));
+                animal = new Animal(_animalOptions[randomNumber], (SexAnimal)UserUtils.GenerateRandomBool(), _soundOptions[randomNumber]);
+                aviary[i].AddAnimal(animal);
+            }
+
+            return aviary;
+        }
 
         public void AddAnimal(Animal animal)
         {
