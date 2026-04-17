@@ -1,13 +1,11 @@
-﻿using System.Timers;
-
-namespace ijuniorPractice
+﻿namespace ijuniorPractice
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            ZooView ViewZoo = new ZooView();
-            ViewZoo.Run();
+            ZooView ZooView = new ZooView();
+            ZooView.Run();
         }
     }
 
@@ -56,11 +54,11 @@ namespace ijuniorPractice
     {
         private int _maxAviarys = 5;
         private List<Aviary> _aviarys = new();
-        private Aviary _aviary = new();
+        private AviaryFabric _aviaryFabric = new();
 
         public Zoo()
         {
-            _aviarys = _aviary.Create(_maxAviarys);
+            _aviarys = _aviaryFabric.Create(_maxAviarys);
         }
 
         public int MaxSize => _aviarys.Count;
@@ -95,10 +93,8 @@ namespace ijuniorPractice
         }
     }
 
-    public class Aviary
+    public class AviaryFabric
     {
-        private List<Animal> _animals = new List<Animal>();
-
         private List<string> _animalOptions = new()
         {
           "Bear",
@@ -117,19 +113,6 @@ namespace ijuniorPractice
           "Quack-quack"
         };
 
-        public Aviary()
-        {
-        }
-
-        public Aviary(string title, string description)
-        {
-            Title = title;
-            Description = description;
-        }
-
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-
         public List<Aviary> Create(int size)
         {
             int randomNumber;
@@ -147,6 +130,20 @@ namespace ijuniorPractice
 
             return aviary;
         }
+    }
+
+    public class Aviary
+    {
+        private List<Animal> _animals = new List<Animal>();
+
+        public Aviary(string title, string description)
+        {
+            Title = title;
+            Description = description;
+        }
+
+        public string Title { get; private set; }
+        public string Description { get; private set; }
 
         public void AddAnimal(Animal animal)
         {
@@ -179,11 +176,6 @@ namespace ijuniorPractice
         public string Title { get; }
         public SexAnimal Sex { get; }
         public string Sound { get; }
-
-        public void MakeSound()
-        {
-            Console.WriteLine(Sound);
-        }
 
         public override string ToString()
         {
