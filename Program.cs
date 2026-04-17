@@ -51,28 +51,32 @@
         {
             Console.WriteLine($"Семма в кассе = {_amountСash}");
         }
+
+        public void AcceptCash(float cash)
+        {
+            _amountСash += cash;
+        }
     }
 
     class Price
     {
-        
+
 
     }
 
     class FabricaCar() //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
-        private List<String> detailsCar = new()
-        {
-            "engine",
-            "transmission",
-            "chassis",
-            "wheels",
-            "fuel tank",
-            "steering wheel",
-            "seats"
-        };
-
+        //private List<String> detailsCar = new()
+        //{
+        //    "engine",
+        //    "transmission",
+        //    "chassis",
+        //    "wheels",
+        //    "fuel tank",
+        //    "steering wheel",
+        //    "seats"
+        //};
 
         public List<Car> CreateCars(int size)
         {
@@ -82,17 +86,19 @@
             {
                 cars.Add(new Car("Машина " + (i + 1)));
 
-                for (int j = 0; j < detailsCar.Count; j++)
+                for (int j = 0; j < sizeof(DetailsCar); j++)
                 {
-                    details.Add(new(detailsCar[j],(StatusDetail)UserUtils.GenerateRandomBool()));
+                    details.Add(new((DetailsCar)j, (StatusDetail)UserUtils.GenerateRandomBool()));
                 }
-                
+
                 cars[i].AddDetail(details);
             }
 
             return cars;
         }
     }
+
+
 
     class Car //автомобиль
     {
@@ -121,10 +127,10 @@
 
     class Detail // деталь
     {
-        public string Title { get; private set; }
+        public DetailsCar Title { get; private set; }
         public StatusDetail Status { get; private set; }
 
-        public Detail(string title, StatusDetail status = StatusDetail.working)
+        public Detail(DetailsCar title, StatusDetail status = StatusDetail.working)
         {
             Title = title;
             Status = status;
@@ -136,7 +142,18 @@
         }
     }
 
-    public enum StatusDetail
+    public enum DetailsCar // список деталей
+    {
+        engine = 0,
+        transmission = 1,
+        chassis = 2,
+        wheels = 3,
+        fuelTank = 4,
+        steeringWheel = 5,
+        seats = 6
+    }
+
+    public enum StatusDetail // статус детали
     {
         working = 1,
         notworking = 0
@@ -158,4 +175,5 @@
     }
 
 }
+
 
