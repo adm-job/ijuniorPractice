@@ -43,25 +43,42 @@
         }
     }
 
-    class FabricaCar()
+    class FabricaCar() //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
-        private List<Detail> details = new();
+        private List<String> detailsCar = new()
+        {
+            "engine",
+            "transmission",
+            "chassis",
+            "wheels",
+            "fuel tank",
+            "steering wheel",
+            "seats"
+        };
 
 
         public List<Car> CreateCars(int size)
         {
+            List<Detail> details = new();
+
             for (int i = 0; i < size; i++)
             {
+                cars.Add(new Car("Машина " + (i + 1)));
 
+                for (int j = 0; j < detailsCar.Count; j++)
+                {
+                    details.Add(new(detailsCar[j]));
+                }
+                
+                cars[i].AddDetail(details);
             }
-
 
             return cars;
         }
     }
 
-    class Car
+    class Car //автомобиль
     {
         private List<Detail> _decimals = new();
 
@@ -90,13 +107,13 @@
     {
         public string Title { get; private set; }
         public StatusDetail Status { get; private set; }
-    
-    public Detail(string title, StatusDetail status = StatusDetail.working)
+
+        public Detail(string title, StatusDetail status = StatusDetail.working)
         {
-            Title = title; 
+            Title = title;
             Status = status;
         }
-    
+
     }
 
 
