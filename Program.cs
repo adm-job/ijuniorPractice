@@ -47,6 +47,15 @@
     {
         private float _amountСash = 0f;
 
+        public void ShowCash()
+        {
+            Console.WriteLine($"Семма в кассе = {_amountСash}");
+        }
+    }
+
+    class Price
+    {
+        
 
     }
 
