@@ -6,6 +6,8 @@
         {
             //ZooView ZooView = new ZooView();
             //ZooView.Run();
+
+
         }
     }
 
@@ -60,11 +62,59 @@
 
     class Price
     {
-
+        private DetailsCar _detailsCar;
 
     }
 
-    class FabricaCar() //фабрика по созданию автомобилкей
+    class Warehouse //Склад
+    {
+        private List<DetailsCar> _detailsCars = new List<DetailsCar>();
+        private List<float> _amount = new();
+
+        private Dictionary<DetailsCar, float> _storage = new();
+
+        public void AddDetail(DetailsCar detailsCar, float amount)
+        {
+            if(_storage.TryAdd(detailsCar, amount) == false)
+            {
+                Console.WriteLine("Деталь уже усть на склде");
+            }
+        }
+
+        public DetailsCar AppendDetail()
+        {
+
+            return new DetailsCar { };
+        }
+
+        public Warehouse(List<DetailsCar> detailsCars, List<float> amount)
+        {
+            _detailsCars = detailsCars;
+            _amount = amount;
+        }
+
+        public DetailsCar GetDetail(DetailsCar detailsCar)
+        {
+            int indexDetail = _detailsCars.FindIndex(detail => detailsCar);
+
+            return car = new(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
+
+    }
+    public enum DetailsCar // список деталей
+    {
+        engine = 0,
+        transmission = 1,
+        chassis = 2,
+        wheels = 3,
+        fuelTank = 4,
+        steeringWheel = 5,
+        seats = 6
+    }
+
+
+
+    class FabricaCar //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
         //private List<String> detailsCar = new()
@@ -143,16 +193,6 @@
         }
     }
 
-    public enum DetailsCar // список деталей
-    {
-        engine = 0,
-        transmission = 1,
-        chassis = 2,
-        wheels = 3,
-        fuelTank = 4,
-        steeringWheel = 5,
-        seats = 6
-    }
 
     public enum StatusDetail // статус детали
     {
@@ -176,5 +216,6 @@
     }
 
 }
+
 
 
