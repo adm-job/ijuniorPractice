@@ -43,15 +43,31 @@
         }
     }
 
+    class FabricaCar()
+    {
+        private List<Car> cars = new();
+        private List<Detail> details = new();
 
 
-    class Avto
+        public List<Car> CreateCars(int size)
+        {
+            for (int i = 0; i < size; i++)
+            {
+
+            }
+
+
+            return cars;
+        }
+    }
+
+    class Car
     {
         private List<Detail> _decimals = new();
 
         public string Name { get; private set; }
 
-        public Avto(string name)
+        public Car(string name)
         {
             Name = name;
         }
@@ -69,9 +85,18 @@
             return $"Name";
         }
     }
+
     class Detail // деталь
     {
-        public string name;
+        public string Title { get; private set; }
+        public StatusDetail Status { get; private set; }
+    
+    public Detail(string title, StatusDetail status = StatusDetail.working)
+        {
+            Title = title; 
+            Status = status;
+        }
+    
     }
 
 
@@ -88,6 +113,12 @@
         {
             return s_random.Next(max);
         }
+    }
+
+    public enum StatusDetail
+    {
+        working = 0,
+        notworking = 0
     }
 }
 
