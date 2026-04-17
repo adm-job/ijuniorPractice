@@ -68,7 +68,7 @@
 
                 for (int j = 0; j < detailsCar.Count; j++)
                 {
-                    details.Add(new(detailsCar[j]));
+                    details.Add(new(detailsCar[j],(StatusDetail)UserUtils.GenerateRandomBool()));
                 }
                 
                 cars[i].AddDetail(details);
@@ -99,7 +99,7 @@
 
         public override string ToString()
         {
-            return $"Name";
+            return $"{Name}";
         }
     }
 
@@ -114,8 +114,17 @@
             Status = status;
         }
 
+        public override string ToString()
+        {
+            return $"{Title} - {Status}";
+        }
     }
 
+    public enum StatusDetail
+    {
+        working = 1,
+        notworking = 0
+    }
 
     class UserUtils
     {
@@ -132,10 +141,5 @@
         }
     }
 
-    public enum StatusDetail
-    {
-        working = 0,
-        notworking = 0
-    }
 }
 
