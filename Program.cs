@@ -43,6 +43,13 @@
         }
     }
 
+    class CashRegister // касса сервиса
+    {
+        private float _amountСash = 0f;
+
+
+    }
+
     class FabricaCar() //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
