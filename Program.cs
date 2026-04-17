@@ -8,9 +8,6 @@
             //ZooView.Run();
         }
     }
-    
-
-
 
     class CarService
     {
@@ -45,6 +42,38 @@
             return inputNumber;
         }
     }
+
+
+
+    class Avto
+    {
+        private List<Detail> _decimals = new();
+
+        public string Name { get; private set; }
+
+        public Avto(string name)
+        {
+            Name = name;
+        }
+
+        public void AddDetail(List<Detail> details)
+        {
+            foreach (var detail in details)
+            {
+                _decimals.Add(detail);
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"Name";
+        }
+    }
+    class Detail // деталь
+    {
+        public string name;
+    }
+
 
     class UserUtils
     {
