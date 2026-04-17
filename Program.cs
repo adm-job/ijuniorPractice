@@ -84,6 +84,7 @@
 
             for (int i = 0; i < size; i++)
             {
+                details.Clear();
                 cars.Add(new Car("Машина " + (i + 1)));
 
                 for (int j = 0; j < sizeof(DetailsCar); j++)
