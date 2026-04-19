@@ -6,8 +6,6 @@
         {
             //ZooView ZooView = new ZooView();
             //ZooView.Run();
-
-
         }
     }
 
@@ -25,7 +23,6 @@
                 Console.WriteLine("Выберите пункт меню\n");
 
                 _inputUser = ReadInt(5) - 1; // Править все
-
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
                 Console.ReadLine();
@@ -95,9 +92,11 @@
 
         public DetailsCar GetDetail(DetailsCar detailsCar)
         {
-            int indexDetail = _detailsCars.FindIndex(detail => detailsCar);
+            int indexDetail = _detailsCars.FindIndex(detail => detail == detailsCar);
 
-            return car = new(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //провека количества !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            return _detailsCars[indexDetail]; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
     }
