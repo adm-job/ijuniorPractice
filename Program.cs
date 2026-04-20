@@ -65,38 +65,37 @@
 
     class Warehouse //Склад
     {
-        private List<DetailsCar> _detailsCars = new List<DetailsCar>();
-        private List<float> _amount = new();
+        private Dictionary<Detail, float> _storage = new();
 
-        private Dictionary<DetailsCar, float> _storage = new();
-
-        public void AddDetail(DetailsCar detailsCar, float amount)
+        public void AddDetail(Detail detailsCar, float amount)
         {
-            if(_storage.TryAdd(detailsCar, amount) == false)
+            if (_storage.TryAdd(detailsCar, amount) == false)
             {
                 Console.WriteLine("Деталь уже усть на склде");
             }
         }
 
-        public DetailsCar AppendDetail()
+        public Detail GetDetail(Detail detailsCar)
         {
+            float amount = 0f;
 
-            return new DetailsCar { };
-        }
-
-        public Warehouse(List<DetailsCar> detailsCars, List<float> amount)
-        {
-            _detailsCars = detailsCars;
-            _amount = amount;
-        }
-
-        public DetailsCar GetDetail(DetailsCar detailsCar)
-        {
-            int indexDetail = _detailsCars.FindIndex(detail => detail == detailsCar);
-
-            //провека количества !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            return _detailsCars[indexDetail]; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (_storage.ContainsKey(detailsCar))
+            {
+                _storage.TryGetValue(detailsCar, out amount);
+                if (amount > 0)
+                {
+                    _storage[detailsCar] = amount--;
+                    return detailsCar;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            } 
         }
 
     }
@@ -147,8 +146,6 @@
             return cars;
         }
     }
-
-
 
     class Car //автомобиль
     {
