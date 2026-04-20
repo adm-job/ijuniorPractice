@@ -115,16 +115,6 @@
     class FabricaCar //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
-        //private List<String> detailsCar = new()
-        //{
-        //    "engine",
-        //    "transmission",
-        //    "chassis",
-        //    "wheels",
-        //    "fuel tank",
-        //    "steering wheel",
-        //    "seats"
-        //};
 
         public List<Car> CreateCars(int size)
         {
