@@ -17,7 +17,7 @@
         private List<Car> _clientCar;
         private bool _isPrice = true;
         private int _inputUser = 0;
-        private FabricaCar _fabricaCar;
+        private FabricaCar _fabricaCar = new ();
 
         public void AddСlientsQueue(int maxClients)
         {
@@ -27,8 +27,6 @@
 
         public void Run()
         {
-            _clientCar = _fabricaCar.CreateCars(15);
-            
             const int ShowСlients = 1;
 
 
@@ -41,8 +39,20 @@
                 Console.Clear();
                 Console.WriteLine("Автосервис\n");
                 Console.WriteLine("Выберите пункт меню\n");
+                Console.WriteLine(ShowСlients + " показать очередь клиентов");
 
-                _inputUser = ReadInt(5) - 1; // Править все
+            
+                _inputUser = ReadInt(1); // Править все
+
+                switch(_inputUser)
+                {
+                    case ShowСlients:
+                        foreach (var car in _clientCar)
+                        {
+                            Console.WriteLine(car);
+                        }
+                        break;
+                }
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
                 Console.ReadLine();
@@ -119,7 +129,6 @@
                 return null;
             } 
         }
-
     }
 
     public enum DetailsCar // список деталей
