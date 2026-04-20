@@ -4,18 +4,38 @@
     {
         static void Main(string[] args)
         {
-            //ZooView ZooView = new ZooView();
-            //ZooView.Run();
+            int maxClients = 15;
+
+            CarService carService = new CarService();
+            carService.AddСlientsQueue(maxClients);
+            carService.Run();
         }
     }
 
     class CarService
     {
+        private List<Car> _clientCar;
         private bool _isPrice = true;
         private int _inputUser = 0;
+        private FabricaCar _fabricaCar;
+
+        public void AddСlientsQueue(int maxClients)
+        {
+            _clientCar = _fabricaCar.CreateCars(maxClients);
+        }
+
 
         public void Run()
         {
+            _clientCar = _fabricaCar.CreateCars(15);
+            
+            const int ShowСlients = 1;
+
+
+
+
+
+
             while (_isPrice)
             {
                 Console.Clear();
@@ -28,6 +48,8 @@
                 Console.ReadLine();
             }
         }
+
+
 
         private int ReadInt(int maxIndex)
         {
@@ -99,6 +121,7 @@
         }
 
     }
+
     public enum DetailsCar // список деталей
     {
         engine = 0,
