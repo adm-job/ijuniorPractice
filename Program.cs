@@ -46,9 +46,12 @@
                 switch(_inputUser)
                 {
                     case ShowСlients:
+                        int y = 0 ;
                         foreach (var car in _clientCar)
                         {
+                            Console.SetCursorPosition(100, y);
                             Console.WriteLine(car);
+                            y += 1;
                         }
                         break;
                 }
