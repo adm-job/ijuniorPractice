@@ -40,7 +40,6 @@
                 Console.WriteLine("Автосервис\n");
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
-
             
                 _inputUser = ReadInt(1); // Править все
 
