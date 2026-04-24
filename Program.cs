@@ -29,11 +29,6 @@
         {
             const int ShowСlients = 1;
 
-
-
-
-
-
             while (_isPrice)
             {
                 Console.Clear();
