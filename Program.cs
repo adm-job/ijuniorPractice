@@ -7,7 +7,7 @@
             int maxClients = 15;
 
             CarService carService = new CarService();
-            carService.AddСlientsQueue(maxClients);
+            //carService.AddСlientsQueue(maxClients);
             carService.Run();
         }
     }
@@ -28,6 +28,8 @@
         public void Run()
         {
             const int ShowСlients = 1;
+
+            AddСlientsQueue(15);
 
             while (_isPrice)
             {
