@@ -17,7 +17,7 @@
         private List<Car> _clientCar;
         private bool _isPrice = true;
         private int _inputUser = 0;
-        private FabricaCar _fabricaCar = new ();
+        private FabricaCar _fabricaCar = new();
 
         public void AddСlientsQueue(int maxClients)
         {
@@ -37,13 +37,13 @@
                 Console.WriteLine("Автосервис\n");
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
-            
+
                 _inputUser = ReadInt(1); // Править все
 
-                switch(_inputUser)
+                switch (_inputUser)
                 {
                     case ShowСlients:
-                        int y = 0 ;
+                        int y = 0;
                         foreach (var car in _clientCar)
                         {
                             Console.SetCursorPosition(100, y);
@@ -94,6 +94,21 @@
     {
         private Dictionary<DetailsCar, PartInfo> _prices;
 
+        public Price()
+        {
+            _prices = new Dictionary<DetailsCar, PartInfo>()
+            {
+                {DetailsCar.engine, new PartInfo(5000, 1500) },
+                {DetailsCar.transmission, new PartInfo(3500,1000) },
+                {DetailsCar.chassis, new PartInfo(3000, 900) },
+                {DetailsCar.wheels, new PartInfo(12000, 3500) },
+                {DetailsCar.fuelTank, new PartInfo(4000, 1900) },
+                {DetailsCar.steeringWheel, new PartInfo(6000,2400) },
+                {DetailsCar.seats, new PartInfo(34000, 9000) }
+            };
+        }
+
+
 
     }
 
@@ -129,7 +144,7 @@
             else
             {
                 return null;
-            } 
+            }
         }
     }
 
