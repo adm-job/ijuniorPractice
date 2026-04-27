@@ -92,6 +92,8 @@
     {
         private DetailsCar _detailsCar;
 
+        record PartInfo(decimal PartPrice, decimal WorkPrice);
+
     }
 
     class Warehouse //Склад
