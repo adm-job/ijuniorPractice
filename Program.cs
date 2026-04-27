@@ -88,11 +88,12 @@
         }
     }
 
+    record PartInfo(decimal PartPrice, decimal WorkPrice);
+
     class Price
     {
-        private DetailsCar _detailsCar;
+        private Dictionary<DetailsCar, PartInfo> _prices;
 
-        record PartInfo(decimal PartPrice, decimal WorkPrice);
 
     }
 
