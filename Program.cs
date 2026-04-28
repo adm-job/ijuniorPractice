@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-            int maxClients = 15;
 
             CarService carService = new CarService();
             carService.Run();
@@ -13,6 +12,7 @@
 
     class CarService
     {
+        private int maxClients = 15;
         private List<Car> _clientCar;
         private bool _isPrice = true;
         private int _inputUser = 0;
@@ -24,12 +24,11 @@
             _clientCar = _fabricaCar.CreateCars(maxClients);
         }
 
-
         public void Run()
         {
             const int ShowСlients = 1;
 
-            AddСlientsQueue(15);
+            AddСlientsQueue(maxClients);
 
             while (_isPrice)
             {
@@ -38,11 +37,11 @@
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
 
-                _inputUser = ReadInt(1); // Править все
+                _inputUser = ReadInt(2); // Править все
 
                 switch (_inputUser)
                 {
-                    case ShowСlients:
+                    case ShowСlients: // Переделать
                         int y = 0;
                         foreach (var car in _clientCar)
                         {
