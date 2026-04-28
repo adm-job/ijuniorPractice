@@ -64,7 +64,6 @@
         }
 
 
-
         private int ReadInt(int maxIndex)
         {
             int inputNumber;
@@ -93,7 +92,7 @@
         }
     }
 
-    record PartInfo(decimal PartPrice, decimal WorkPrice);
+    record PartInfo(float PartPrice, float WorkPrice);
 
     class Price
     {
