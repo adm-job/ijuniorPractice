@@ -14,7 +14,7 @@
     {
         private int maxClients = 15;
         private List<Car> _clientCar;
-        private bool _isPrice = true;
+        private bool _isWorking = true;
         private int _inputUser = 0;
         private FabricaCar _fabricaCar = new();
 
@@ -27,10 +27,11 @@
         public void Run()
         {
             const int ShowСlients = 1;
+            const int ShowPrice = 2;
 
             AddСlientsQueue(maxClients);
 
-            while (_isPrice)
+            while (_isWorking)
             {
                 Console.Clear();
                 Console.WriteLine("Автосервис\n");
@@ -50,6 +51,8 @@
                             y += 1;
                         }
                         break;
+                        case ShowPrice:
+                        _isWorking.
                 }
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
