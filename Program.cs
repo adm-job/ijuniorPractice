@@ -17,7 +17,7 @@
         private bool _isWorking = true;
         private int _inputUser = 0;
         private FabricaCar _fabricaCar = new();
-
+        private Price _price = new();
 
         public void AddСlientsQueue(int maxClients)
         {
@@ -37,6 +37,7 @@
                 Console.WriteLine("Автосервис\n");
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
+                Console.WriteLine(ShowPrice + " показать цены на детали и работы");
 
                 _inputUser = ReadInt(2); // Править все
 
@@ -51,8 +52,10 @@
                             y += 1;
                         }
                         break;
-                        case ShowPrice:
-                        _isWorking.
+
+                    case ShowPrice:
+                        _price.Show();
+                        break;
                 }
 
                 Console.WriteLine("\nНажмите ввод что бы продолжить выбор");
