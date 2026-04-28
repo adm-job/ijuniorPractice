@@ -7,7 +7,6 @@
             int maxClients = 15;
 
             CarService carService = new CarService();
-            //carService.AddСlientsQueue(maxClients);
             carService.Run();
         }
     }
@@ -18,6 +17,7 @@
         private bool _isPrice = true;
         private int _inputUser = 0;
         private FabricaCar _fabricaCar = new();
+
 
         public void AddСlientsQueue(int maxClients)
         {
@@ -108,6 +108,13 @@
             };
         }
 
+        public void Show()
+        {
+            foreach (var line in _prices)
+            {
+                Console.WriteLine($"{line.Key}| Деталь: {line.Value.PartPrice}| Работа: {line.Value.WorkPrice}");
+            }
+        }
 
 
     }
