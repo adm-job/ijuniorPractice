@@ -138,6 +138,7 @@
         public Detail GetDetail(Detail detailsCar)
         {
             float amount = 0f;
+            var part = _storage;
 
             if (_storage.ContainsKey(detailsCar))
             {
