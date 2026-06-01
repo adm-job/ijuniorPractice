@@ -92,7 +92,7 @@
         }
     }
 
-    record PartInfo(float PartPrice, float WorkPrice);
+    record PartInfo(float PartPrice, float WorkPrice, float forfeit);
 
     class Price
     {
@@ -102,13 +102,13 @@
         {
             _prices = new Dictionary<DetailsCar, PartInfo>()
             {
-                {DetailsCar.engine, new PartInfo(5000, 1500) },
-                {DetailsCar.transmission, new PartInfo(3500,1000) },
-                {DetailsCar.chassis, new PartInfo(3000, 900) },
-                {DetailsCar.wheels, new PartInfo(12000, 3500) },
-                {DetailsCar.fuelTank, new PartInfo(4000, 1900) },
-                {DetailsCar.steeringWheel, new PartInfo(6000,2400) },
-                {DetailsCar.seats, new PartInfo(34000, 9000) }
+                {DetailsCar.engine, new PartInfo(5000, 1500, 500) },
+                {DetailsCar.transmission, new PartInfo(3500,1000, 500) },
+                {DetailsCar.chassis, new PartInfo(3000, 900, 500) },
+                {DetailsCar.wheels, new PartInfo(12000, 3500, 500) },
+                {DetailsCar.fuelTank, new PartInfo(4000, 1900, 500) },
+                {DetailsCar.steeringWheel, new PartInfo(6000,2400, 500) },
+                {DetailsCar.seats, new PartInfo(34000, 9000, 500) }
             };
         }
 
