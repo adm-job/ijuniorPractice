@@ -92,7 +92,7 @@
         }
     }
 
-    record PartInfo(float PartPrice, float WorkPrice, float forfeit);
+    record PartInfo(float partPrice, float workPrice, float forfeit);
 
     class Price
     {
@@ -116,7 +116,7 @@
         {
             foreach (var line in _prices)
             {
-                Console.WriteLine($"{line.Key}| Деталь: {line.Value.PartPrice}| Работа: {line.Value.WorkPrice}");
+                Console.WriteLine($"{line.Key}| Деталь: {line.Value.partPrice}| Работа: {line.Value.workPrice}| Отказ: {line.Value.forfeit}");
             }
         }
 
