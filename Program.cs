@@ -116,7 +116,7 @@
         {
             foreach (var line in _prices)
             {
-                Console.WriteLine($"{line.Key}| Деталь: {line.Value.partPrice}| Работа: {line.Value.workPrice}| Отказ: {line.Value.forfeit}");
+                Console.WriteLine($"{line.Key}| Деталь: {line.Value.partPrice}| Работа: {line.Value.workPrice}| Отказ(Штраф): {line.Value.forfeit}");
             }
         }
 
@@ -131,7 +131,7 @@
         {
             if (_storage.TryAdd(detailsCar, amount) == false)
             {
-                Console.WriteLine("Деталь уже усть на склде");
+                Console.WriteLine("Деталь уже eсть на склде");
             }
         }
 
