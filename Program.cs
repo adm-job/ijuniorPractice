@@ -131,7 +131,7 @@
         {
             if (_storage.TryAdd(detailsCar, amount) == false)
             {
-                Console.WriteLine("Деталь уже eсть на склде");
+                Console.WriteLine("Деталь уже eсть на складе");
             }
         }
 
