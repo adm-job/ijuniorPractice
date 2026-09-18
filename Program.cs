@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-
             CarService carService = new CarService();
             carService.Run();
         }
@@ -240,7 +239,6 @@
         }
     }
 
-
     public enum StatusDetail // статус детали
     {
         working = 1,
@@ -261,7 +259,6 @@
             return s_random.Next(max);
         }
     }
-
 }
 
 
