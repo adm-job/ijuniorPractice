@@ -170,8 +170,6 @@
         seats = 6
     }
 
-
-
     class FabricaCar //фабрика по созданию автомобилкей
     {
         private List<Car> cars = new();
