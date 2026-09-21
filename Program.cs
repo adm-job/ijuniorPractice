@@ -27,6 +27,7 @@
         {
             const int ShowСlients = 1;
             const int ShowPrice = 2;
+            const int Exit = 3;
 
             AddСlientsQueue(maxClients);
 
@@ -37,8 +38,9 @@
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
                 Console.WriteLine(ShowPrice + " показать цены на детали и работы");
+                Console.WriteLine(Exit + " выход из программы");
 
-                _inputUser = ReadInt(2); // Править все
+                _inputUser = ReadInt(3); // Править все
 
                 switch (_inputUser)
                 {
@@ -54,6 +56,14 @@
 
                     case ShowPrice:
                         _price.Show();
+                        break;
+
+                    case Exit:
+                        _isWorking = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Выбранного пункта нет в меню автосервиса");
                         break;
                 }
 
