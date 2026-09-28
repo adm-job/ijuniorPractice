@@ -15,12 +15,12 @@
         private List<Car> _clientCars;
         private bool _isWorking = true;
         private int _inputUser = 0;
-        private FabricaCar _fabricaCar = new();
+        private FabricaCar _factoryCars = new();
         private Price _price = new();
 
         public void AddСlientsQueue(int maxClients)
         {
-            _clientCars = _fabricaCar.CreateCars(maxClients);
+            _clientCars = _factoryCars.CreateCars(maxClients);
         }
 
         public void Run()
