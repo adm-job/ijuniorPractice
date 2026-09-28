@@ -12,7 +12,7 @@
     class CarService
     {
         private int maxClients = 15;
-        private List<Car> _clientCar;
+        private List<Car> _clientCars;
         private bool _isWorking = true;
         private int _inputUser = 0;
         private FabricaCar _fabricaCar = new();
@@ -20,7 +20,7 @@
 
         public void AddСlientsQueue(int maxClients)
         {
-            _clientCar = _fabricaCar.CreateCars(maxClients);
+            _clientCars = _fabricaCar.CreateCars(maxClients);
         }
 
         public void Run()
@@ -46,7 +46,7 @@
                 {
                     case ShowСlients: // Переделать
                         int y = 0;
-                        foreach (var car in _clientCar)
+                        foreach (var car in _clientCars)
                         {
                             Console.SetCursorPosition(100, y);
                             Console.WriteLine(car);
