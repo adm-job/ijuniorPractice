@@ -15,7 +15,7 @@
         private List<Car> _clientCars;
         private bool _isWorking = true;
         private int _inputUser = 0;
-        private FabricaCar _factoryCars = new();
+        private FactoryCar _factoryCars = new();
         private Price _price = new();
 
         public void AddСlientsQueue(int maxClients)
@@ -180,9 +180,9 @@
         seats = 6
     }
 
-    class FabricaCar //фабрика по созданию автомобилкей
+    class FactoryCar //фабрика по созданию автомобилкей
     {
-        private List<Car> cars = new();
+        private List<Car> _cars = new();
 
         public List<Car> CreateCars(int size)
         {
@@ -191,23 +191,23 @@
             for (int i = 0; i < size; i++)
             {
                 details.Clear();
-                cars.Add(new Car("Машина " + (i + 1)));
+                _cars.Add(new Car("Машина " + (i + 1)));
 
                 for (int j = 0; j < sizeof(DetailsCar); j++)
                 {
                     details.Add(new((DetailsCar)j, (StatusDetail)UserUtils.GenerateRandomBool()));
                 }
 
-                cars[i].AddDetail(details);
+                _cars[i].AddDetail(details);
             }
 
-            return cars;
+            return _cars;
         }
     }
 
     class Car //автомобиль
     {
-        private List<Detail> _decimals = new();
+        private List<Detail> _details = new();
 
         public string Name { get; private set; }
 
@@ -220,7 +220,7 @@
         {
             foreach (var detail in details)
             {
-                _decimals.Add(detail);
+                _details.Add(detail);
             }
         }
 
