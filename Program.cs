@@ -17,6 +17,7 @@
         private int _inputUser = 0;
         private FactoryCar _factoryCars = new();
         private Price _price = new();
+        private CashRegister _cashRegister = new();
 
         public void AddСlientsQueue(int maxClients)
         {
@@ -27,7 +28,8 @@
         {
             const int ShowСlients = 1;
             const int ShowPrice = 2;
-            const int Exit = 3;
+            const int ShowCashRegister = 3;
+            const int Exit = 4;
 
             AddСlientsQueue(maxClients);
 
@@ -38,6 +40,7 @@
                 Console.WriteLine("Выберите пункт меню\n");
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
                 Console.WriteLine(ShowPrice + " показать цены на детали и работы");
+                Console.WriteLine(ShowCashRegister + " показать деньги в кассе");
                 Console.WriteLine(Exit + " выход из программы");
 
                 _inputUser = ReadInt(); // Править все
@@ -56,6 +59,10 @@
 
                     case ShowPrice:
                         _price.Show();
+                        break;
+
+                    case ShowCashRegister:
+                        Console.WriteLine(_cashRegister);
                         break;
 
                     case Exit:
@@ -92,12 +99,17 @@
 
         public void ShowCash()
         {
-            Console.WriteLine($"Семма в кассе = {_amountСash}");
+            Console.WriteLine($"Сумма в кассе = {_amountСash}");
         }
 
         public void AcceptCash(float cash)
         {
             _amountСash += cash;
+        }
+
+        public override string ToString()
+        {
+            return $"Сумма в кассе = {_amountСash}";
         }
     }
 
