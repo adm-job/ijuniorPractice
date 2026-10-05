@@ -62,7 +62,7 @@
                         break;
 
                     case ShowCashRegister:
-                        Console.WriteLine(_cashRegister);
+                        Console.WriteLine("\n" + _cashRegister);
                         break;
 
                     case Exit:
@@ -96,11 +96,6 @@
     class CashRegister // касса сервиса
     {
         private float _amountСash = 0f;
-
-        public void ShowCash()
-        {
-            Console.WriteLine($"Сумма в кассе = {_amountСash}");
-        }
 
         public void AcceptCash(float cash)
         {
