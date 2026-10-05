@@ -40,7 +40,7 @@
                 Console.WriteLine(ShowPrice + " показать цены на детали и работы");
                 Console.WriteLine(Exit + " выход из программы");
 
-                _inputUser = ReadInt(3); // Править все
+                _inputUser = ReadInt(); // Править все
 
                 switch (_inputUser)
                 {
@@ -73,13 +73,13 @@
         }
 
 
-        private int ReadInt(int maxIndex)
+        private int ReadInt()
         {
             int inputNumber;
 
-            while (int.TryParse(Console.ReadLine(), out inputNumber) == false || inputNumber <= 0 || inputNumber > maxIndex)
+            while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
             {
-                Console.WriteLine($"Введено не верное значение индекса всего {maxIndex}");
+                Console.WriteLine($"Введено не число");
             }
 
             return inputNumber;
