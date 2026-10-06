@@ -41,19 +41,17 @@
                 Console.WriteLine(ShowСlients + " показать очередь клиентов");
                 Console.WriteLine(ShowPrice + " показать цены на детали и работы");
                 Console.WriteLine(ShowCashRegister + " показать деньги в кассе");
-                Console.WriteLine(Exit + " выход из программы");
+                Console.WriteLine(Exit + " выход из программы\n");
 
                 _inputUser = ReadInt(); // Править все
 
                 switch (_inputUser)
                 {
                     case ShowСlients: // Переделать
-                        int y = 0;
+                        
                         foreach (var car in _clientCars)
                         {
-                            Console.SetCursorPosition(100, y);
                             Console.WriteLine(car);
-                            y += 1;
                         }
                         break;
 
@@ -62,7 +60,7 @@
                         break;
 
                     case ShowCashRegister:
-                        Console.WriteLine("\n" + _cashRegister);
+                        Console.WriteLine(_cashRegister);
                         break;
 
                     case Exit:
