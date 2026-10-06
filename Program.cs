@@ -48,7 +48,10 @@
                 switch (_inputUser)
                 {
                     case ShowСlients: // Переделать
-                        UserUtils.Show(_clientCars);
+                        foreach (var car in _clientCars)
+                        {
+                            Console.WriteLine(car);
+                        }
                         break;
 
                     case ShowPrice:
@@ -268,9 +271,9 @@
             return s_random.Next(max);
         }
 
-        public void Show(List<Car> cars)
+        public void Show(List<Car> _clientCars)
         {
-            foreach (var car in cars)
+            foreach (var car in _clientCars)
             {
                 Console.WriteLine(car);
             }
