@@ -12,7 +12,7 @@
     class CarService
     {
         private int maxClients = 15;
-        private List<Car> _clientCars;
+        private List<Car> _clientCars = new();
         private bool _isWorking = true;
         private int _inputUser = 0;
         private FactoryCar _factoryCars = new();
@@ -48,11 +48,7 @@
                 switch (_inputUser)
                 {
                     case ShowСlients: // Переделать
-                        
-                        foreach (var car in _clientCars)
-                        {
-                            Console.WriteLine(car);
-                        }
+                        UserUtils.Show(_clientCars);
                         break;
 
                     case ShowPrice:
@@ -270,6 +266,14 @@
         public static int GenerateRandomBool(int max = 2)
         {
             return s_random.Next(max);
+        }
+
+        public void Show(List<Car> cars)
+        {
+            foreach (var car in cars)
+            {
+                Console.WriteLine(car);
+            }
         }
     }
 }
