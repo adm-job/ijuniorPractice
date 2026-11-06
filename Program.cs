@@ -67,7 +67,7 @@
                         break;
 
                     default:
-                        Console.WriteLine("Выбранного пункта нет в меню автосервиса");
+                        Console.WriteLine("Выбранного пункта нет в меню автосервиса, повторите ввод");
                         break;
                 }
 
@@ -83,7 +83,7 @@
 
             while (int.TryParse(Console.ReadLine(), out inputNumber) == false)
             {
-                Console.WriteLine($"Введено не число");
+                Console.WriteLine($"Введено не число, повторите ввод");
             }
 
             return inputNumber;
