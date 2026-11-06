@@ -19,7 +19,7 @@
         private Price _price = new();
         private CashRegister _cashRegister = new();
 
-        public void AddСlientsQueue(int maxClients)
+        public void AddClientsQueue(int maxClients)
         {
             _clientCars = _factoryCars.CreateCars(maxClients);
         }
@@ -31,7 +31,7 @@
             const int ShowCashRegister = 3;
             const int Exit = 4;
 
-            AddСlientsQueue(maxClients);
+            AddClientsQueue(maxClients);
 
             while (_isWorking)
             {
